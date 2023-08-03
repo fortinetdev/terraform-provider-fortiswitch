@@ -1,0 +1,20 @@
+---
+subcategory: "FortiSwitch System"
+layout: "fortiswitch"
+page_title: "FortiSwitch: fortiswitch_system_autoscriptlist"
+description: |-
+  Provides a list of fortiswitch_system_autoscript.
+---
+
+# Data Source: fortiswitch_system_autoscriptlist
+Provides a list of `fortiswitch_system_autoscript`.
+
+## Argument Reference
+
+* `filter` - (Optional) A filter used to scope the list. See [Filter results of datasource](https://registry.terraform.io/providers/fortinetdev/fortiswitch/latest/docs/guides/fgt_filter).
+
+## Attribute Reference
+
+In addition to all arguments above, the following attributes are exported:
+
+* `namelist` -  A list of the `fortiswitch_system_autoscript`.
