@@ -33,6 +33,7 @@ The following arguments are supported:
 
 * `defaultgw` - Enable/disable default gateway. Valid values: `enable`, `disable`.
 * `gwdetect` - Enable/disable gateway detection. Valid values: `enable`, `disable`.
+* `dhcp_client_status` - DHCP client connection status. Valid values: `initial`, `stopped`, `connected`, `rebooting`, `selecting`, `requesting`, `binding`, `renewing`, `rebinding`.
 * `weight` - Default weight for static routes if route has no weight configured (0 - 255).
 * `ip` - Interface IPv4 address.
 * `vrrp_virtual_mac` - enable to use virtual MAC for VRRP Valid values: `enable`, `disable`.

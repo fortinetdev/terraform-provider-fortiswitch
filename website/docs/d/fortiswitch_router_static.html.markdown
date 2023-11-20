@@ -28,6 +28,7 @@ The following attributes are exported:
 * `priority` - Administrative priority (0-4294967295).
 * `status` - Status.
 * `vrf` - VRF.
+* `gw_l2_switch` - Enable/disable L2 gateway.
 * `device` - Gateway out interface.
 * `gateway` - Gateway ip for this route.
 

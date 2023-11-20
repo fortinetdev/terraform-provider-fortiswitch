@@ -43,6 +43,7 @@ The following attributes are exported:
 * `accprofile` - Administrative user access profile.
 * `force_password_change` - Enable/disable forcing of password change on next login.
 * `allow_remove_admin_session` - Enable/disable privileged administrative users to remove administrative sessions.
+* `wildcard_fallback` - Enable/disable attempting authentication against wildcard accounts if authenticating this account fails.
 * `schedule` - Schedule name.
 * `peer_group` - Peer group name.
 * `comments` - Comment.

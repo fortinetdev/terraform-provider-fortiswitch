@@ -90,6 +90,11 @@ func resourceRouterStatic() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"gw_l2_switch": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"device": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -245,6 +250,10 @@ func flattenRouterStaticVrf(v interface{}, d *schema.ResourceData, pre string, s
 	return v
 }
 
+func flattenRouterStaticGwL2Switch(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterStaticDevice(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -322,6 +331,12 @@ func refreshObjectRouterStatic(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("gw_l2_switch", flattenRouterStaticGwL2Switch(o["gw-l2-switch"], d, "gw_l2_switch", sv)); err != nil {
+		if !fortiAPIPatch(o["gw-l2-switch"]) {
+			return fmt.Errorf("Error reading gw_l2_switch: %v", err)
+		}
+	}
+
 	if err = d.Set("device", flattenRouterStaticDevice(o["device"], d, "device", sv)); err != nil {
 		if !fortiAPIPatch(o["device"]) {
 			return fmt.Errorf("Error reading device: %v", err)
@@ -384,6 +399,10 @@ func expandRouterStaticStatus(d *schema.ResourceData, v interface{}, pre string,
 }
 
 func expandRouterStaticVrf(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterStaticGwL2Switch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -505,6 +524,16 @@ func getObjectRouterStatic(d *schema.ResourceData, sv string) (*map[string]inter
 			return &obj, err
 		} else if t != nil {
 			obj["vrf"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("gw_l2_switch"); ok {
+
+		t, err := expandRouterStaticGwL2Switch(d, v, "gw_l2_switch", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["gw-l2-switch"] = t
 		}
 	}
 

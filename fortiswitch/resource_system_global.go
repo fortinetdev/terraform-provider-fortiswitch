@@ -179,6 +179,11 @@ func resourceSystemGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"admin_password_hash": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"dh_params": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -230,6 +235,11 @@ func resourceSystemGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"tcp_options": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"post_login_banner": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 2047),
@@ -275,6 +285,11 @@ func resourceSystemGlobal() *schema.Resource {
 			},
 			"csr_ca_attribute": &schema.Schema{
 				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"delaycli_timeout_cleanup": &schema.Schema{
+				Type:     schema.TypeInt,
 				Optional: true,
 				Computed: true,
 			},
@@ -563,6 +578,10 @@ func flattenSystemGlobalAllowSubnetOverlap(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenSystemGlobalAdminPasswordHash(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemGlobalDhParams(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -603,6 +622,10 @@ func flattenSystemGlobalL3HostExpiry(v interface{}, d *schema.ResourceData, pre 
 	return v
 }
 
+func flattenSystemGlobalTcpOptions(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemGlobalPostLoginBanner(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -636,6 +659,10 @@ func flattenSystemGlobalDhcpClientLocation(v interface{}, d *schema.ResourceData
 }
 
 func flattenSystemGlobalCsrCaAttribute(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalDelaycliTimeoutCleanup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -886,6 +913,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("admin_password_hash", flattenSystemGlobalAdminPasswordHash(o["admin-password-hash"], d, "admin_password_hash", sv)); err != nil {
+		if !fortiAPIPatch(o["admin-password-hash"]) {
+			return fmt.Errorf("Error reading admin_password_hash: %v", err)
+		}
+	}
+
 	if err = d.Set("dh_params", flattenSystemGlobalDhParams(o["dh-params"], d, "dh_params", sv)); err != nil {
 		if !fortiAPIPatch(o["dh-params"]) {
 			return fmt.Errorf("Error reading dh_params: %v", err)
@@ -946,6 +979,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("tcp_options", flattenSystemGlobalTcpOptions(o["tcp-options"], d, "tcp_options", sv)); err != nil {
+		if !fortiAPIPatch(o["tcp-options"]) {
+			return fmt.Errorf("Error reading tcp_options: %v", err)
+		}
+	}
+
 	if err = d.Set("post_login_banner", flattenSystemGlobalPostLoginBanner(o["post-login-banner"], d, "post_login_banner", sv)); err != nil {
 		if !fortiAPIPatch(o["post-login-banner"]) {
 			return fmt.Errorf("Error reading post_login_banner: %v", err)
@@ -997,6 +1036,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 	if err = d.Set("csr_ca_attribute", flattenSystemGlobalCsrCaAttribute(o["csr-ca-attribute"], d, "csr_ca_attribute", sv)); err != nil {
 		if !fortiAPIPatch(o["csr-ca-attribute"]) {
 			return fmt.Errorf("Error reading csr_ca_attribute: %v", err)
+		}
+	}
+
+	if err = d.Set("delaycli_timeout_cleanup", flattenSystemGlobalDelaycliTimeoutCleanup(o["delaycli-timeout-cleanup"], d, "delaycli_timeout_cleanup", sv)); err != nil {
+		if !fortiAPIPatch(o["delaycli-timeout-cleanup"]) {
+			return fmt.Errorf("Error reading delaycli_timeout_cleanup: %v", err)
 		}
 	}
 
@@ -1235,6 +1280,10 @@ func expandSystemGlobalAllowSubnetOverlap(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
+func expandSystemGlobalAdminPasswordHash(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemGlobalDhParams(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1275,6 +1324,10 @@ func expandSystemGlobalL3HostExpiry(d *schema.ResourceData, v interface{}, pre s
 	return v, nil
 }
 
+func expandSystemGlobalTcpOptions(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemGlobalPostLoginBanner(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1308,6 +1361,10 @@ func expandSystemGlobalDhcpClientLocation(d *schema.ResourceData, v interface{},
 }
 
 func expandSystemGlobalCsrCaAttribute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalDelaycliTimeoutCleanup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1782,6 +1839,20 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		}
 	}
 
+	if v, ok := d.GetOk("admin_password_hash"); ok {
+		if setArgNil {
+			obj["admin-password-hash"] = nil
+		} else {
+
+			t, err := expandSystemGlobalAdminPasswordHash(d, v, "admin_password_hash", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["admin-password-hash"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("dh_params"); ok {
 		if setArgNil {
 			obj["dh-params"] = nil
@@ -1922,6 +1993,20 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		}
 	}
 
+	if v, ok := d.GetOk("tcp_options"); ok {
+		if setArgNil {
+			obj["tcp-options"] = nil
+		} else {
+
+			t, err := expandSystemGlobalTcpOptions(d, v, "tcp_options", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["tcp-options"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("post_login_banner"); ok {
 		if setArgNil {
 			obj["post-login-banner"] = nil
@@ -2044,6 +2129,20 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 				return &obj, err
 			} else if t != nil {
 				obj["csr-ca-attribute"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("delaycli_timeout_cleanup"); ok {
+		if setArgNil {
+			obj["delaycli-timeout-cleanup"] = nil
+		} else {
+
+			t, err := expandSystemGlobalDelaycliTimeoutCleanup(d, v, "delaycli_timeout_cleanup", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["delaycli-timeout-cleanup"] = t
 			}
 		}
 	}

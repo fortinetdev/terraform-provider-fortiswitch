@@ -41,6 +41,7 @@ The following arguments are supported:
 * `edge_port` - Enable/disable interface as edge port. Valid values: `enabled`, `disabled`.
 * `stp_bpdu_guard` - Enable/disable STP BPDU guard protection (stp-state and edge-port must be enabled). Valid values: `enabled`, `disabled`.
 * `dhcp_snoop_option82_override` - Configure per vlan option82 override. The structure of `dhcp_snoop_option82_override` block is documented below.
+* `ptp_status` - PTP Admin. Status. Valid values: `enable`, `disable`.
 * `loop_guard` - Enable/disable loop guard protection. Valid values: `enabled`, `disabled`.
 * `qnq` - Configure QinQ. The structure of `qnq` block is documented below.
 * `allowed_vlans` - Allowed VLANs.

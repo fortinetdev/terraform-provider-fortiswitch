@@ -32,6 +32,10 @@ func dataSourceSystemInterface() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"dhcp_client_status": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"weight": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -552,6 +556,10 @@ func dataSourceFlattenSystemInterfaceDefaultgw(v interface{}, d *schema.Resource
 }
 
 func dataSourceFlattenSystemInterfaceGwdetect(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceDhcpClientStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1463,6 +1471,12 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 	if err = d.Set("gwdetect", dataSourceFlattenSystemInterfaceGwdetect(o["gwdetect"], d, "gwdetect")); err != nil {
 		if !fortiAPIPatch(o["gwdetect"]) {
 			return fmt.Errorf("Error reading gwdetect: %v", err)
+		}
+	}
+
+	if err = d.Set("dhcp_client_status", dataSourceFlattenSystemInterfaceDhcpClientStatus(o["dhcp-client-status"], d, "dhcp_client_status")); err != nil {
+		if !fortiAPIPatch(o["dhcp-client-status"]) {
+			return fmt.Errorf("Error reading dhcp_client_status: %v", err)
 		}
 	}
 

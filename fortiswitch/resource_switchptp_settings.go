@@ -31,6 +31,17 @@ func resourceSwitchPtpSettings() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"status": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
+			},
 			"mode": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -110,12 +121,32 @@ func resourceSwitchPtpSettingsRead(d *schema.ResourceData, m interface{}) error 
 	return nil
 }
 
+func flattenSwitchPtpSettingsStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchPtpSettingsProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchPtpSettingsMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func refreshObjectSwitchPtpSettings(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+
+	if err = d.Set("status", flattenSwitchPtpSettingsStatus(o["status"], d, "status", sv)); err != nil {
+		if !fortiAPIPatch(o["status"]) {
+			return fmt.Errorf("Error reading status: %v", err)
+		}
+	}
+
+	if err = d.Set("profile", flattenSwitchPtpSettingsProfile(o["profile"], d, "profile", sv)); err != nil {
+		if !fortiAPIPatch(o["profile"]) {
+			return fmt.Errorf("Error reading profile: %v", err)
+		}
+	}
 
 	if err = d.Set("mode", flattenSwitchPtpSettingsMode(o["mode"], d, "mode", sv)); err != nil {
 		if !fortiAPIPatch(o["mode"]) {
@@ -132,12 +163,48 @@ func flattenSwitchPtpSettingsFortiTestDebug(d *schema.ResourceData, fswdebugsn i
 	log.Printf("ER List: %v, %v", strings.Split("FortiSwitch Ver", " "), e)
 }
 
+func expandSwitchPtpSettingsStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchPtpSettingsProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchPtpSettingsMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
 func getObjectSwitchPtpSettings(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+
+	if v, ok := d.GetOk("status"); ok {
+		if setArgNil {
+			obj["status"] = nil
+		} else {
+
+			t, err := expandSwitchPtpSettingsStatus(d, v, "status", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["status"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("profile"); ok {
+		if setArgNil {
+			obj["profile"] = nil
+		} else {
+
+			t, err := expandSwitchPtpSettingsProfile(d, v, "profile", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["profile"] = t
+			}
+		}
+	}
 
 	if v, ok := d.GetOk("mode"); ok {
 		if setArgNil {

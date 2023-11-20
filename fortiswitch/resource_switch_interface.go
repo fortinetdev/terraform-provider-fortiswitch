@@ -147,6 +147,11 @@ func resourceSwitchInterface() *schema.Resource {
 					},
 				},
 			},
+			"ptp_status": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"loop_guard": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -910,6 +915,10 @@ func flattenSwitchInterfaceDhcpSnoopOption82OverrideId(v interface{}, d *schema.
 }
 
 func flattenSwitchInterfaceDhcpSnoopOption82OverrideRemoteId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchInterfacePtpStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1809,6 +1818,12 @@ func refreshObjectSwitchInterface(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
+	if err = d.Set("ptp_status", flattenSwitchInterfacePtpStatus(o["ptp-status"], d, "ptp_status", sv)); err != nil {
+		if !fortiAPIPatch(o["ptp-status"]) {
+			return fmt.Errorf("Error reading ptp_status: %v", err)
+		}
+	}
+
 	if err = d.Set("loop_guard", flattenSwitchInterfaceLoopGuard(o["loop-guard"], d, "loop_guard", sv)); err != nil {
 		if !fortiAPIPatch(o["loop-guard"]) {
 			return fmt.Errorf("Error reading loop_guard: %v", err)
@@ -2263,6 +2278,10 @@ func expandSwitchInterfaceDhcpSnoopOption82OverrideId(d *schema.ResourceData, v 
 }
 
 func expandSwitchInterfaceDhcpSnoopOption82OverrideRemoteId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchInterfacePtpStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3143,6 +3162,16 @@ func getObjectSwitchInterface(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["dhcp-snoop-option82-override"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ptp_status"); ok {
+
+		t, err := expandSwitchInterfacePtpStatus(d, v, "ptp_status", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ptp-status"] = t
 		}
 	}
 

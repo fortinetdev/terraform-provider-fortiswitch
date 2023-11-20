@@ -43,6 +43,7 @@ The following arguments are supported:
 * `priority` - Administrative priority (0-4294967295).
 * `status` - Status. Valid values: `enable`, `disable`.
 * `vrf` - VRF.
+* `gw_l2_switch` - Enable/disable L2 gateway. Valid values: `enable`, `disable`.
 * `device` - Gateway out interface.
 * `gateway` - Gateway ip for this route.
 

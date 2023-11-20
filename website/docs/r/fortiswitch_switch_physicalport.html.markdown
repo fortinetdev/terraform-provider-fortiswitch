@@ -13,12 +13,14 @@ Physical port specific configuration.
 
 The following arguments are supported:
 
+* `macsec_pae_mode` - Assign PAE mode to a MACSEC interface. Valid values: `none`, `supp`, `auth`.
 * `l2_learning` - Enable / disable dynamic MAC address learning. Valid values: `enabled`, `disabled`.
 * `dmi_status` - DMI status. Valid values: `enable`, `disable`, `global`.
 * `storm_control_mode` - Storm control mode. Valid values: `global`, `override`, `disabled`.
-* `speed` - Configure interface speed and duplex. Valid values: `auto`, `10half`, `10full`, `100half`, `100full`, `100FX-half`, `100FX-full`, `1000full`, `2500auto`, `5000auto`, `10000full`, `10000cr`, `10000sr`, `40000full`, `40000sr4`, `40000cr4`, `100000full`, `100000cr4`, `100000sr4`, `auto-module`, `1000full-fiber`, `1000auto`, `25000full`, `25000cr`, `25000sr`, `50000full`, `50000cr`, `50000sr`.
+* `speed` - Configure interface speed and duplex.
 * `fortilink_p2p` - FortiLink point-to-point. Valid values: `enable`, `disable`.
 * `flap_rate` - Number of stage change events needed within flap-duration.
+* `macsec_profile` - macsec port profile.
 * `egress_drop_mode` - Enable/Disable egress drop. Valid values: `enabled`, `disabled`.
 * `loopback` - Phy Port Loopback. Valid values: `local`, `remote`, `disable`.
 * `priority_based_flow_control` - Enable / disable priority-based flow control. 802.3 flow control will be applied when disabled Valid values: `disable`, `enable`.
@@ -34,6 +36,7 @@ The following arguments are supported:
 * `flap_duration` - Period over which flap events are calculated (seconds).
 * `eee_tx_wake_time` - EEE Transmit wake time (microseconds)(0-2560).
 * `storm_control` - Storm control. The structure of `storm_control` block is documented below.
+* `security_mode` - Security mode. Valid values: `none`, `macsec`.
 * `flapguard_state` - Timestamp of last triggered event (or 0 if none).
 * `pause_resume` - Resume threshold for resuming reception on pause metering of an ingress port. Valid values: `75%`, `50%`, `25%`.
 * `l2_sa_unknown` - Forward / drop unknown(SMAC) packets when dynamic MAC address learning is disabled. Valid values: `forward`, `drop`.

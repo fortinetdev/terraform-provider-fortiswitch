@@ -32,6 +32,7 @@ The following attributes are exported:
 * `remove_private_as` - Enable/disable remove private AS number from IPv4 outbound updates.
 * `shutdown` - Enable/disable shutdown this neighbor.
 * `route_map_in6` - IPv6 Inbound route map filter.
+* `route_map_in_evpn` - EVPN Inbound route map filter.
 * `unsuppress_map6` - IPv6 Route map to selectively unsuppress suppressed routes.
 * `unsuppress_map` - IPv4 Route map to selectively unsuppress suppressed routes.
 * `as_override6` - Enable/disable replace peer AS with own AS for IPv6.
@@ -45,19 +46,23 @@ The following attributes are exported:
 * `next_hop_self` - Enable/disable IPv4 next-hop calculation for this neighbor.
 * `allowas_in_enable` - Enable/disable IPv4 Enable to allow my AS in AS path.
 * `route_reflector_client6` - Enable/disable IPv6 AS route reflector client.
+* `activate_evpn` - Enable/disable address family evpn for this neighbor.
 * `dont_capability_negotiate` - Don't negotiate capabilities with this neighbor
 * `connect_timer` - Interval (seconds) for connect timer.
 * `passive` - Enable/disable sending of open messages to this neighbor.
+* `attribute_unchanged_evpn` - EVPN List of attributes that should be unchanged.
 * `allowas_in` - IPv4 The maximum number of occurrence of my AS number allowed.
 * `maximum_prefix6` - Maximum number of IPv6 prefixes to accept from this peer.
 * `route_server_client` - Enable/disable IPv4 AS route server client.
 * `maximum_prefix_threshold` - Maximum IPv4 prefix threshold value (1-100 percent).
 * `filter_list_out` - BGP aspath filter for IPv4 outbound routes.
 * `enforce_first_as` - Enable/disable  - Enable to enforce first AS for all(IPV4/IPV6) EBGP routes.
+* `soft_reconfiguration_evpn` - Enable/disable allow EVPN inbound soft reconfiguration.
 * `keep_alive_timer` - Keepalive timer interval (seconds).
 * `maximum_prefix_warning_only` - Enable/disable IPv4 Only give warning message when threshold is exceeded.
 * `description` - Description.
 * `as_override` - Enable/disable replace peer AS with own AS for IPv4.
+* `route_reflector_client_evpn` - Enable/disable EVPN AS route reflector client.
 * `bfd_session_mode` - Single or multihop BFD session to this neighbor.
 * `distribute_list_out` - Filter for IPv4 updates to this neighbor.
 * `capability_orf6` - Accept/Send IPv6 ORF lists to/from this neighbor.
@@ -66,6 +71,7 @@ The following attributes are exported:
 * `next_hop_self6` - Enable/disable IPv6 next-hop calculation for this neighbor.
 * `allowas_in_enable6` - Enable/disable IPv6 Enable to allow my AS in AS path.
 * `allowas_in6` - IPv6 The maximum number of occurrence of my AS number allowed.
+* `route_map_out_evpn` - EVPN outbound route map filter.
 * `update_source` - Interface to use as source IP/IPv6 address of TCP connections.
 * `interface` - Interface.
 * `remove_private_as6` - Enable/disable remove private AS number from IPv6 outbound updates.
@@ -77,6 +83,7 @@ The following attributes are exported:
 * `maximum_prefix` - Maximum number of IPv4 prefixes to accept from this peer.
 * `route_server_client6` - Enable/disable IPv6 AS route server client.
 * `capability_dynamic` - Enable/disable advertise dynamic capability to this neighbor.
+* `allowas_in_enable_evpn` - Enable/disable EVPN Enable to allow my AS in AS path.
 * `ebgp_ttl_security_hops` - Specify the maximum number of hops to the EBGP peer.
 * `distribute_list_in6` - Filter for IPv6 updates from this neighbor.
 * `override_capability` - Enable/disable override result of capability negotiation.

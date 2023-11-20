@@ -46,6 +46,7 @@ The following arguments are supported:
 * `macsec_mode` - Set mode of the MACsec Profile.
 * `include_mka_icv_ind` - Include MKA ICV indicator. Valid values: `enable`.
 * `eap_tls_cert` - Client certificate for MACSEC CAK EAP-TLS.
+* `cipher_suite` - MACsec cipher suite. Valid values: `GCM-AES-128`.
 * `traffic_policy` - MACsec traffic policy configuration. The structure of `traffic_policy` block is documented below.
 * `eap_tls_radius_server` - Radius Server for MACSEC CAK EAP-TLS.
 * `cipher_suite` - MACsec cipher suite.
@@ -62,6 +63,7 @@ The `traffic_policy` block supports:
 * `status` - Enable/disable this Traffic policy. Valid values: `enable`.
 * `name` - Traffic policy type name.
 * `security_policy` - Must/Should secure the traffic. Valid values: `must-secure`.
+* `exclude_protocol` - Exclude protocols that should not be MACsec-secured. Valid values: `ipv4`, `ipv6`, `dot1q`, `qinq`, `fortilink`, `arp`, `stp`, `lldp`, `lacp`.
 
 The `mka_psk` block supports:
 

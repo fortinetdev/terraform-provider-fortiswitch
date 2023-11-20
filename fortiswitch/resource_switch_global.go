@@ -71,6 +71,11 @@ func resourceSwitchGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"vxlan_dport": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
 			"mac_address_algorithm": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -196,12 +201,23 @@ func resourceSwitchGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"vxlan_sport": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 65535),
+				Optional:     true,
+				Computed:     true,
+			},
 			"mclag_peer_info_timeout": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
 				Computed: true,
 			},
 			"mclag_igmpsnooping_aware": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"access_vlan_mode": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -258,6 +274,11 @@ func resourceSwitchGlobal() *schema.Resource {
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"mac_called_station_delimiter": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"mab_reauth": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -268,13 +289,38 @@ func resourceSwitchGlobal() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"mac_case": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"mac_password_delimiter": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"link_down_auth": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"mab_entry_as": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"mac_username_delimiter": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"reauth_period": &schema.Schema{
 							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
+						},
+						"mac_calling_station_delimiter": &schema.Schema{
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -407,6 +453,10 @@ func flattenSwitchGlobalBpduLearn(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
+func flattenSwitchGlobalVxlanDport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchGlobalMacAddressAlgorithm(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -507,11 +557,19 @@ func flattenSwitchGlobalPoePowerBudget(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
+func flattenSwitchGlobalVxlanSport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchGlobalMclagPeerInfoTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenSwitchGlobalMclagIgmpsnoopingAware(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchGlobalAccessVlanMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -560,6 +618,12 @@ func flattenSwitchGlobalPortSecurity(v interface{}, d *schema.ResourceData, pre 
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
+	pre_append = pre + ".0." + "mac_called_station_delimiter"
+	if _, ok := i["mac-called-station-delimiter"]; ok {
+
+		result["mac_called_station_delimiter"] = flattenSwitchGlobalPortSecurityMacCalledStationDelimiter(i["mac-called-station-delimiter"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "mab_reauth"
 	if _, ok := i["mab-reauth"]; ok {
 
@@ -572,16 +636,46 @@ func flattenSwitchGlobalPortSecurity(v interface{}, d *schema.ResourceData, pre 
 		result["max_reauth_attempt"] = flattenSwitchGlobalPortSecurityMaxReauthAttempt(i["max-reauth-attempt"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "mac_case"
+	if _, ok := i["mac-case"]; ok {
+
+		result["mac_case"] = flattenSwitchGlobalPortSecurityMacCase(i["mac-case"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "mac_password_delimiter"
+	if _, ok := i["mac-password-delimiter"]; ok {
+
+		result["mac_password_delimiter"] = flattenSwitchGlobalPortSecurityMacPasswordDelimiter(i["mac-password-delimiter"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "link_down_auth"
 	if _, ok := i["link-down-auth"]; ok {
 
 		result["link_down_auth"] = flattenSwitchGlobalPortSecurityLinkDownAuth(i["link-down-auth"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "mab_entry_as"
+	if _, ok := i["mab-entry-as"]; ok {
+
+		result["mab_entry_as"] = flattenSwitchGlobalPortSecurityMabEntryAs(i["mab-entry-as"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "mac_username_delimiter"
+	if _, ok := i["mac-username-delimiter"]; ok {
+
+		result["mac_username_delimiter"] = flattenSwitchGlobalPortSecurityMacUsernameDelimiter(i["mac-username-delimiter"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "reauth_period"
 	if _, ok := i["reauth-period"]; ok {
 
 		result["reauth_period"] = flattenSwitchGlobalPortSecurityReauthPeriod(i["reauth-period"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "mac_calling_station_delimiter"
+	if _, ok := i["mac-calling-station-delimiter"]; ok {
+
+		result["mac_calling_station_delimiter"] = flattenSwitchGlobalPortSecurityMacCallingStationDelimiter(i["mac-calling-station-delimiter"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "quarantine_vlan"
@@ -600,6 +694,10 @@ func flattenSwitchGlobalPortSecurity(v interface{}, d *schema.ResourceData, pre 
 	return lastresult
 }
 
+func flattenSwitchGlobalPortSecurityMacCalledStationDelimiter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchGlobalPortSecurityMabReauth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -608,11 +706,31 @@ func flattenSwitchGlobalPortSecurityMaxReauthAttempt(v interface{}, d *schema.Re
 	return v
 }
 
+func flattenSwitchGlobalPortSecurityMacCase(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchGlobalPortSecurityMacPasswordDelimiter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchGlobalPortSecurityLinkDownAuth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
+func flattenSwitchGlobalPortSecurityMabEntryAs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchGlobalPortSecurityMacUsernameDelimiter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchGlobalPortSecurityReauthPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchGlobalPortSecurityMacCallingStationDelimiter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -680,6 +798,12 @@ func refreshObjectSwitchGlobal(d *schema.ResourceData, o map[string]interface{},
 	if err = d.Set("bpdu_learn", flattenSwitchGlobalBpduLearn(o["bpdu-learn"], d, "bpdu_learn", sv)); err != nil {
 		if !fortiAPIPatch(o["bpdu-learn"]) {
 			return fmt.Errorf("Error reading bpdu_learn: %v", err)
+		}
+	}
+
+	if err = d.Set("vxlan_dport", flattenSwitchGlobalVxlanDport(o["vxlan-dport"], d, "vxlan_dport", sv)); err != nil {
+		if !fortiAPIPatch(o["vxlan-dport"]) {
+			return fmt.Errorf("Error reading vxlan_dport: %v", err)
 		}
 	}
 
@@ -833,6 +957,12 @@ func refreshObjectSwitchGlobal(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("vxlan_sport", flattenSwitchGlobalVxlanSport(o["vxlan-sport"], d, "vxlan_sport", sv)); err != nil {
+		if !fortiAPIPatch(o["vxlan-sport"]) {
+			return fmt.Errorf("Error reading vxlan_sport: %v", err)
+		}
+	}
+
 	if err = d.Set("mclag_peer_info_timeout", flattenSwitchGlobalMclagPeerInfoTimeout(o["mclag-peer-info-timeout"], d, "mclag_peer_info_timeout", sv)); err != nil {
 		if !fortiAPIPatch(o["mclag-peer-info-timeout"]) {
 			return fmt.Errorf("Error reading mclag_peer_info_timeout: %v", err)
@@ -842,6 +972,12 @@ func refreshObjectSwitchGlobal(d *schema.ResourceData, o map[string]interface{},
 	if err = d.Set("mclag_igmpsnooping_aware", flattenSwitchGlobalMclagIgmpsnoopingAware(o["mclag-igmpsnooping-aware"], d, "mclag_igmpsnooping_aware", sv)); err != nil {
 		if !fortiAPIPatch(o["mclag-igmpsnooping-aware"]) {
 			return fmt.Errorf("Error reading mclag_igmpsnooping_aware: %v", err)
+		}
+	}
+
+	if err = d.Set("access_vlan_mode", flattenSwitchGlobalAccessVlanMode(o["access-vlan-mode"], d, "access_vlan_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["access-vlan-mode"]) {
+			return fmt.Errorf("Error reading access_vlan_mode: %v", err)
 		}
 	}
 
@@ -968,6 +1104,10 @@ func expandSwitchGlobalBpduLearn(d *schema.ResourceData, v interface{}, pre stri
 	return v, nil
 }
 
+func expandSwitchGlobalVxlanDport(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchGlobalMacAddressAlgorithm(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1068,11 +1208,19 @@ func expandSwitchGlobalPoePowerBudget(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
+func expandSwitchGlobalVxlanSport(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchGlobalMclagPeerInfoTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
 func expandSwitchGlobalMclagIgmpsnoopingAware(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchGlobalAccessVlanMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1122,6 +1270,15 @@ func expandSwitchGlobalPortSecurity(d *schema.ResourceData, v interface{}, pre s
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
+	pre_append = pre + ".0." + "mac_called_station_delimiter"
+	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["mac-called-station-delimiter"] = nil
+		} else {
+
+			result["mac-called-station-delimiter"], _ = expandSwitchGlobalPortSecurityMacCalledStationDelimiter(d, i["mac_called_station_delimiter"], pre_append, sv)
+		}
+	}
 	pre_append = pre + ".0." + "mab_reauth"
 	if _, ok := d.GetOk(pre_append); ok {
 		if setArgNil {
@@ -1140,6 +1297,24 @@ func expandSwitchGlobalPortSecurity(d *schema.ResourceData, v interface{}, pre s
 			result["max-reauth-attempt"], _ = expandSwitchGlobalPortSecurityMaxReauthAttempt(d, i["max_reauth_attempt"], pre_append, sv)
 		}
 	}
+	pre_append = pre + ".0." + "mac_case"
+	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["mac-case"] = nil
+		} else {
+
+			result["mac-case"], _ = expandSwitchGlobalPortSecurityMacCase(d, i["mac_case"], pre_append, sv)
+		}
+	}
+	pre_append = pre + ".0." + "mac_password_delimiter"
+	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["mac-password-delimiter"] = nil
+		} else {
+
+			result["mac-password-delimiter"], _ = expandSwitchGlobalPortSecurityMacPasswordDelimiter(d, i["mac_password_delimiter"], pre_append, sv)
+		}
+	}
 	pre_append = pre + ".0." + "link_down_auth"
 	if _, ok := d.GetOk(pre_append); ok {
 		if setArgNil {
@@ -1149,6 +1324,24 @@ func expandSwitchGlobalPortSecurity(d *schema.ResourceData, v interface{}, pre s
 			result["link-down-auth"], _ = expandSwitchGlobalPortSecurityLinkDownAuth(d, i["link_down_auth"], pre_append, sv)
 		}
 	}
+	pre_append = pre + ".0." + "mab_entry_as"
+	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["mab-entry-as"] = nil
+		} else {
+
+			result["mab-entry-as"], _ = expandSwitchGlobalPortSecurityMabEntryAs(d, i["mab_entry_as"], pre_append, sv)
+		}
+	}
+	pre_append = pre + ".0." + "mac_username_delimiter"
+	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["mac-username-delimiter"] = nil
+		} else {
+
+			result["mac-username-delimiter"], _ = expandSwitchGlobalPortSecurityMacUsernameDelimiter(d, i["mac_username_delimiter"], pre_append, sv)
+		}
+	}
 	pre_append = pre + ".0." + "reauth_period"
 	if _, ok := d.GetOk(pre_append); ok {
 		if setArgNil {
@@ -1156,6 +1349,15 @@ func expandSwitchGlobalPortSecurity(d *schema.ResourceData, v interface{}, pre s
 		} else {
 
 			result["reauth-period"], _ = expandSwitchGlobalPortSecurityReauthPeriod(d, i["reauth_period"], pre_append, sv)
+		}
+	}
+	pre_append = pre + ".0." + "mac_calling_station_delimiter"
+	if _, ok := d.GetOk(pre_append); ok {
+		if setArgNil {
+			result["mac-calling-station-delimiter"] = nil
+		} else {
+
+			result["mac-calling-station-delimiter"], _ = expandSwitchGlobalPortSecurityMacCallingStationDelimiter(d, i["mac_calling_station_delimiter"], pre_append, sv)
 		}
 	}
 	pre_append = pre + ".0." + "quarantine_vlan"
@@ -1180,6 +1382,10 @@ func expandSwitchGlobalPortSecurity(d *schema.ResourceData, v interface{}, pre s
 	return result, nil
 }
 
+func expandSwitchGlobalPortSecurityMacCalledStationDelimiter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchGlobalPortSecurityMabReauth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1188,11 +1394,31 @@ func expandSwitchGlobalPortSecurityMaxReauthAttempt(d *schema.ResourceData, v in
 	return v, nil
 }
 
+func expandSwitchGlobalPortSecurityMacCase(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchGlobalPortSecurityMacPasswordDelimiter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchGlobalPortSecurityLinkDownAuth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
+func expandSwitchGlobalPortSecurityMabEntryAs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchGlobalPortSecurityMacUsernameDelimiter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchGlobalPortSecurityReauthPeriod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchGlobalPortSecurityMacCallingStationDelimiter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1323,6 +1549,20 @@ func getObjectSwitchGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 				return &obj, err
 			} else if t != nil {
 				obj["bpdu-learn"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("vxlan_dport"); ok {
+		if setArgNil {
+			obj["vxlan-dport"] = nil
+		} else {
+
+			t, err := expandSwitchGlobalVxlanDport(d, v, "vxlan_dport", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vxlan-dport"] = t
 			}
 		}
 	}
@@ -1677,6 +1917,20 @@ func getObjectSwitchGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		}
 	}
 
+	if v, ok := d.GetOkExists("vxlan_sport"); ok {
+		if setArgNil {
+			obj["vxlan-sport"] = nil
+		} else {
+
+			t, err := expandSwitchGlobalVxlanSport(d, v, "vxlan_sport", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vxlan-sport"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("mclag_peer_info_timeout"); ok {
 		if setArgNil {
 			obj["mclag-peer-info-timeout"] = nil
@@ -1701,6 +1955,20 @@ func getObjectSwitchGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 				return &obj, err
 			} else if t != nil {
 				obj["mclag-igmpsnooping-aware"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("access_vlan_mode"); ok {
+		if setArgNil {
+			obj["access-vlan-mode"] = nil
+		} else {
+
+			t, err := expandSwitchGlobalAccessVlanMode(d, v, "access_vlan_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["access-vlan-mode"] = t
 			}
 		}
 	}

@@ -9,6 +9,10 @@ description: |-
 # fortiswitch_router_ospf6
 Router OSPF6 configuration.
 
+~> The provider supports the definition of Interface in Router Ospf6 `fortiswitch_router_ospf6`, and also allows the definition of separate Interface resources `fortiswitch_routerospf6_interface`, but do not use a `fortiswitch_router_ospf6` with in-line Interface in conjunction with any `fortiswitch_routerospf6_interface` resources, otherwise conflicts and overwrite will occur.
+
+
+
 ## Example Usage
 
 ```hcl

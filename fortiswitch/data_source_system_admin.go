@@ -80,6 +80,10 @@ func dataSourceSystemAdmin() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"wildcard_fallback": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"schedule": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -276,6 +280,10 @@ func dataSourceFlattenSystemAdminForcePasswordChange(v interface{}, d *schema.Re
 }
 
 func dataSourceFlattenSystemAdminAllowRemoveAdminSession(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAdminWildcardFallback(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -537,6 +545,12 @@ func dataSourceRefreshObjectSystemAdmin(d *schema.ResourceData, o map[string]int
 	if err = d.Set("allow_remove_admin_session", dataSourceFlattenSystemAdminAllowRemoveAdminSession(o["allow-remove-admin-session"], d, "allow_remove_admin_session")); err != nil {
 		if !fortiAPIPatch(o["allow-remove-admin-session"]) {
 			return fmt.Errorf("Error reading allow_remove_admin_session: %v", err)
+		}
+	}
+
+	if err = d.Set("wildcard_fallback", dataSourceFlattenSystemAdminWildcardFallback(o["wildcard-fallback"], d, "wildcard_fallback")); err != nil {
+		if !fortiAPIPatch(o["wildcard-fallback"]) {
+			return fmt.Errorf("Error reading wildcard_fallback: %v", err)
 		}
 	}
 

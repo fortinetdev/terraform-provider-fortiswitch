@@ -25,6 +25,7 @@ resource "fortiswitch_systemcertificate_local" "scrl" {
 
 The following arguments are supported:
 
+* `info` - Info about name.
 * `scep_password` - SCEP server challenge password for auto-regeneration.
 * `name` - Name.
 * `certificate` - Certificate.

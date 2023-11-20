@@ -3,7 +3,6 @@ package request
 import (
 	"bytes"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"net/url"
@@ -193,7 +192,6 @@ func (r *Request) SendWithSpecialParams(s string) error {
 // If errors are encountered, it returns the error.
 func (r *Request) LoginSession() (*Cookies, error) {
 	var err error
-	log.Default().Println("[INFO] login session starts")
 
 	data := "username="
 	data += r.Config.Auth.Username
@@ -201,40 +199,37 @@ func (r *Request) LoginSession() (*Cookies, error) {
 	data += r.Config.Auth.Password
 	data += "&ajax=1"
 
-	log.Printf("login creds: %v", data)
 	bodyBytes := bytes.NewBufferString(data)
 
 	req, _ := http.NewRequest("POST", "", bodyBytes)
-	// req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("accept", "text/plain")
-
+	req.Header.Set("Content-Type", "application/json")
 	u := "https://"
 	u += r.Config.FwTarget
 	u += "/logincheck"
 	req.URL, err = url.Parse(u)
-	log.Printf("URL: %v", req.URL)
-
 	if err != nil {
 		err = fmt.Errorf("Could not parse URL: %s", err)
 		return nil, err
 	}
 
-	// revert to set in client.Client construction time
-	// http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
-
 	rsp, err := r.Config.HTTPCon.Do(req)
-
 	if err != nil {
 		if strings.Contains(err.Error(), "x509: ") {
 			err = fmt.Errorf("HTTP request error: %v", err)
 			return nil, err
 		}
-		return nil, fmt.Errorf("failed request %s: %v", rsp.Status, err)
 	}
 
-	if rsp.StatusCode != 200 {
-		return nil, fmt.Errorf("Failed to login %v", rsp)
+	if rsp == nil {
+		err = fmt.Errorf("Host is unreachable. HTTP response is nil.")
+		return nil, err
 	}
+
+	if rsp.Header == nil {
+		err = fmt.Errorf("HTTP response header is nil.")
+		return nil, err
+	}
+
 	csrfToken := ""
 	cookie := ""
 	if setCookie, ok := rsp.Header["Set-Cookie"]; ok {
@@ -259,12 +254,7 @@ func (r *Request) LoginSession() (*Cookies, error) {
 			return nil, err
 		}
 	} else {
-		body, err := ioutil.ReadAll(rsp.Body)
-		rsp.Body.Close()
-
-		err = fmt.Errorf(
-			"Logincheck response do not contains Set-Cookie. %v;;%v;;;;%v",
-			rsp.Status, rsp.Request.URL, string(body))
+		err = fmt.Errorf("Logincheck response do not contains Set-Cookie.")
 		return nil, err
 	}
 
@@ -272,9 +262,6 @@ func (r *Request) LoginSession() (*Cookies, error) {
 		CSRFToken: csrfToken,
 		Cookie:    cookie,
 	}
-
-	log.Default().Printf("[INFO] set cookie %v", ck)
-	log.Default().Println("[INFO] login session end")
 
 	return ck, nil
 }

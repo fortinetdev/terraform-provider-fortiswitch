@@ -6811,6 +6811,114 @@ func (c *FortiSDKClient) ReadSystemDhcpServer(mkey string) (mapTmp map[string]in
 	return
 }
 
+// CreateSystemPtpInterfacePolicy API operation for FortiSwitch creates a new Interface Policy.
+// Returns the index value of the Interface Policy and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system.ptp - interface-policy chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateSystemPtpInterfacePolicy(params *map[string]interface{}) (output map[string]interface{}, err error) {
+
+	HTTPMethod := "POST"
+	path := "/api/v2/cmdb/system.ptp/interface-policy"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// UpdateSystemPtpInterfacePolicy API operation for FortiSwitch updates the specified Interface Policy.
+// Returns the index value of the Interface Policy and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system.ptp - interface-policy chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateSystemPtpInterfacePolicy(params *map[string]interface{}, mkey string) (output map[string]interface{}, err error) {
+	HTTPMethod := "PUT"
+	path := "/api/v2/cmdb/system.ptp/interface-policy"
+	path += "/" + escapeURLString(mkey)
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// DeleteSystemPtpInterfacePolicy API operation for FortiSwitch deletes the specified Interface Policy.
+// Returns error for service API and SDK errors.
+// See the system.ptp - interface-policy chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteSystemPtpInterfacePolicy(mkey string) (err error) {
+	HTTPMethod := "DELETE"
+	path := "/api/v2/cmdb/system.ptp/interface-policy"
+	path += "/" + escapeURLString(mkey)
+
+	err = delete(c, HTTPMethod, path)
+	return
+}
+
+// ReadSystemPtpInterfacePolicy API operation for FortiSwitch gets the Interface Policy
+// with the specified index value.
+// Returns the requested Interface Policy value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system.ptp - interface-policy chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadSystemPtpInterfacePolicy(mkey string) (mapTmp map[string]interface{}, err error) {
+	HTTPMethod := "GET"
+	path := "/api/v2/cmdb/system.ptp/interface-policy"
+	path += "/" + escapeURLString(mkey)
+
+	mapTmp, err = read(c, HTTPMethod, path, false)
+	return
+}
+
+// CreateSystemPtpProfile API operation for FortiSwitch creates a new Profile.
+// Returns the index value of the Profile and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system.ptp - profile chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateSystemPtpProfile(params *map[string]interface{}) (output map[string]interface{}, err error) {
+
+	HTTPMethod := "POST"
+	path := "/api/v2/cmdb/system.ptp/profile"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// UpdateSystemPtpProfile API operation for FortiSwitch updates the specified Profile.
+// Returns the index value of the Profile and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system.ptp - profile chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateSystemPtpProfile(params *map[string]interface{}, mkey string) (output map[string]interface{}, err error) {
+	HTTPMethod := "PUT"
+	path := "/api/v2/cmdb/system.ptp/profile"
+	path += "/" + escapeURLString(mkey)
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// DeleteSystemPtpProfile API operation for FortiSwitch deletes the specified Profile.
+// Returns error for service API and SDK errors.
+// See the system.ptp - profile chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteSystemPtpProfile(mkey string) (err error) {
+	HTTPMethod := "DELETE"
+	path := "/api/v2/cmdb/system.ptp/profile"
+	path += "/" + escapeURLString(mkey)
+
+	err = delete(c, HTTPMethod, path)
+	return
+}
+
+// ReadSystemPtpProfile API operation for FortiSwitch gets the Profile
+// with the specified index value.
+// Returns the requested Profile value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system.ptp - profile chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadSystemPtpProfile(mkey string) (mapTmp map[string]interface{}, err error) {
+	HTTPMethod := "GET"
+	path := "/api/v2/cmdb/system.ptp/profile"
+	path += "/" + escapeURLString(mkey)
+
+	mapTmp, err = read(c, HTTPMethod, path, false)
+	return
+}
+
 // CreateSystemScheduleGroup API operation for FortiSwitch creates a new Group.
 // Returns the index value of the Group and execution result when the request executes successfully.
 // Returns error for service API and SDK errors.
@@ -7691,6 +7799,60 @@ func (c *FortiSDKClient) ReadRouterbgpNetwork6(mkey string) (mapTmp map[string]i
 	return
 }
 
+// CreateRouterospfInterface API operation for FortiSwitch creates a new Interface.
+// Returns the index value of the Interface and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router/ospf - interface chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateRouterospfInterface(params *map[string]interface{}) (output map[string]interface{}, err error) {
+
+	HTTPMethod := "POST"
+	path := "/api/v2/cmdb/router/ospf/interface"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// UpdateRouterospfInterface API operation for FortiSwitch updates the specified Interface.
+// Returns the index value of the Interface and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router/ospf - interface chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateRouterospfInterface(params *map[string]interface{}, mkey string) (output map[string]interface{}, err error) {
+	HTTPMethod := "PUT"
+	path := "/api/v2/cmdb/router/ospf/interface"
+	path += "/" + escapeURLString(mkey)
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// DeleteRouterospfInterface API operation for FortiSwitch deletes the specified Interface.
+// Returns error for service API and SDK errors.
+// See the router/ospf - interface chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteRouterospfInterface(mkey string) (err error) {
+	HTTPMethod := "DELETE"
+	path := "/api/v2/cmdb/router/ospf/interface"
+	path += "/" + escapeURLString(mkey)
+
+	err = delete(c, HTTPMethod, path)
+	return
+}
+
+// ReadRouterospfInterface API operation for FortiSwitch gets the Interface
+// with the specified index value.
+// Returns the requested Interface value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router/ospf - interface chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadRouterospfInterface(mkey string) (mapTmp map[string]interface{}, err error) {
+	HTTPMethod := "GET"
+	path := "/api/v2/cmdb/router/ospf/interface"
+	path += "/" + escapeURLString(mkey)
+
+	mapTmp, err = read(c, HTTPMethod, path, false)
+	return
+}
+
 // CreateRouterospfNetwork API operation for FortiSwitch creates a new Network.
 // Returns the index value of the Network and execution result when the request executes successfully.
 // Returns error for service API and SDK errors.
@@ -7739,6 +7901,60 @@ func (c *FortiSDKClient) DeleteRouterospfNetwork(mkey string) (err error) {
 func (c *FortiSDKClient) ReadRouterospfNetwork(mkey string) (mapTmp map[string]interface{}, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/router/ospf/network"
+	path += "/" + escapeURLString(mkey)
+
+	mapTmp, err = read(c, HTTPMethod, path, false)
+	return
+}
+
+// CreateRouterospf6Interface API operation for FortiSwitch creates a new Interface.
+// Returns the index value of the Interface and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router/ospf6 - interface chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateRouterospf6Interface(params *map[string]interface{}) (output map[string]interface{}, err error) {
+
+	HTTPMethod := "POST"
+	path := "/api/v2/cmdb/router/ospf6/interface"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// UpdateRouterospf6Interface API operation for FortiSwitch updates the specified Interface.
+// Returns the index value of the Interface and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router/ospf6 - interface chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateRouterospf6Interface(params *map[string]interface{}, mkey string) (output map[string]interface{}, err error) {
+	HTTPMethod := "PUT"
+	path := "/api/v2/cmdb/router/ospf6/interface"
+	path += "/" + escapeURLString(mkey)
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// DeleteRouterospf6Interface API operation for FortiSwitch deletes the specified Interface.
+// Returns error for service API and SDK errors.
+// See the router/ospf6 - interface chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteRouterospf6Interface(mkey string) (err error) {
+	HTTPMethod := "DELETE"
+	path := "/api/v2/cmdb/router/ospf6/interface"
+	path += "/" + escapeURLString(mkey)
+
+	err = delete(c, HTTPMethod, path)
+	return
+}
+
+// ReadRouterospf6Interface API operation for FortiSwitch gets the Interface
+// with the specified index value.
+// Returns the requested Interface value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router/ospf6 - interface chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadRouterospf6Interface(mkey string) (mapTmp map[string]interface{}, err error) {
+	HTTPMethod := "GET"
+	path := "/api/v2/cmdb/router/ospf6/interface"
 	path += "/" + escapeURLString(mkey)
 
 	mapTmp, err = read(c, HTTPMethod, path, false)

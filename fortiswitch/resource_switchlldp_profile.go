@@ -31,6 +31,11 @@ func resourceSwitchLldpProfile() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"auto_isl_auth_encrypt": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"vlan_name_map": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -58,9 +63,20 @@ func resourceSwitchLldpProfile() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"auto_isl_auth": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"auto_isl_receive_timeout": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 300),
+				Optional:     true,
+				Computed:     true,
+			},
+			"auto_isl_auth_macsec_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -99,6 +115,18 @@ func resourceSwitchLldpProfile() *schema.Resource {
 						},
 					},
 				},
+			},
+			"auto_isl_auth_user": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
+			},
+			"auto_isl_auth_reauth": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(10, 3600),
+				Optional:     true,
+				Computed:     true,
 			},
 			"med_location_service": &schema.Schema{
 				Type:     schema.TypeList,
@@ -176,6 +204,12 @@ func resourceSwitchLldpProfile() *schema.Resource {
 						},
 					},
 				},
+			},
+			"auto_isl_auth_identity": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
 			},
 			"auto_isl_hello_timer": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -281,6 +315,10 @@ func resourceSwitchLldpProfileRead(d *schema.ResourceData, m interface{}) error 
 	return nil
 }
 
+func flattenSwitchLldpProfileAutoIslAuthEncrypt(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchLldpProfileVlanNameMap(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -301,7 +339,15 @@ func flattenSwitchLldpProfile8023Tlvs(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
+func flattenSwitchLldpProfileAutoIslAuth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchLldpProfileAutoIslReceiveTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchLldpProfileAutoIslAuthMacsecProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -379,6 +425,14 @@ func flattenSwitchLldpProfileCustomTlvsName(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSwitchLldpProfileCustomTlvsInformationString(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchLldpProfileAutoIslAuthUser(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchLldpProfileAutoIslAuthReauth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -546,12 +600,22 @@ func flattenSwitchLldpProfileMedNetworkPolicyAssignVlan(v interface{}, d *schema
 	return v
 }
 
+func flattenSwitchLldpProfileAutoIslAuthIdentity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchLldpProfileAutoIslHelloTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func refreshObjectSwitchLldpProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+
+	if err = d.Set("auto_isl_auth_encrypt", flattenSwitchLldpProfileAutoIslAuthEncrypt(o["auto-isl-auth-encrypt"], d, "auto_isl_auth_encrypt", sv)); err != nil {
+		if !fortiAPIPatch(o["auto-isl-auth-encrypt"]) {
+			return fmt.Errorf("Error reading auto_isl_auth_encrypt: %v", err)
+		}
+	}
 
 	if err = d.Set("vlan_name_map", flattenSwitchLldpProfileVlanNameMap(o["vlan-name-map"], d, "vlan_name_map", sv)); err != nil {
 		if !fortiAPIPatch(o["vlan-name-map"]) {
@@ -583,9 +647,21 @@ func refreshObjectSwitchLldpProfile(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
+	if err = d.Set("auto_isl_auth", flattenSwitchLldpProfileAutoIslAuth(o["auto-isl-auth"], d, "auto_isl_auth", sv)); err != nil {
+		if !fortiAPIPatch(o["auto-isl-auth"]) {
+			return fmt.Errorf("Error reading auto_isl_auth: %v", err)
+		}
+	}
+
 	if err = d.Set("auto_isl_receive_timeout", flattenSwitchLldpProfileAutoIslReceiveTimeout(o["auto-isl-receive-timeout"], d, "auto_isl_receive_timeout", sv)); err != nil {
 		if !fortiAPIPatch(o["auto-isl-receive-timeout"]) {
 			return fmt.Errorf("Error reading auto_isl_receive_timeout: %v", err)
+		}
+	}
+
+	if err = d.Set("auto_isl_auth_macsec_profile", flattenSwitchLldpProfileAutoIslAuthMacsecProfile(o["auto-isl-auth-macsec-profile"], d, "auto_isl_auth_macsec_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["auto-isl-auth-macsec-profile"]) {
+			return fmt.Errorf("Error reading auto_isl_auth_macsec_profile: %v", err)
 		}
 	}
 
@@ -608,6 +684,18 @@ func refreshObjectSwitchLldpProfile(d *schema.ResourceData, o map[string]interfa
 					return fmt.Errorf("Error reading custom_tlvs: %v", err)
 				}
 			}
+		}
+	}
+
+	if err = d.Set("auto_isl_auth_user", flattenSwitchLldpProfileAutoIslAuthUser(o["auto-isl-auth-user"], d, "auto_isl_auth_user", sv)); err != nil {
+		if !fortiAPIPatch(o["auto-isl-auth-user"]) {
+			return fmt.Errorf("Error reading auto_isl_auth_user: %v", err)
+		}
+	}
+
+	if err = d.Set("auto_isl_auth_reauth", flattenSwitchLldpProfileAutoIslAuthReauth(o["auto-isl-auth-reauth"], d, "auto_isl_auth_reauth", sv)); err != nil {
+		if !fortiAPIPatch(o["auto-isl-auth-reauth"]) {
+			return fmt.Errorf("Error reading auto_isl_auth_reauth: %v", err)
 		}
 	}
 
@@ -655,6 +743,12 @@ func refreshObjectSwitchLldpProfile(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
+	if err = d.Set("auto_isl_auth_identity", flattenSwitchLldpProfileAutoIslAuthIdentity(o["auto-isl-auth-identity"], d, "auto_isl_auth_identity", sv)); err != nil {
+		if !fortiAPIPatch(o["auto-isl-auth-identity"]) {
+			return fmt.Errorf("Error reading auto_isl_auth_identity: %v", err)
+		}
+	}
+
 	if err = d.Set("auto_isl_hello_timer", flattenSwitchLldpProfileAutoIslHelloTimer(o["auto-isl-hello-timer"], d, "auto_isl_hello_timer", sv)); err != nil {
 		if !fortiAPIPatch(o["auto-isl-hello-timer"]) {
 			return fmt.Errorf("Error reading auto_isl_hello_timer: %v", err)
@@ -668,6 +762,10 @@ func flattenSwitchLldpProfileFortiTestDebug(d *schema.ResourceData, fswdebugsn i
 	log.Printf(strconv.Itoa(fswdebugsn))
 	e := validation.IntBetween(fswdebugbeg, fswdebugend)
 	log.Printf("ER List: %v, %v", strings.Split("FortiSwitch Ver", " "), e)
+}
+
+func expandSwitchLldpProfileAutoIslAuthEncrypt(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
 }
 
 func expandSwitchLldpProfileVlanNameMap(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -690,7 +788,15 @@ func expandSwitchLldpProfile8023Tlvs(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
+func expandSwitchLldpProfileAutoIslAuth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchLldpProfileAutoIslReceiveTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchLldpProfileAutoIslAuthMacsecProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -757,6 +863,14 @@ func expandSwitchLldpProfileCustomTlvsName(d *schema.ResourceData, v interface{}
 }
 
 func expandSwitchLldpProfileCustomTlvsInformationString(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchLldpProfileAutoIslAuthUser(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchLldpProfileAutoIslAuthReauth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -902,12 +1016,26 @@ func expandSwitchLldpProfileMedNetworkPolicyAssignVlan(d *schema.ResourceData, v
 	return v, nil
 }
 
+func expandSwitchLldpProfileAutoIslAuthIdentity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchLldpProfileAutoIslHelloTimer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
 func getObjectSwitchLldpProfile(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+
+	if v, ok := d.GetOk("auto_isl_auth_encrypt"); ok {
+
+		t, err := expandSwitchLldpProfileAutoIslAuthEncrypt(d, v, "auto_isl_auth_encrypt", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["auto-isl-auth-encrypt"] = t
+		}
+	}
 
 	if v, ok := d.GetOk("vlan_name_map"); ok {
 
@@ -959,6 +1087,16 @@ func getObjectSwitchLldpProfile(d *schema.ResourceData, sv string) (*map[string]
 		}
 	}
 
+	if v, ok := d.GetOk("auto_isl_auth"); ok {
+
+		t, err := expandSwitchLldpProfileAutoIslAuth(d, v, "auto_isl_auth", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["auto-isl-auth"] = t
+		}
+	}
+
 	if v, ok := d.GetOkExists("auto_isl_receive_timeout"); ok {
 
 		t, err := expandSwitchLldpProfileAutoIslReceiveTimeout(d, v, "auto_isl_receive_timeout", sv)
@@ -966,6 +1104,16 @@ func getObjectSwitchLldpProfile(d *schema.ResourceData, sv string) (*map[string]
 			return &obj, err
 		} else if t != nil {
 			obj["auto-isl-receive-timeout"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("auto_isl_auth_macsec_profile"); ok {
+
+		t, err := expandSwitchLldpProfileAutoIslAuthMacsecProfile(d, v, "auto_isl_auth_macsec_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["auto-isl-auth-macsec-profile"] = t
 		}
 	}
 
@@ -986,6 +1134,26 @@ func getObjectSwitchLldpProfile(d *schema.ResourceData, sv string) (*map[string]
 			return &obj, err
 		} else if t != nil {
 			obj["custom-tlvs"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("auto_isl_auth_user"); ok {
+
+		t, err := expandSwitchLldpProfileAutoIslAuthUser(d, v, "auto_isl_auth_user", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["auto-isl-auth-user"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("auto_isl_auth_reauth"); ok {
+
+		t, err := expandSwitchLldpProfileAutoIslAuthReauth(d, v, "auto_isl_auth_reauth", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["auto-isl-auth-reauth"] = t
 		}
 	}
 
@@ -1026,6 +1194,16 @@ func getObjectSwitchLldpProfile(d *schema.ResourceData, sv string) (*map[string]
 			return &obj, err
 		} else if t != nil {
 			obj["med-network-policy"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("auto_isl_auth_identity"); ok {
+
+		t, err := expandSwitchLldpProfileAutoIslAuthIdentity(d, v, "auto_isl_auth_identity", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["auto-isl-auth-identity"] = t
 		}
 	}
 

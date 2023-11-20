@@ -191,8 +191,8 @@ func Provider() *schema.Provider {
 		},
 
 		ResourcesMap: map[string]*schema.Resource{
-			"fortiswitch_alertemail_setting":               resourceAlertemailSetting(),
 			"fortiswitch_json_generic_api":                 resourceJSONGenericAPI(),
+			"fortiswitch_alertemail_setting":               resourceAlertemailSetting(),
 			"fortiswitch_gui_console":                      resourceGuiConsole(),
 			"fortiswitch_log_customfield":                  resourceLogCustomField(),
 			"fortiswitch_log_eventfilter":                  resourceLogEventfilter(),
@@ -346,6 +346,8 @@ func Provider() *schema.Provider {
 			"fortiswitch_systemcertificate_ocsp":           resourceSystemCertificateOcsp(),
 			"fortiswitch_systemcertificate_remote":         resourceSystemCertificateRemote(),
 			"fortiswitch_systemdhcp_server":                resourceSystemDhcpServer(),
+			"fortiswitch_systemptp_interfacepolicy":        resourceSystemPtpInterfacePolicy(),
+			"fortiswitch_systemptp_profile":                resourceSystemPtpProfile(),
 			"fortiswitch_systemschedule_group":             resourceSystemScheduleGroup(),
 			"fortiswitch_systemschedule_onetime":           resourceSystemScheduleOnetime(),
 			"fortiswitch_systemschedule_recurring":         resourceSystemScheduleRecurring(),
@@ -363,7 +365,9 @@ func Provider() *schema.Provider {
 			"fortiswitch_routerbgp_neighbor":               resourceRouterbgpNeighbor(),
 			"fortiswitch_routerbgp_network":                resourceRouterbgpNetwork(),
 			"fortiswitch_routerbgp_network6":               resourceRouterbgpNetwork6(),
+			"fortiswitch_routerospf_interface":             resourceRouterospfInterface(),
 			"fortiswitch_routerospf_network":               resourceRouterospfNetwork(),
+			"fortiswitch_routerospf6_interface":            resourceRouterospf6Interface(),
 		},
 
 		ConfigureFunc: providerConfigure,

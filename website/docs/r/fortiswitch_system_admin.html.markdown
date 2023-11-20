@@ -39,6 +39,7 @@ The following arguments are supported:
 * `accprofile` - Administrative user access profile.
 * `force_password_change` - Enable/disable forcing of password change on next login. Valid values: `enable`, `disable`.
 * `allow_remove_admin_session` - Enable/disable privileged administrative users to remove administrative sessions. Valid values: `enable`, `disable`.
+* `wildcard_fallback` - Enable/disable attempting authentication against wildcard accounts if authenticating this account fails. Valid values: `enable`, `disable`.
 * `schedule` - Schedule name.
 * `peer_group` - Peer group name.
 * `comments` - Comment.

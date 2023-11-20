@@ -152,6 +152,11 @@ func resourceSwitchAclPrelookup() *schema.Resource {
 					},
 				},
 			},
+			"interface_all": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"interface": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -497,6 +502,10 @@ func flattenSwitchAclPrelookupActionCosQueue(v interface{}, d *schema.ResourceDa
 	return v
 }
 
+func flattenSwitchAclPrelookupInterfaceAll(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchAclPrelookupInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -571,6 +580,12 @@ func refreshObjectSwitchAclPrelookup(d *schema.ResourceData, o map[string]interf
 					return fmt.Errorf("Error reading action: %v", err)
 				}
 			}
+		}
+	}
+
+	if err = d.Set("interface_all", flattenSwitchAclPrelookupInterfaceAll(o["interface-all"], d, "interface_all", sv)); err != nil {
+		if !fortiAPIPatch(o["interface-all"]) {
+			return fmt.Errorf("Error reading interface_all: %v", err)
 		}
 	}
 
@@ -793,6 +808,10 @@ func expandSwitchAclPrelookupActionCosQueue(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
+func expandSwitchAclPrelookupInterfaceAll(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchAclPrelookupInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -861,6 +880,16 @@ func getObjectSwitchAclPrelookup(d *schema.ResourceData, sv string) (*map[string
 			return &obj, err
 		} else if t != nil {
 			obj["action"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("interface_all"); ok {
+
+		t, err := expandSwitchAclPrelookupInterfaceAll(d, v, "interface_all", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["interface-all"] = t
 		}
 	}
 

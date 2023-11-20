@@ -31,6 +31,11 @@ func resourceSystemCertificateCa() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"info": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"scep_url": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
@@ -152,6 +157,10 @@ func resourceSystemCertificateCaRead(d *schema.ResourceData, m interface{}) erro
 	return nil
 }
 
+func flattenSystemCertificateCaInfo(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemCertificateCaScepUrl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -174,6 +183,12 @@ func flattenSystemCertificateCaAutoUpdateDays(v interface{}, d *schema.ResourceD
 
 func refreshObjectSystemCertificateCa(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+
+	if err = d.Set("info", flattenSystemCertificateCaInfo(o["Info"], d, "info", sv)); err != nil {
+		if !fortiAPIPatch(o["Info"]) {
+			return fmt.Errorf("Error reading info: %v", err)
+		}
+	}
 
 	if err = d.Set("scep_url", flattenSystemCertificateCaScepUrl(o["scep-url"], d, "scep_url", sv)); err != nil {
 		if !fortiAPIPatch(o["scep-url"]) {
@@ -214,6 +229,10 @@ func flattenSystemCertificateCaFortiTestDebug(d *schema.ResourceData, fswdebugsn
 	log.Printf("ER List: %v, %v", strings.Split("FortiSwitch Ver", " "), e)
 }
 
+func expandSystemCertificateCaInfo(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemCertificateCaScepUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -236,6 +255,16 @@ func expandSystemCertificateCaAutoUpdateDays(d *schema.ResourceData, v interface
 
 func getObjectSystemCertificateCa(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+
+	if v, ok := d.GetOk("info"); ok {
+
+		t, err := expandSystemCertificateCaInfo(d, v, "info", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["Info"] = t
+		}
+	}
 
 	if v, ok := d.GetOk("scep_url"); ok {
 

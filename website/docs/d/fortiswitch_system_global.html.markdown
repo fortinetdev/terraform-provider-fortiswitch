@@ -56,6 +56,7 @@ The following attributes are exported:
 * `cfg_revert_timeout` - Time-out for reverting to the last saved configuration (10 - 2147483647).
 * `admin_ssh_v1` - Enable/disable SSH v1 compatibility.
 * `allow_subnet_overlap` - Enable/disable subnet overlap.
+* `admin_password_hash` - Admin password hash algorithm. (sha1, sha256, pbkdf2)
 * `dh_params` - Minimum size of Diffie-Hellman prime for HTTPS/SSH (bits).
 * `ldapconntimeout` - LDAP connection time-out (0 - 2147483647 milliseconds).
 * `tcp_mss_min` - Minimum allowed TCP MSS value in bytes.
@@ -66,6 +67,7 @@ The following attributes are exported:
 * `dhcp_server_access_list` - Enable/Disable trusted DHCP Server list.
 * `admin_port` - Administrative access HTTP port (1 - 65535).
 * `l3_host_expiry` - Enable/disable l3 host expiry.
+* `tcp_options` - Enable/disable TCP options (timestamps, SACK, window scaling).
 * `post_login_banner` - System post-login banner message.
 * `failtime` - Fail-time for PING server lost.
 * `admin_lockout_threshold` - Lockout threshold for FortiSwitch administration.
@@ -75,6 +77,7 @@ The following attributes are exported:
 * `dhcp_snoop_client_req` - Client DHCP packet broadcast mode.
 * `dhcp_client_location` - List the parameters to be included to inform about client location.
 * `csr_ca_attribute` - Enable/disable CA attribute in CSR.
+* `delaycli_timeout_cleanup` - Time-out for cleaning up the delay cli execution completion data (1-1440 minutes, default=15min).
 * `ipv6_accept_dad` - Whether to accept ipv6 DAD (Duplicate Address Detection).
 	0: Disable DAD;
 	1: Enable DAD (default);

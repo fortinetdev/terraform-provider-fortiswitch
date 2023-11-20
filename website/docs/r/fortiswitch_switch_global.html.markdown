@@ -34,6 +34,7 @@ The following arguments are supported:
 * `ip_mac_binding` - Configure ip-mac-binding status. Valid values: `enable`, `disable`.
 * `vxlan_stp_virtual_root` - Enable/disable automatically making local switch the STP root for STP instances containing configured VXLAN’s access vlan. Valid values: `enable`, `disable`.
 * `bpdu_learn` - Enable/disable BPDU learn. Valid values: `enable`, `disable`.
+* `vxlan_dport` - VXLAN destination UDP port.
 * `mac_address_algorithm` - Method to configure the fifth byte of the MAC address 
  (12:34:56:78:XX:XX, sixth byte automatically generated from managmenet MAC, channel, and port information). Valid values: `auto`, `manual`.
 * `virtual_wire_tpid` - TPID value used by virtual-wires.
@@ -60,8 +61,10 @@ The following arguments are supported:
 * `poe_guard_band` - Reserves power (W) in case of a spike in PoE consumption.
 * `auto_stp_priority` - Automatic assignment of STP priority for tier1 and tier2 switches. Valid values: `enable`, `disable`.
 * `poe_power_budget` - Set/override maximum power budget.
+* `vxlan_sport` - VXLAN source UDP port (0 - 65535).
 * `mclag_peer_info_timeout` - MCLAG peer info timeout.
 * `mclag_igmpsnooping_aware` - MCLAG IGMP-snooping aware. Valid values: `enable`, `disable`.
+* `access_vlan_mode` - Intra VLAN traffic behavior with loss of connection to the FortiGate. Valid values: `legacy`, `fail-open`, `fail-close`.
 * `poe_pre_standard_detect` - set poe-pre-standard-detect Valid values: `enable`, `disable`.
 * `dhcp_snooping_database_export` - Enable/disable DHCP snoop database export to file. Valid values: `enable`, `disable`.
 * `name` - Name.
@@ -77,10 +80,16 @@ The following arguments are supported:
 
 The `port_security` block supports:
 
+* `mac_called_station_delimiter` - MAC called station delimiter (default = hyphen). Valid values: `hyphen`, `single-hyphen`, `colon`, `none`.
 * `mab_reauth` - Enable or disable MAB reauthentication settings. Valid values: `disable`, `enable`.
 * `max_reauth_attempt` - 802.1X/MAB maximum reauthorization attempt.
+* `mac_case` - MAC case (default = lowercase). Valid values: `uppercase`, `lowercase`.
+* `mac_password_delimiter` - MAC authentication password delimiter (default = hyphen). Valid values: `hyphen`, `single-hyphen`, `colon`, `none`.
 * `link_down_auth` - If link down detected, 'set-unauth' reverts to un-authorized state. Valid values: `set-unauth`, `no-action`.
+* `mab_entry_as` - Confgure MAB MAC entry as static or dynamic. Valid values: `static`, `dynamic`.
+* `mac_username_delimiter` - MAC authentication username delimiter (default = hyphen). Valid values: `hyphen`, `single-hyphen`, `colon`, `none`.
 * `reauth_period` - 802.1X/MAB reauthentication period ( minute ).
+* `mac_calling_station_delimiter` - MAC calling station delimiter (default = hyphen). Valid values: `hyphen`, `single-hyphen`, `colon`, `none`.
 * `quarantine_vlan` - Enable or disable Quarantine VLAN detection. Valid values: `disable`, `enable`.
 * `tx_period` - 802.1X tx period ( second ).
 

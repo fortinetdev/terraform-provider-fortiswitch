@@ -136,6 +136,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"admin_password_hash": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"dh_params": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -176,6 +180,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"tcp_options": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"post_login_banner": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -210,6 +218,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 			},
 			"csr_ca_attribute": &schema.Schema{
 				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"delaycli_timeout_cleanup": &schema.Schema{
+				Type:     schema.TypeInt,
 				Computed: true,
 			},
 			"ipv6_accept_dad": &schema.Schema{
@@ -430,6 +442,10 @@ func dataSourceFlattenSystemGlobalAllowSubnetOverlap(v interface{}, d *schema.Re
 	return v
 }
 
+func dataSourceFlattenSystemGlobalAdminPasswordHash(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemGlobalDhParams(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -470,6 +486,10 @@ func dataSourceFlattenSystemGlobalL3HostExpiry(v interface{}, d *schema.Resource
 	return v
 }
 
+func dataSourceFlattenSystemGlobalTcpOptions(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemGlobalPostLoginBanner(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -503,6 +523,10 @@ func dataSourceFlattenSystemGlobalDhcpClientLocation(v interface{}, d *schema.Re
 }
 
 func dataSourceFlattenSystemGlobalCsrCaAttribute(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalDelaycliTimeoutCleanup(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -753,6 +777,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("admin_password_hash", dataSourceFlattenSystemGlobalAdminPasswordHash(o["admin-password-hash"], d, "admin_password_hash")); err != nil {
+		if !fortiAPIPatch(o["admin-password-hash"]) {
+			return fmt.Errorf("Error reading admin_password_hash: %v", err)
+		}
+	}
+
 	if err = d.Set("dh_params", dataSourceFlattenSystemGlobalDhParams(o["dh-params"], d, "dh_params")); err != nil {
 		if !fortiAPIPatch(o["dh-params"]) {
 			return fmt.Errorf("Error reading dh_params: %v", err)
@@ -813,6 +843,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("tcp_options", dataSourceFlattenSystemGlobalTcpOptions(o["tcp-options"], d, "tcp_options")); err != nil {
+		if !fortiAPIPatch(o["tcp-options"]) {
+			return fmt.Errorf("Error reading tcp_options: %v", err)
+		}
+	}
+
 	if err = d.Set("post_login_banner", dataSourceFlattenSystemGlobalPostLoginBanner(o["post-login-banner"], d, "post_login_banner")); err != nil {
 		if !fortiAPIPatch(o["post-login-banner"]) {
 			return fmt.Errorf("Error reading post_login_banner: %v", err)
@@ -864,6 +900,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("csr_ca_attribute", dataSourceFlattenSystemGlobalCsrCaAttribute(o["csr-ca-attribute"], d, "csr_ca_attribute")); err != nil {
 		if !fortiAPIPatch(o["csr-ca-attribute"]) {
 			return fmt.Errorf("Error reading csr_ca_attribute: %v", err)
+		}
+	}
+
+	if err = d.Set("delaycli_timeout_cleanup", dataSourceFlattenSystemGlobalDelaycliTimeoutCleanup(o["delaycli-timeout-cleanup"], d, "delaycli_timeout_cleanup")); err != nil {
+		if !fortiAPIPatch(o["delaycli-timeout-cleanup"]) {
+			return fmt.Errorf("Error reading delaycli_timeout_cleanup: %v", err)
 		}
 	}
 

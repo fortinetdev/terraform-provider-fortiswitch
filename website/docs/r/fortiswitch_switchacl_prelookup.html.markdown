@@ -34,6 +34,7 @@ The following arguments are supported:
 * `schedule` - schedule list. The structure of `schedule` block is documented below.
 * `classifier` - Match-conditions for the policy. The structure of `classifier` block is documented below.
 * `action` - Actions for the policy. The structure of `action` block is documented below.
+* `interface_all` - Select all interface. Valid values: `enable`, `disable`.
 * `interface` - Interface to which policy is bound in the pre-lookup.
 * `fswid` - Prelookup policy ID.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].

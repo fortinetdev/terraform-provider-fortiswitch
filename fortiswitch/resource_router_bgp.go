@@ -470,6 +470,12 @@ func resourceRouterBgp() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"route_map_in_evpn": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 35),
+							Optional:     true,
+							Computed:     true,
+						},
 						"unsuppress_map6": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
@@ -538,6 +544,11 @@ func resourceRouterBgp() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"activate_evpn": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"dont_capability_negotiate": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -549,6 +560,11 @@ func resourceRouterBgp() *schema.Resource {
 							Computed: true,
 						},
 						"passive": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"attribute_unchanged_evpn": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -584,6 +600,11 @@ func resourceRouterBgp() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"soft_reconfiguration_evpn": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"keep_alive_timer": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
@@ -601,6 +622,11 @@ func resourceRouterBgp() *schema.Resource {
 							Computed:     true,
 						},
 						"as_override": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"route_reflector_client_evpn": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -645,6 +671,12 @@ func resourceRouterBgp() *schema.Resource {
 							Type:     schema.TypeInt,
 							Optional: true,
 							Computed: true,
+						},
+						"route_map_out_evpn": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 35),
+							Optional:     true,
+							Computed:     true,
 						},
 						"update_source": &schema.Schema{
 							Type:         schema.TypeString,
@@ -702,6 +734,11 @@ func resourceRouterBgp() *schema.Resource {
 							Computed: true,
 						},
 						"capability_dynamic": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"allowas_in_enable_evpn": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -1682,6 +1719,12 @@ func flattenRouterBgpNeighbor(v interface{}, d *schema.ResourceData, pre string,
 			tmp["route_map_in6"] = flattenRouterBgpNeighborRouteMapIn6(i["route-map-in6"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_in_evpn"
+		if _, ok := i["route-map-in-evpn"]; ok {
+
+			tmp["route_map_in_evpn"] = flattenRouterBgpNeighborRouteMapInEvpn(i["route-map-in-evpn"], d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "unsuppress_map6"
 		if _, ok := i["unsuppress-map6"]; ok {
 
@@ -1760,6 +1803,12 @@ func flattenRouterBgpNeighbor(v interface{}, d *schema.ResourceData, pre string,
 			tmp["route_reflector_client6"] = flattenRouterBgpNeighborRouteReflectorClient6(i["route-reflector-client6"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "activate_evpn"
+		if _, ok := i["activate-evpn"]; ok {
+
+			tmp["activate_evpn"] = flattenRouterBgpNeighborActivateEvpn(i["activate-evpn"], d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dont_capability_negotiate"
 		if _, ok := i["dont-capability-negotiate"]; ok {
 
@@ -1776,6 +1825,12 @@ func flattenRouterBgpNeighbor(v interface{}, d *schema.ResourceData, pre string,
 		if _, ok := i["passive"]; ok {
 
 			tmp["passive"] = flattenRouterBgpNeighborPassive(i["passive"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "attribute_unchanged_evpn"
+		if _, ok := i["attribute-unchanged-evpn"]; ok {
+
+			tmp["attribute_unchanged_evpn"] = flattenRouterBgpNeighborAttributeUnchangedEvpn(i["attribute-unchanged-evpn"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in"
@@ -1814,6 +1869,12 @@ func flattenRouterBgpNeighbor(v interface{}, d *schema.ResourceData, pre string,
 			tmp["enforce_first_as"] = flattenRouterBgpNeighborEnforceFirstAs(i["enforce-first-as"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "soft_reconfiguration_evpn"
+		if _, ok := i["soft-reconfiguration-evpn"]; ok {
+
+			tmp["soft_reconfiguration_evpn"] = flattenRouterBgpNeighborSoftReconfigurationEvpn(i["soft-reconfiguration-evpn"], d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "keep_alive_timer"
 		if _, ok := i["keep-alive-timer"]; ok {
 
@@ -1836,6 +1897,12 @@ func flattenRouterBgpNeighbor(v interface{}, d *schema.ResourceData, pre string,
 		if _, ok := i["as-override"]; ok {
 
 			tmp["as_override"] = flattenRouterBgpNeighborAsOverride(i["as-override"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_reflector_client_evpn"
+		if _, ok := i["route-reflector-client-evpn"]; ok {
+
+			tmp["route_reflector_client_evpn"] = flattenRouterBgpNeighborRouteReflectorClientEvpn(i["route-reflector-client-evpn"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bfd_session_mode"
@@ -1884,6 +1951,12 @@ func flattenRouterBgpNeighbor(v interface{}, d *schema.ResourceData, pre string,
 		if _, ok := i["allowas-in6"]; ok {
 
 			tmp["allowas_in6"] = flattenRouterBgpNeighborAllowasIn6(i["allowas-in6"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out_evpn"
+		if _, ok := i["route-map-out-evpn"]; ok {
+
+			tmp["route_map_out_evpn"] = flattenRouterBgpNeighborRouteMapOutEvpn(i["route-map-out-evpn"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "update_source"
@@ -1950,6 +2023,12 @@ func flattenRouterBgpNeighbor(v interface{}, d *schema.ResourceData, pre string,
 		if _, ok := i["capability-dynamic"]; ok {
 
 			tmp["capability_dynamic"] = flattenRouterBgpNeighborCapabilityDynamic(i["capability-dynamic"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_enable_evpn"
+		if _, ok := i["allowas-in-enable-evpn"]; ok {
+
+			tmp["allowas_in_enable_evpn"] = flattenRouterBgpNeighborAllowasInEnableEvpn(i["allowas-in-enable-evpn"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ebgp_ttl_security_hops"
@@ -2111,6 +2190,10 @@ func flattenRouterBgpNeighborRouteMapIn6(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func flattenRouterBgpNeighborRouteMapInEvpn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterBgpNeighborUnsuppressMap6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2163,6 +2246,10 @@ func flattenRouterBgpNeighborRouteReflectorClient6(v interface{}, d *schema.Reso
 	return v
 }
 
+func flattenRouterBgpNeighborActivateEvpn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterBgpNeighborDontCapabilityNegotiate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2172,6 +2259,10 @@ func flattenRouterBgpNeighborConnectTimer(v interface{}, d *schema.ResourceData,
 }
 
 func flattenRouterBgpNeighborPassive(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterBgpNeighborAttributeUnchangedEvpn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2199,6 +2290,10 @@ func flattenRouterBgpNeighborEnforceFirstAs(v interface{}, d *schema.ResourceDat
 	return v
 }
 
+func flattenRouterBgpNeighborSoftReconfigurationEvpn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterBgpNeighborKeepAliveTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2212,6 +2307,10 @@ func flattenRouterBgpNeighborDescription(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenRouterBgpNeighborAsOverride(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterBgpNeighborRouteReflectorClientEvpn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2244,6 +2343,10 @@ func flattenRouterBgpNeighborAllowasInEnable6(v interface{}, d *schema.ResourceD
 }
 
 func flattenRouterBgpNeighborAllowasIn6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterBgpNeighborRouteMapOutEvpn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2288,6 +2391,10 @@ func flattenRouterBgpNeighborRouteServerClient6(v interface{}, d *schema.Resourc
 }
 
 func flattenRouterBgpNeighborCapabilityDynamic(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterBgpNeighborAllowasInEnableEvpn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3456,6 +3563,12 @@ func expandRouterBgpNeighbor(d *schema.ResourceData, v interface{}, pre string, 
 			tmp["route-map-in6"], _ = expandRouterBgpNeighborRouteMapIn6(d, i["route_map_in6"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_in_evpn"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["route-map-in-evpn"], _ = expandRouterBgpNeighborRouteMapInEvpn(d, i["route_map_in_evpn"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "unsuppress_map6"
 		if _, ok := d.GetOk(pre_append); ok {
 
@@ -3534,6 +3647,12 @@ func expandRouterBgpNeighbor(d *schema.ResourceData, v interface{}, pre string, 
 			tmp["route-reflector-client6"], _ = expandRouterBgpNeighborRouteReflectorClient6(d, i["route_reflector_client6"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "activate_evpn"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["activate-evpn"], _ = expandRouterBgpNeighborActivateEvpn(d, i["activate_evpn"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dont_capability_negotiate"
 		if _, ok := d.GetOk(pre_append); ok {
 
@@ -3550,6 +3669,12 @@ func expandRouterBgpNeighbor(d *schema.ResourceData, v interface{}, pre string, 
 		if _, ok := d.GetOk(pre_append); ok {
 
 			tmp["passive"], _ = expandRouterBgpNeighborPassive(d, i["passive"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "attribute_unchanged_evpn"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["attribute-unchanged-evpn"], _ = expandRouterBgpNeighborAttributeUnchangedEvpn(d, i["attribute_unchanged_evpn"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in"
@@ -3588,6 +3713,12 @@ func expandRouterBgpNeighbor(d *schema.ResourceData, v interface{}, pre string, 
 			tmp["enforce-first-as"], _ = expandRouterBgpNeighborEnforceFirstAs(d, i["enforce_first_as"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "soft_reconfiguration_evpn"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["soft-reconfiguration-evpn"], _ = expandRouterBgpNeighborSoftReconfigurationEvpn(d, i["soft_reconfiguration_evpn"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "keep_alive_timer"
 		if _, ok := d.GetOk(pre_append); ok {
 
@@ -3610,6 +3741,12 @@ func expandRouterBgpNeighbor(d *schema.ResourceData, v interface{}, pre string, 
 		if _, ok := d.GetOk(pre_append); ok {
 
 			tmp["as-override"], _ = expandRouterBgpNeighborAsOverride(d, i["as_override"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_reflector_client_evpn"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["route-reflector-client-evpn"], _ = expandRouterBgpNeighborRouteReflectorClientEvpn(d, i["route_reflector_client_evpn"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bfd_session_mode"
@@ -3658,6 +3795,12 @@ func expandRouterBgpNeighbor(d *schema.ResourceData, v interface{}, pre string, 
 		if _, ok := d.GetOk(pre_append); ok {
 
 			tmp["allowas-in6"], _ = expandRouterBgpNeighborAllowasIn6(d, i["allowas_in6"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out_evpn"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["route-map-out-evpn"], _ = expandRouterBgpNeighborRouteMapOutEvpn(d, i["route_map_out_evpn"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "update_source"
@@ -3724,6 +3867,12 @@ func expandRouterBgpNeighbor(d *schema.ResourceData, v interface{}, pre string, 
 		if _, ok := d.GetOk(pre_append); ok {
 
 			tmp["capability-dynamic"], _ = expandRouterBgpNeighborCapabilityDynamic(d, i["capability_dynamic"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_enable_evpn"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["allowas-in-enable-evpn"], _ = expandRouterBgpNeighborAllowasInEnableEvpn(d, i["allowas_in_enable_evpn"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ebgp_ttl_security_hops"
@@ -3884,6 +4033,10 @@ func expandRouterBgpNeighborRouteMapIn6(d *schema.ResourceData, v interface{}, p
 	return v, nil
 }
 
+func expandRouterBgpNeighborRouteMapInEvpn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandRouterBgpNeighborUnsuppressMap6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -3936,6 +4089,10 @@ func expandRouterBgpNeighborRouteReflectorClient6(d *schema.ResourceData, v inte
 	return v, nil
 }
 
+func expandRouterBgpNeighborActivateEvpn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandRouterBgpNeighborDontCapabilityNegotiate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -3945,6 +4102,10 @@ func expandRouterBgpNeighborConnectTimer(d *schema.ResourceData, v interface{}, 
 }
 
 func expandRouterBgpNeighborPassive(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterBgpNeighborAttributeUnchangedEvpn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3972,6 +4133,10 @@ func expandRouterBgpNeighborEnforceFirstAs(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
+func expandRouterBgpNeighborSoftReconfigurationEvpn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandRouterBgpNeighborKeepAliveTimer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -3985,6 +4150,10 @@ func expandRouterBgpNeighborDescription(d *schema.ResourceData, v interface{}, p
 }
 
 func expandRouterBgpNeighborAsOverride(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterBgpNeighborRouteReflectorClientEvpn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4017,6 +4186,10 @@ func expandRouterBgpNeighborAllowasInEnable6(d *schema.ResourceData, v interface
 }
 
 func expandRouterBgpNeighborAllowasIn6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterBgpNeighborRouteMapOutEvpn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4061,6 +4234,10 @@ func expandRouterBgpNeighborRouteServerClient6(d *schema.ResourceData, v interfa
 }
 
 func expandRouterBgpNeighborCapabilityDynamic(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterBgpNeighborAllowasInEnableEvpn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

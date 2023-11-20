@@ -19,9 +19,11 @@ The following arguments are supported:
 * `min_bundle` - Minimum size of bundle.
 * `hb_dst_udp_port` - Destination UDP port of heartbeat packet.
 * `member_withdrawal_behavior` - Port behaviors after it withdraws because of loss of control packets. Valid values: `forward`, `block`.
+* `fallback_port` - LACP fallback port.
 * `mclag_mac_address` - MCLAG MAC address.
 * `isl_fortilink` - ISL fortiLink trunk.
 * `max_miss_heartbeats` - Maximum tolerant missed heartbeats.
+* `restricted` - Restricted ISL ICL trunk.
 * `aggregator_mode` - LACP Member Select Mode. Valid values: `bandwidth`, `count`.
 * `port_selection_criteria` - Algorithm for aggregate port selection. Valid values: `src-mac`, `dst-mac`, `src-dst-mac`, `src-ip`, `dst-ip`, `src-dst-ip`.
 * `lacp_speed` - LACP speed. Valid values: `slow`, `fast`.

@@ -61,6 +61,12 @@ func resourceSwitchTrunk() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"fallback_port": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
+			},
 			"mclag_mac_address": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -75,6 +81,12 @@ func resourceSwitchTrunk() *schema.Resource {
 				Type:     schema.TypeInt,
 				Optional: true,
 				Computed: true,
+			},
+			"restricted": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 1),
+				Optional:     true,
+				Computed:     true,
 			},
 			"aggregator_mode": &schema.Schema{
 				Type:     schema.TypeString,
@@ -315,6 +327,10 @@ func flattenSwitchTrunkMemberWithdrawalBehavior(v interface{}, d *schema.Resourc
 	return v
 }
 
+func flattenSwitchTrunkFallbackPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchTrunkMclagMacAddress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -324,6 +340,10 @@ func flattenSwitchTrunkIslFortilink(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenSwitchTrunkMaxMissHeartbeats(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchTrunkRestricted(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -489,6 +509,12 @@ func refreshObjectSwitchTrunk(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
+	if err = d.Set("fallback_port", flattenSwitchTrunkFallbackPort(o["fallback-port"], d, "fallback_port", sv)); err != nil {
+		if !fortiAPIPatch(o["fallback-port"]) {
+			return fmt.Errorf("Error reading fallback_port: %v", err)
+		}
+	}
+
 	if err = d.Set("mclag_mac_address", flattenSwitchTrunkMclagMacAddress(o["mclag-mac-address"], d, "mclag_mac_address", sv)); err != nil {
 		if !fortiAPIPatch(o["mclag-mac-address"]) {
 			return fmt.Errorf("Error reading mclag_mac_address: %v", err)
@@ -504,6 +530,12 @@ func refreshObjectSwitchTrunk(d *schema.ResourceData, o map[string]interface{}, 
 	if err = d.Set("max_miss_heartbeats", flattenSwitchTrunkMaxMissHeartbeats(o["max-miss-heartbeats"], d, "max_miss_heartbeats", sv)); err != nil {
 		if !fortiAPIPatch(o["max-miss-heartbeats"]) {
 			return fmt.Errorf("Error reading max_miss_heartbeats: %v", err)
+		}
+	}
+
+	if err = d.Set("restricted", flattenSwitchTrunkRestricted(o["restricted"], d, "restricted", sv)); err != nil {
+		if !fortiAPIPatch(o["restricted"]) {
+			return fmt.Errorf("Error reading restricted: %v", err)
 		}
 	}
 
@@ -676,6 +708,10 @@ func expandSwitchTrunkMemberWithdrawalBehavior(d *schema.ResourceData, v interfa
 	return v, nil
 }
 
+func expandSwitchTrunkFallbackPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchTrunkMclagMacAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -685,6 +721,10 @@ func expandSwitchTrunkIslFortilink(d *schema.ResourceData, v interface{}, pre st
 }
 
 func expandSwitchTrunkMaxMissHeartbeats(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchTrunkRestricted(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -863,6 +903,16 @@ func getObjectSwitchTrunk(d *schema.ResourceData, sv string) (*map[string]interf
 		}
 	}
 
+	if v, ok := d.GetOk("fallback_port"); ok {
+
+		t, err := expandSwitchTrunkFallbackPort(d, v, "fallback_port", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fallback-port"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("mclag_mac_address"); ok {
 
 		t, err := expandSwitchTrunkMclagMacAddress(d, v, "mclag_mac_address", sv)
@@ -890,6 +940,16 @@ func getObjectSwitchTrunk(d *schema.ResourceData, sv string) (*map[string]interf
 			return &obj, err
 		} else if t != nil {
 			obj["max-miss-heartbeats"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("restricted"); ok {
+
+		t, err := expandSwitchTrunkRestricted(d, v, "restricted", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["restricted"] = t
 		}
 	}
 

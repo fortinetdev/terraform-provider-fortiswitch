@@ -24,6 +24,7 @@ resource "fortiswitch_systemcertificate_ca" "scc" {
 
 The following arguments are supported:
 
+* `info` - Info about name.
 * `scep_url` - URL of SCEP server.
 * `ca` - CA certificate.
 * `auto_update_days_warning` - Days to send update before auto-update, 0=disabled.

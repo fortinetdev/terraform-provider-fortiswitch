@@ -19,6 +19,7 @@ The following attributes are exported:
 
 * `defaultgw` - Enable/disable default gateway.
 * `gwdetect` - Enable/disable gateway detection.
+* `dhcp_client_status` - DHCP client connection status.
 * `weight` - Default weight for static routes if route has no weight configured (0 - 255).
 * `ip` - Interface IPv4 address.
 * `vrrp_virtual_mac` - enable to use virtual MAC for VRRP

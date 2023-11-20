@@ -1,5 +1,21 @@
-## 1.1.0 (Unreleased)
+## 1.1.1 (Unreleased)
 
+
+## 1.1.0 (October 24, 2023)
+
+IMPROVEMENTS:
+
+* Support new versions 7.2.4, 7.2.5, 7.4.0 and 7.4.1;
+* Fix issue that mkey is missing in `fortiswitch_router_ospf` and `fortiswitch_router_ospf6`;
+* Update the document for `fortiswitch_router_ospf` and `fortiswitch_router_ospf6`；
+* Update the supported fortiSwitch versions in the document.
+
+FEATURES:
+
+* **New Resource:** `fortiswitch_routerospf6_interface`
+* **New Resource:** `fortiswitch_routerospf_interface`
+* **New Resource:** `fortiswitch_systemptp_interfacepolicy`
+* **New Resource:** `fortiswitch_systemptp_profile`
 
 ## 1.0.0 (August 3, 2023)
 

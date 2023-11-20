@@ -82,6 +82,11 @@ func resourceSwitchMacsecProfile() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"cipher_suite": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"traffic_policy": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -103,6 +108,11 @@ func resourceSwitchMacsecProfile() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"exclude_protocol": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -111,11 +121,6 @@ func resourceSwitchMacsecProfile() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
 				Computed:     true,
-			},
-			"cipher_suite": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
 			},
 			"macsec_validate": &schema.Schema{
 				Type:     schema.TypeString,
@@ -313,6 +318,10 @@ func flattenSwitchMacsecProfileEapTlsCert(v interface{}, d *schema.ResourceData,
 	return v
 }
 
+func flattenSwitchMacsecProfileCipherSuite(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchMacsecProfileTrafficPolicy(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -355,6 +364,12 @@ func flattenSwitchMacsecProfileTrafficPolicy(v interface{}, d *schema.ResourceDa
 			tmp["security_policy"] = flattenSwitchMacsecProfileTrafficPolicySecurityPolicy(i["security-policy"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "exclude_protocol"
+		if _, ok := i["exclude-protocol"]; ok {
+
+			tmp["exclude_protocol"] = flattenSwitchMacsecProfileTrafficPolicyExcludeProtocol(i["exclude-protocol"], d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -373,6 +388,10 @@ func flattenSwitchMacsecProfileTrafficPolicyName(v interface{}, d *schema.Resour
 }
 
 func flattenSwitchMacsecProfileTrafficPolicySecurityPolicy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchMacsecProfileTrafficPolicyExcludeProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -544,6 +563,12 @@ func refreshObjectSwitchMacsecProfile(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
+	if err = d.Set("cipher_suite", flattenSwitchMacsecProfileCipherSuite(o["cipher-suite"], d, "cipher_suite", sv)); err != nil {
+		if !fortiAPIPatch(o["cipher-suite"]) {
+			return fmt.Errorf("Error reading cipher_suite: %v", err)
+		}
+	}
+
 	if isImportTable() {
 		if err = d.Set("traffic_policy", flattenSwitchMacsecProfileTrafficPolicy(o["traffic-policy"], d, "traffic_policy", sv)); err != nil {
 			if !fortiAPIPatch(o["traffic-policy"]) {
@@ -663,6 +688,10 @@ func expandSwitchMacsecProfileEapTlsCert(d *schema.ResourceData, v interface{}, 
 	return v, nil
 }
 
+func expandSwitchMacsecProfileCipherSuite(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchMacsecProfileTrafficPolicy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	result := make([]map[string]interface{}, 0, len(l))
@@ -695,6 +724,12 @@ func expandSwitchMacsecProfileTrafficPolicy(d *schema.ResourceData, v interface{
 			tmp["security-policy"], _ = expandSwitchMacsecProfileTrafficPolicySecurityPolicy(d, i["security_policy"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "exclude_protocol"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["exclude-protocol"], _ = expandSwitchMacsecProfileTrafficPolicyExcludeProtocol(d, i["exclude_protocol"], pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -712,6 +747,10 @@ func expandSwitchMacsecProfileTrafficPolicyName(d *schema.ResourceData, v interf
 }
 
 func expandSwitchMacsecProfileTrafficPolicySecurityPolicy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchMacsecProfileTrafficPolicyExcludeProtocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -905,6 +944,16 @@ func getObjectSwitchMacsecProfile(d *schema.ResourceData, sv string) (*map[strin
 			return &obj, err
 		} else if t != nil {
 			obj["eap-tls-cert"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("cipher_suite"); ok {
+
+		t, err := expandSwitchMacsecProfileCipherSuite(d, v, "cipher_suite", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["cipher-suite"] = t
 		}
 	}
 

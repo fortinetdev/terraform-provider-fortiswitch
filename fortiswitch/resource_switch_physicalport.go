@@ -31,6 +31,11 @@ func resourceSwitchPhysicalPort() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"macsec_pae_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"l2_learning": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -60,6 +65,12 @@ func resourceSwitchPhysicalPort() *schema.Resource {
 				Type:     schema.TypeInt,
 				Optional: true,
 				Computed: true,
+			},
+			"macsec_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
 			},
 			"egress_drop_mode": &schema.Schema{
 				Type:     schema.TypeString,
@@ -166,6 +177,11 @@ func resourceSwitchPhysicalPort() *schema.Resource {
 						},
 					},
 				},
+			},
+			"security_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"flapguard_state": &schema.Schema{
 				Type:         schema.TypeString,
@@ -344,6 +360,10 @@ func resourceSwitchPhysicalPortRead(d *schema.ResourceData, m interface{}) error
 	return nil
 }
 
+func flattenSwitchPhysicalPortMacsecPaeMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchPhysicalPortL2Learning(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -365,6 +385,10 @@ func flattenSwitchPhysicalPortFortilinkP2P(v interface{}, d *schema.ResourceData
 }
 
 func flattenSwitchPhysicalPortFlapRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchPhysicalPortMacsecProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -487,6 +511,10 @@ func flattenSwitchPhysicalPortStormControlBurstSizeLevel(v interface{}, d *schem
 	return v
 }
 
+func flattenSwitchPhysicalPortSecurityMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchPhysicalPortFlapguardState(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -554,6 +582,12 @@ func flattenSwitchPhysicalPortPoePortPriority(v interface{}, d *schema.ResourceD
 func refreshObjectSwitchPhysicalPort(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
+	if err = d.Set("macsec_pae_mode", flattenSwitchPhysicalPortMacsecPaeMode(o["macsec-pae-mode"], d, "macsec_pae_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["macsec-pae-mode"]) {
+			return fmt.Errorf("Error reading macsec_pae_mode: %v", err)
+		}
+	}
+
 	if err = d.Set("l2_learning", flattenSwitchPhysicalPortL2Learning(o["l2-learning"], d, "l2_learning", sv)); err != nil {
 		if !fortiAPIPatch(o["l2-learning"]) {
 			return fmt.Errorf("Error reading l2_learning: %v", err)
@@ -587,6 +621,12 @@ func refreshObjectSwitchPhysicalPort(d *schema.ResourceData, o map[string]interf
 	if err = d.Set("flap_rate", flattenSwitchPhysicalPortFlapRate(o["flap-rate"], d, "flap_rate", sv)); err != nil {
 		if !fortiAPIPatch(o["flap-rate"]) {
 			return fmt.Errorf("Error reading flap_rate: %v", err)
+		}
+	}
+
+	if err = d.Set("macsec_profile", flattenSwitchPhysicalPortMacsecProfile(o["macsec-profile"], d, "macsec_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["macsec-profile"]) {
+			return fmt.Errorf("Error reading macsec_profile: %v", err)
 		}
 	}
 
@@ -687,6 +727,12 @@ func refreshObjectSwitchPhysicalPort(d *schema.ResourceData, o map[string]interf
 					return fmt.Errorf("Error reading storm_control: %v", err)
 				}
 			}
+		}
+	}
+
+	if err = d.Set("security_mode", flattenSwitchPhysicalPortSecurityMode(o["security-mode"], d, "security_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["security-mode"]) {
+			return fmt.Errorf("Error reading security_mode: %v", err)
 		}
 	}
 
@@ -795,6 +841,10 @@ func flattenSwitchPhysicalPortFortiTestDebug(d *schema.ResourceData, fswdebugsn 
 	log.Printf("ER List: %v, %v", strings.Split("FortiSwitch Ver", " "), e)
 }
 
+func expandSwitchPhysicalPortMacsecPaeMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchPhysicalPortL2Learning(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -816,6 +866,10 @@ func expandSwitchPhysicalPortFortilinkP2P(d *schema.ResourceData, v interface{},
 }
 
 func expandSwitchPhysicalPortFlapRate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchPhysicalPortMacsecProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -934,6 +988,10 @@ func expandSwitchPhysicalPortStormControlBurstSizeLevel(d *schema.ResourceData, 
 	return v, nil
 }
 
+func expandSwitchPhysicalPortSecurityMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchPhysicalPortFlapguardState(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1001,6 +1059,16 @@ func expandSwitchPhysicalPortPoePortPriority(d *schema.ResourceData, v interface
 func getObjectSwitchPhysicalPort(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
+	if v, ok := d.GetOk("macsec_pae_mode"); ok {
+
+		t, err := expandSwitchPhysicalPortMacsecPaeMode(d, v, "macsec_pae_mode", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["macsec-pae-mode"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("l2_learning"); ok {
 
 		t, err := expandSwitchPhysicalPortL2Learning(d, v, "l2_learning", sv)
@@ -1058,6 +1126,16 @@ func getObjectSwitchPhysicalPort(d *schema.ResourceData, sv string) (*map[string
 			return &obj, err
 		} else if t != nil {
 			obj["flap-rate"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("macsec_profile"); ok {
+
+		t, err := expandSwitchPhysicalPortMacsecProfile(d, v, "macsec_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["macsec-profile"] = t
 		}
 	}
 
@@ -1208,6 +1286,16 @@ func getObjectSwitchPhysicalPort(d *schema.ResourceData, sv string) (*map[string
 			return &obj, err
 		} else if t != nil {
 			obj["storm-control"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("security_mode"); ok {
+
+		t, err := expandSwitchPhysicalPortSecurityMode(d, v, "security_mode", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["security-mode"] = t
 		}
 	}
 

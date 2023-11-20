@@ -9,6 +9,8 @@ description: |-
 # fortiswitch_router_ospf
 OSPF configuration.
 
+~> The provider supports the definition of Interface in Router Ospf `fortiswitch_router_ospf`, and also allows the definition of separate Interface resources `fortiswitch_routerospf_interface`, but do not use a `fortiswitch_router_ospf` with in-line Interface in conjunction with any `fortiswitch_routerospf_interface` resources, otherwise conflicts and overwrite will occur.
+
 ~> The provider supports the definition of Network in Router Ospf `fortiswitch_router_ospf`, and also allows the definition of separate Network resources `fortiswitch_routerospf_network`, but do not use a `fortiswitch_router_ospf` with in-line Network in conjunction with any `fortiswitch_routerospf_network` resources, otherwise conflicts and overwrite will occur.
 
 

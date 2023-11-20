@@ -13,6 +13,8 @@ Global PTP configuration.
 
 The following arguments are supported:
 
+* `status` - Select PTP status. Valid values: `disable`, `enable`.
+* `profile` - Selected PTP Profile
 * `mode` - Disable/enable PTP mode. Valid values: `disable`, `transparent-e2e`, `transparent-p2p`.
 
 

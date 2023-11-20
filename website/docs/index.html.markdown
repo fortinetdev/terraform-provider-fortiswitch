@@ -104,4 +104,4 @@ Check out the FortiSwitch provider release notes and additional information from
 
 ## Versioning
 
-The provider can cover FortiSwitch 7.0 and 7.2 versions, the configuration of all parameters should be based on the relevant FortiSwitch version manual.
+The provider can cover FortiSwitch 7.0, 7.2 and 7.4 versions, the configuration of all parameters should be based on the relevant FortiSwitch version manual.

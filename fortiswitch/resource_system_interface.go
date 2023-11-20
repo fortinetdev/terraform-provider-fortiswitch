@@ -46,6 +46,11 @@ func resourceSystemInterface() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"dhcp_client_status": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"weight": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
@@ -775,6 +780,10 @@ func flattenSystemInterfaceDefaultgw(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenSystemInterfaceGwdetect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceDhcpClientStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1783,6 +1792,12 @@ func refreshObjectSystemInterface(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
+	if err = d.Set("dhcp_client_status", flattenSystemInterfaceDhcpClientStatus(o["dhcp-client-status"], d, "dhcp_client_status", sv)); err != nil {
+		if !fortiAPIPatch(o["dhcp-client-status"]) {
+			return fmt.Errorf("Error reading dhcp_client_status: %v", err)
+		}
+	}
+
 	if err = d.Set("weight", flattenSystemInterfaceWeight(o["weight"], d, "weight", sv)); err != nil {
 		if !fortiAPIPatch(o["weight"]) {
 			return fmt.Errorf("Error reading weight: %v", err)
@@ -2161,6 +2176,10 @@ func expandSystemInterfaceDefaultgw(d *schema.ResourceData, v interface{}, pre s
 }
 
 func expandSystemInterfaceGwdetect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceDhcpClientStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3082,6 +3101,16 @@ func getObjectSystemInterface(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["gwdetect"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("dhcp_client_status"); ok {
+
+		t, err := expandSystemInterfaceDhcpClientStatus(d, v, "dhcp_client_status", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dhcp-client-status"] = t
 		}
 	}
 

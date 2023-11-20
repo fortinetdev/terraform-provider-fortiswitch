@@ -102,6 +102,11 @@ func resourceSystemAdmin() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"wildcard_fallback": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"schedule": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -388,6 +393,10 @@ func flattenSystemAdminAllowRemoveAdminSession(v interface{}, d *schema.Resource
 	return v
 }
 
+func flattenSystemAdminWildcardFallback(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemAdminSchedule(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -649,6 +658,12 @@ func refreshObjectSystemAdmin(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
+	if err = d.Set("wildcard_fallback", flattenSystemAdminWildcardFallback(o["wildcard-fallback"], d, "wildcard_fallback", sv)); err != nil {
+		if !fortiAPIPatch(o["wildcard-fallback"]) {
+			return fmt.Errorf("Error reading wildcard_fallback: %v", err)
+		}
+	}
+
 	if err = d.Set("schedule", flattenSystemAdminSchedule(o["schedule"], d, "schedule", sv)); err != nil {
 		if !fortiAPIPatch(o["schedule"]) {
 			return fmt.Errorf("Error reading schedule: %v", err)
@@ -867,6 +882,10 @@ func expandSystemAdminForcePasswordChange(d *schema.ResourceData, v interface{},
 }
 
 func expandSystemAdminAllowRemoveAdminSession(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAdminWildcardFallback(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1114,6 +1133,16 @@ func getObjectSystemAdmin(d *schema.ResourceData, sv string) (*map[string]interf
 			return &obj, err
 		} else if t != nil {
 			obj["allow-remove-admin-session"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("wildcard_fallback"); ok {
+
+		t, err := expandSystemAdminWildcardFallback(d, v, "wildcard_fallback", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["wildcard-fallback"] = t
 		}
 	}
 

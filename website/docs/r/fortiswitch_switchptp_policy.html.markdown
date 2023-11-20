@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_switchptp_policy
-PTP policy configuration.
+PTP policy configuration. Applies to FortiSwitch Version `<= 7.2.4`.
 
 ## Argument Reference
 

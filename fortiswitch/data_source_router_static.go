@@ -68,6 +68,10 @@ func dataSourceRouterStatic() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"gw_l2_switch": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"device": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -166,6 +170,10 @@ func dataSourceFlattenRouterStaticVrf(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
+func dataSourceFlattenRouterStaticGwL2Switch(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenRouterStaticDevice(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -240,6 +248,12 @@ func dataSourceRefreshObjectRouterStatic(d *schema.ResourceData, o map[string]in
 	if err = d.Set("vrf", dataSourceFlattenRouterStaticVrf(o["vrf"], d, "vrf")); err != nil {
 		if !fortiAPIPatch(o["vrf"]) {
 			return fmt.Errorf("Error reading vrf: %v", err)
+		}
+	}
+
+	if err = d.Set("gw_l2_switch", dataSourceFlattenRouterStaticGwL2Switch(o["gw-l2-switch"], d, "gw_l2_switch")); err != nil {
+		if !fortiAPIPatch(o["gw-l2-switch"]) {
+			return fmt.Errorf("Error reading gw_l2_switch: %v", err)
 		}
 	}
 
