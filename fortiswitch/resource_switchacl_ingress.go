@@ -544,6 +544,9 @@ func flattenSwitchAclIngressClassifierDstMac(v interface{}, d *schema.ResourceDa
 }
 
 func flattenSwitchAclIngressClassifierCos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == "" {
+		return nil
+	}
 	return v
 }
 
@@ -756,10 +759,16 @@ func flattenSwitchAclIngressActionRedirectPhysicalPortMemberName(v interface{}, 
 }
 
 func flattenSwitchAclIngressActionCosQueue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == "" {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchAclIngressActionRemarkDscp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == "" {
+		return nil
+	}
 	return v
 }
 
@@ -819,6 +828,9 @@ func flattenSwitchAclIngressActionPolicer(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSwitchAclIngressActionRemarkCos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == "" {
+		return nil
+	}
 	return v
 }
 

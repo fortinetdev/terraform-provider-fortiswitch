@@ -26,6 +26,7 @@ The following attributes are exported:
 * `source_ip` - Source IP used in packet to the server.
 * `interval` - Detection interval.
 * `gateway_ip6` - Gateway IPv6 address used to PING the server.
+* `server` - Server address(es). The structure of `server` block is documented below.
 * `failtime` - Number of retry attempts before bringing server down.
 * `update_static_route` - Enable/disable update static route.
 * `addr_mode` - Address mode (IPv4 or IPv6).
@@ -38,4 +39,8 @@ The following attributes are exported:
 * `password` - Twamp controller password in authentication mode.
 * `port` - Port number to poll.
 * `recoverytime` - Number of retry attempts before bringing server up.
+
+The `server` block contains:
+
+* `address` - Server address.
 

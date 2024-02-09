@@ -11,6 +11,10 @@ Router OSPF6 configuration.
 
 ~> The provider supports the definition of Interface in Router Ospf6 `fortiswitch_router_ospf6`, and also allows the definition of separate Interface resources `fortiswitch_routerospf6_interface`, but do not use a `fortiswitch_router_ospf6` with in-line Interface in conjunction with any `fortiswitch_routerospf6_interface` resources, otherwise conflicts and overwrite will occur.
 
+~> The provider supports the definition of Area in Router Ospf6 `fortiswitch_router_ospf6`, and also allows the definition of separate Area resources `fortiswitch_routerospf6_area`, but do not use a `fortiswitch_router_ospf6` with in-line Area in conjunction with any `fortiswitch_routerospf6_area` resources, otherwise conflicts and overwrite will occur.
+
+~> The provider supports the definition of Redistribute in Router Ospf6 `fortiswitch_router_ospf6`, and also allows the definition of separate Redistribute resources `fortiswitch_routerospf6_redistribute`, but do not use a `fortiswitch_router_ospf6` with in-line Redistribute in conjunction with any `fortiswitch_routerospf6_redistribute` resources, otherwise conflicts and overwrite will occur.
+
 
 
 ## Example Usage

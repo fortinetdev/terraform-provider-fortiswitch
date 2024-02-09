@@ -81,6 +81,20 @@ func resourceSystemLinkMonitor() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"server": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"address": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 63),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
 			"failtime": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 10),
@@ -146,6 +160,11 @@ func resourceSystemLinkMonitor() *schema.Resource {
 				ValidateFunc: validation.IntBetween(1, 10),
 				Optional:     true,
 				Computed:     true,
+			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
 			},
 		},
 	}
@@ -276,6 +295,49 @@ func flattenSystemLinkMonitorGatewayIp6(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func flattenSystemLinkMonitorServer(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "address"
+		if _, ok := i["address"]; ok {
+
+			tmp["address"] = flattenSystemLinkMonitorServerAddress(i["address"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "address", d)
+	return result
+}
+
+func flattenSystemLinkMonitorServerAddress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemLinkMonitorFailtime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -378,6 +440,22 @@ func refreshObjectSystemLinkMonitor(d *schema.ResourceData, o map[string]interfa
 	if err = d.Set("gateway_ip6", flattenSystemLinkMonitorGatewayIp6(o["gateway-ip6"], d, "gateway_ip6", sv)); err != nil {
 		if !fortiAPIPatch(o["gateway-ip6"]) {
 			return fmt.Errorf("Error reading gateway_ip6: %v", err)
+		}
+	}
+
+	if isImportTable() {
+		if err = d.Set("server", flattenSystemLinkMonitorServer(o["server"], d, "server", sv)); err != nil {
+			if !fortiAPIPatch(o["server"]) {
+				return fmt.Errorf("Error reading server: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("server"); ok {
+			if err = d.Set("server", flattenSystemLinkMonitorServer(o["server"], d, "server", sv)); err != nil {
+				if !fortiAPIPatch(o["server"]) {
+					return fmt.Errorf("Error reading server: %v", err)
+				}
+			}
 		}
 	}
 
@@ -495,6 +573,38 @@ func expandSystemLinkMonitorInterval(d *schema.ResourceData, v interface{}, pre 
 }
 
 func expandSystemLinkMonitorGatewayIp6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemLinkMonitorServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "address"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["address"], _ = expandSystemLinkMonitorServerAddress(d, i["address"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemLinkMonitorServerAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -636,6 +746,16 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 			return &obj, err
 		} else if t != nil {
 			obj["gateway-ip6"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("server"); ok || d.HasChange("server") {
+
+		t, err := expandSystemLinkMonitorServer(d, v, "server", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["server"] = t
 		}
 	}
 

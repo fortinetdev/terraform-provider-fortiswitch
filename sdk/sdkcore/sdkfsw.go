@@ -7907,6 +7907,60 @@ func (c *FortiSDKClient) ReadRouterospfNetwork(mkey string) (mapTmp map[string]i
 	return
 }
 
+// CreateRouterospfArea API operation for FortiSwitch creates a new Area.
+// Returns the index value of the Area and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router/ospf - area chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateRouterospfArea(params *map[string]interface{}) (output map[string]interface{}, err error) {
+
+	HTTPMethod := "POST"
+	path := "/api/v2/cmdb/router/ospf/area"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// UpdateRouterospfArea API operation for FortiSwitch updates the specified Area.
+// Returns the index value of the Area and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router/ospf - area chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateRouterospfArea(params *map[string]interface{}, mkey string) (output map[string]interface{}, err error) {
+	HTTPMethod := "PUT"
+	path := "/api/v2/cmdb/router/ospf/area"
+	path += "/" + escapeURLString(mkey)
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// DeleteRouterospfArea API operation for FortiSwitch deletes the specified Area.
+// Returns error for service API and SDK errors.
+// See the router/ospf - area chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteRouterospfArea(mkey string) (err error) {
+	HTTPMethod := "DELETE"
+	path := "/api/v2/cmdb/router/ospf/area"
+	path += "/" + escapeURLString(mkey)
+
+	err = delete(c, HTTPMethod, path)
+	return
+}
+
+// ReadRouterospfArea API operation for FortiSwitch gets the Area
+// with the specified index value.
+// Returns the requested Area value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router/ospf - area chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadRouterospfArea(mkey string) (mapTmp map[string]interface{}, err error) {
+	HTTPMethod := "GET"
+	path := "/api/v2/cmdb/router/ospf/area"
+	path += "/" + escapeURLString(mkey)
+
+	mapTmp, err = read(c, HTTPMethod, path, false)
+	return
+}
+
 // CreateRouterospf6Interface API operation for FortiSwitch creates a new Interface.
 // Returns the index value of the Interface and execution result when the request executes successfully.
 // Returns error for service API and SDK errors.
@@ -7955,6 +8009,114 @@ func (c *FortiSDKClient) DeleteRouterospf6Interface(mkey string) (err error) {
 func (c *FortiSDKClient) ReadRouterospf6Interface(mkey string) (mapTmp map[string]interface{}, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/router/ospf6/interface"
+	path += "/" + escapeURLString(mkey)
+
+	mapTmp, err = read(c, HTTPMethod, path, false)
+	return
+}
+
+// CreateRouterospf6Area API operation for FortiSwitch creates a new Area.
+// Returns the index value of the Area and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router/ospf6 - area chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateRouterospf6Area(params *map[string]interface{}) (output map[string]interface{}, err error) {
+
+	HTTPMethod := "POST"
+	path := "/api/v2/cmdb/router/ospf6/area"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// UpdateRouterospf6Area API operation for FortiSwitch updates the specified Area.
+// Returns the index value of the Area and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router/ospf6 - area chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateRouterospf6Area(params *map[string]interface{}, mkey string) (output map[string]interface{}, err error) {
+	HTTPMethod := "PUT"
+	path := "/api/v2/cmdb/router/ospf6/area"
+	path += "/" + escapeURLString(mkey)
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// DeleteRouterospf6Area API operation for FortiSwitch deletes the specified Area.
+// Returns error for service API and SDK errors.
+// See the router/ospf6 - area chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteRouterospf6Area(mkey string) (err error) {
+	HTTPMethod := "DELETE"
+	path := "/api/v2/cmdb/router/ospf6/area"
+	path += "/" + escapeURLString(mkey)
+
+	err = delete(c, HTTPMethod, path)
+	return
+}
+
+// ReadRouterospf6Area API operation for FortiSwitch gets the Area
+// with the specified index value.
+// Returns the requested Area value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router/ospf6 - area chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadRouterospf6Area(mkey string) (mapTmp map[string]interface{}, err error) {
+	HTTPMethod := "GET"
+	path := "/api/v2/cmdb/router/ospf6/area"
+	path += "/" + escapeURLString(mkey)
+
+	mapTmp, err = read(c, HTTPMethod, path, false)
+	return
+}
+
+// CreateRouterospf6Redistribute API operation for FortiSwitch creates a new Redistribute.
+// Returns the index value of the Redistribute and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router/ospf6 - redistribute chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateRouterospf6Redistribute(params *map[string]interface{}) (output map[string]interface{}, err error) {
+
+	HTTPMethod := "POST"
+	path := "/api/v2/cmdb/router/ospf6/redistribute"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// UpdateRouterospf6Redistribute API operation for FortiSwitch updates the specified Redistribute.
+// Returns the index value of the Redistribute and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router/ospf6 - redistribute chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateRouterospf6Redistribute(params *map[string]interface{}, mkey string) (output map[string]interface{}, err error) {
+	HTTPMethod := "PUT"
+	path := "/api/v2/cmdb/router/ospf6/redistribute"
+	path += "/" + escapeURLString(mkey)
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// DeleteRouterospf6Redistribute API operation for FortiSwitch deletes the specified Redistribute.
+// Returns error for service API and SDK errors.
+// See the router/ospf6 - redistribute chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteRouterospf6Redistribute(mkey string) (err error) {
+	HTTPMethod := "DELETE"
+	path := "/api/v2/cmdb/router/ospf6/redistribute"
+	path += "/" + escapeURLString(mkey)
+
+	err = delete(c, HTTPMethod, path)
+	return
+}
+
+// ReadRouterospf6Redistribute API operation for FortiSwitch gets the Redistribute
+// with the specified index value.
+// Returns the requested Redistribute value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router/ospf6 - redistribute chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadRouterospf6Redistribute(mkey string) (mapTmp map[string]interface{}, err error) {
+	HTTPMethod := "GET"
+	path := "/api/v2/cmdb/router/ospf6/redistribute"
 	path += "/" + escapeURLString(mkey)
 
 	mapTmp, err = read(c, HTTPMethod, path, false)

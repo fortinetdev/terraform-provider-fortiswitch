@@ -13,6 +13,8 @@ OSPF configuration.
 
 ~> The provider supports the definition of Network in Router Ospf `fortiswitch_router_ospf`, and also allows the definition of separate Network resources `fortiswitch_routerospf_network`, but do not use a `fortiswitch_router_ospf` with in-line Network in conjunction with any `fortiswitch_routerospf_network` resources, otherwise conflicts and overwrite will occur.
 
+~> The provider supports the definition of Area in Router Ospf `fortiswitch_router_ospf`, and also allows the definition of separate Area resources `fortiswitch_routerospf_area`, but do not use a `fortiswitch_router_ospf` with in-line Area in conjunction with any `fortiswitch_routerospf_area` resources, otherwise conflicts and overwrite will occur.
+
 
 
 ## Example Usage

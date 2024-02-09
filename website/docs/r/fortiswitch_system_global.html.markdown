@@ -91,7 +91,7 @@ The following arguments are supported:
 * `detect_ip_conflict` - Enable/disable detection of IP address conflicts. Valid values: `enable`, `disable`.
 * `asset_tag` - Asset tag.
 * `ip_conflict_ignore_default` - Enable/disable IP conflict detection for default IP address. Valid values: `enable`, `disable`.
-* `timezone` - Time zone. Valid values: `01`, `02`, `03`, `04`, `05`, `81`, `06`, `07`, `08`, `09`, `10`, `11`, `12`, `13`, `74`, `14`, `77`, `15`, `87`, `16`, `17`, `18`, `19`, `20`, `75`, `21`, `22`, `23`, `24`, `80`, `79`, `25`, `26`, `27`, `28`, `78`, `29`, `30`, `31`, `32`, `33`, `34`, `35`, `36`, `37`, `38`, `83`, `84`, `40`, `85`, `41`, `42`, `43`, `39`, `44`, `46`, `47`, `51`, `48`, `45`, `49`, `50`, `52`, `53`, `54`, `55`, `56`, `57`, `58`, `59`, `60`, `62`, `63`, `61`, `64`, `65`, `66`, `67`, `68`, `69`, `70`, `71`, `72`, `00`, `82`, `73`, `86`, `76`.
+* `timezone` - Time zone.
 * `admin_sport` - Administrative access HTTPS port (1 - 65535).
 * `image_rotation` - Enable/disable image upgrade partition rotation. Valid values: `disable`, `enable`.
 * `admin_telnet_port` - Administrative access TELNET port (1 - 65535).

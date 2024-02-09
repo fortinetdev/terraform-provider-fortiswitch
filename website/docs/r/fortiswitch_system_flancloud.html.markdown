@@ -25,6 +25,7 @@ resource "fortiswitch_system_flancloud" "name" {
 The following arguments are supported:
 
 * `status` - Enable/disable FortiLAN-cloud service. Valid values: `enable`, `disable`.
+* `service_type` - Configure the flan manager service type. Valid values: `flan-cloud`, `fortilink-https`.
 * `interval` - Service name resolution time interval (3-300sec, default=3).
 * `port` - Port Number.
 * `name` - Fully qualified domain name or IP address of FortiLAN-cloud service.

@@ -35,6 +35,7 @@ The following arguments are supported:
 * `source_ip` - Source IP used in packet to the server.
 * `interval` - Detection interval.
 * `gateway_ip6` - Gateway IPv6 address used to PING the server.
+* `server` - Server address(es). The structure of `server` block is documented below.
 * `failtime` - Number of retry attempts before bringing server down.
 * `update_static_route` - Enable/disable update static route. Valid values: `enable`, `disable`.
 * `addr_mode` - Address mode (IPv4 or IPv6). Valid values: `ipv4`, `ipv6`.
@@ -47,6 +48,11 @@ The following arguments are supported:
 * `password` - Twamp controller password in authentication mode.
 * `port` - Port number to poll.
 * `recoverytime` - Number of retry attempts before bringing server up.
+* `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
+
+The `server` block supports:
+
+* `address` - Server address.
 
 
 ## Attribute Reference

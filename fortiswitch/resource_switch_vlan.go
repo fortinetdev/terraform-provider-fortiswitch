@@ -440,6 +440,12 @@ func resourceSwitchVlan() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"assignment_priority": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 255),
+				Optional:     true,
+				Computed:     true,
+			},
 			"mld_snooping": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -1343,6 +1349,10 @@ func flattenSwitchVlanAccessVlan(v interface{}, d *schema.ResourceData, pre stri
 	return v
 }
 
+func flattenSwitchVlanAssignmentPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchVlanMldSnooping(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1683,6 +1693,12 @@ func refreshObjectSwitchVlan(d *schema.ResourceData, o map[string]interface{}, s
 	if err = d.Set("access_vlan", flattenSwitchVlanAccessVlan(o["access-vlan"], d, "access_vlan", sv)); err != nil {
 		if !fortiAPIPatch(o["access-vlan"]) {
 			return fmt.Errorf("Error reading access_vlan: %v", err)
+		}
+	}
+
+	if err = d.Set("assignment_priority", flattenSwitchVlanAssignmentPriority(o["assignment-priority"], d, "assignment_priority", sv)); err != nil {
+		if !fortiAPIPatch(o["assignment-priority"]) {
+			return fmt.Errorf("Error reading assignment_priority: %v", err)
 		}
 	}
 
@@ -2377,6 +2393,10 @@ func expandSwitchVlanAccessVlan(d *schema.ResourceData, v interface{}, pre strin
 	return v, nil
 }
 
+func expandSwitchVlanAssignmentPriority(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchVlanMldSnooping(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -2791,6 +2811,16 @@ func getObjectSwitchVlan(d *schema.ResourceData, sv string) (*map[string]interfa
 			return &obj, err
 		} else if t != nil {
 			obj["access-vlan"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("assignment_priority"); ok {
+
+		t, err := expandSwitchVlanAssignmentPriority(d, v, "assignment_priority", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["assignment-priority"] = t
 		}
 	}
 

@@ -69,7 +69,7 @@ provider "fortiswitch" {
 
 #### Environment variables
 
-You can provide your credentials via the `FORTISWITCH_ACCESS_HOSTNAME`, `FORTISWITCH_ACCESS_TOKEN`, `FORTISWITCH_INSECURE` and `FORTISWITCH_CA_CABUNDLE` environment variables. Note that setting your FortiSwitch credentials using static credentials variables will override the environment variables.
+You can provide your credentials via the `FORTISWITCH_INSECURE` and `FORTISWITCH_CA_CABUNDLE` environment variables. Note that setting your FortiSwitch credentials using static credentials variables will override the environment variables.
 
 Usage:
 

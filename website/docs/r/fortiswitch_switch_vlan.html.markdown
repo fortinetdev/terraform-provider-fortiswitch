@@ -54,6 +54,7 @@ The following arguments are supported:
 * `private_vlan` - Enable/disable private VLAN. Valid values: `enable`, `disable`.
 * `member_by_proto` - Assign VLAN membership based on ethernet frametype and protocol. The structure of `member_by_proto` block is documented below.
 * `access_vlan` - Block port-to-port traffic. Valid values: `disable`, `enable`.
+* `assignment_priority` - 802.1x Radius (Tunnel-Private-Group-Id) vlanid assign-by-name priority (smaller is higher).
 * `mld_snooping` - Enable/disable MLD snooping for the VLAN interface. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 

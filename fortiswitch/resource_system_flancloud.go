@@ -36,6 +36,11 @@ func resourceSystemFlanCloud() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"service_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"interval": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(3, 300),
@@ -132,6 +137,10 @@ func flattenSystemFlanCloudStatus(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
+func flattenSystemFlanCloudServiceType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemFlanCloudInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -150,6 +159,12 @@ func refreshObjectSystemFlanCloud(d *schema.ResourceData, o map[string]interface
 	if err = d.Set("status", flattenSystemFlanCloudStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
+		}
+	}
+
+	if err = d.Set("service_type", flattenSystemFlanCloudServiceType(o["service-type"], d, "service_type", sv)); err != nil {
+		if !fortiAPIPatch(o["service-type"]) {
+			return fmt.Errorf("Error reading service_type: %v", err)
 		}
 	}
 
@@ -184,6 +199,10 @@ func expandSystemFlanCloudStatus(d *schema.ResourceData, v interface{}, pre stri
 	return v, nil
 }
 
+func expandSystemFlanCloudServiceType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemFlanCloudInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -209,6 +228,20 @@ func getObjectSystemFlanCloud(d *schema.ResourceData, setArgNil bool, sv string)
 				return &obj, err
 			} else if t != nil {
 				obj["status"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("service_type"); ok {
+		if setArgNil {
+			obj["service-type"] = nil
+		} else {
+
+			t, err := expandSystemFlanCloudServiceType(d, v, "service_type", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["service-type"] = t
 			}
 		}
 	}

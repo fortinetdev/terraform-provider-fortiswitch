@@ -230,7 +230,7 @@ func resourceSwitchAclEgressUpdate(d *schema.ResourceData, m interface{}) error 
 
 	log.Printf(strconv.Itoa(c.Retries))
 	if o["mkey"] != nil && o["mkey"] != "" {
-		d.SetId(strconv.Itoa(int(o["mkey"].(float64))))
+		d.SetId(o["mkey"].(string))
 	} else {
 		d.SetId("SwitchAclEgress")
 	}
@@ -405,6 +405,9 @@ func flattenSwitchAclEgressClassifierDstMac(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSwitchAclEgressClassifierCos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == "" {
+		return nil
+	}
 	return v
 }
 
@@ -428,6 +431,9 @@ func flattenSwitchAclEgressClassifierSrcMac(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSwitchAclEgressClassifierDscp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == "" {
+		return nil
+	}
 	return v
 }
 
@@ -520,6 +526,9 @@ func flattenSwitchAclEgressActionRedirect(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSwitchAclEgressActionRemarkDscp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == "" {
+		return nil
+	}
 	return v
 }
 

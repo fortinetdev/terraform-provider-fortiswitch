@@ -1,5 +1,15 @@
-## 1.1.1 (Unreleased)
+## 1.1.2 (Unreleased)
 
+
+## 1.1.1 (February 9, 2024)
+
+BUGFIXES:
+
+* Fix data type issues in `fortiswitch_switchacl_egress` and `fortiswitch_switch_prelookup`;
+
+IMPROVEMENTS:
+
+* Support new version 7.4.2;
 
 ## 1.1.0 (October 24, 2023)
 

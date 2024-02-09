@@ -1097,6 +1097,9 @@ func flattenSwitchInterfaceQnqUntaggedSVlan(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSwitchInterfaceQnqAddInner(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == "" {
+		return nil
+	}
 	return v
 }
 

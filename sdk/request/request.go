@@ -107,6 +107,9 @@ func (r *Request) SendRequest(retries int) error {
 		} else {
 			break
 		}
+		if rsp != nil {
+			rsp.Body.Close()
+		}
 	}
 
 	errLogout := r.LogoutSession(cookies)
@@ -184,6 +187,14 @@ func (r *Request) SendWithSpecialParams(s string) error {
 		} else {
 			break
 		}
+		if rsp != nil {
+			rsp.Body.Close()
+		}
+	}
+
+	errLogout := r.LogoutSession(cookies)
+	if errLogout != nil {
+		log.Printf("[WARNING] Issue occurs when logout session: %v", errLogout)
 	}
 	return err
 }
@@ -197,7 +208,6 @@ func (r *Request) LoginSession() (*Cookies, error) {
 	data += r.Config.Auth.Username
 	data += "&secretkey="
 	data += r.Config.Auth.Password
-	data += "&ajax=1"
 
 	bodyBytes := bytes.NewBufferString(data)
 
@@ -258,6 +268,10 @@ func (r *Request) LoginSession() (*Cookies, error) {
 		return nil, err
 	}
 
+	if rsp != nil {
+		rsp.Body.Close()
+	}
+
 	ck := &Cookies{
 		CSRFToken: csrfToken,
 		Cookie:    cookie,
@@ -278,18 +292,20 @@ func (r *Request) LogoutSession(cookies *Cookies) error {
 
 	req, _ := http.NewRequest("POST", "", nil)
 	req.Header.Set("x-csrftoken", cookies.CSRFToken)
-	req.Header.Set("Cookie", cookies.Cookie)
 	req.Header.Set("Content-Type", "application/json")
 	u := "https://"
 	u += r.Config.FwTarget
-	u += "/logout"
+	u += "/api/v2/logout"
 	req.URL, err = url.Parse(u)
 	if err != nil {
 		err = fmt.Errorf("Could not parse URL: %s", err)
 		return err
 	}
 
-	_, err = r.Config.HTTPCon.Do(req)
+	rsp, err := r.Config.HTTPCon.Do(req)
+	if rsp != nil {
+		rsp.Body.Close()
+	}
 	if err != nil {
 		if strings.Contains(err.Error(), "x509: ") {
 			err = fmt.Errorf("HTTP request error: %v", err)

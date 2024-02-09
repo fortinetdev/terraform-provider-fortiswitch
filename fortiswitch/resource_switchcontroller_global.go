@@ -111,6 +111,11 @@ func resourceSwitchControllerGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"mgmt_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"tunnel_mode": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -298,6 +303,10 @@ func flattenSwitchControllerGlobalAcDiscoveryType(v interface{}, d *schema.Resou
 	return v
 }
 
+func flattenSwitchControllerGlobalMgmtMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchControllerGlobalTunnelMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -378,6 +387,12 @@ func refreshObjectSwitchControllerGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("ac_discovery_type", flattenSwitchControllerGlobalAcDiscoveryType(o["ac-discovery-type"], d, "ac_discovery_type", sv)); err != nil {
 		if !fortiAPIPatch(o["ac-discovery-type"]) {
 			return fmt.Errorf("Error reading ac_discovery_type: %v", err)
+		}
+	}
+
+	if err = d.Set("mgmt_mode", flattenSwitchControllerGlobalMgmtMode(o["mgmt-mode"], d, "mgmt_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["mgmt-mode"]) {
+			return fmt.Errorf("Error reading mgmt_mode: %v", err)
 		}
 	}
 
@@ -485,6 +500,10 @@ func expandSwitchControllerGlobalMaxRetransmit(d *schema.ResourceData, v interfa
 }
 
 func expandSwitchControllerGlobalAcDiscoveryType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerGlobalMgmtMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -645,6 +664,20 @@ func getObjectSwitchControllerGlobal(d *schema.ResourceData, setArgNil bool, sv 
 				return &obj, err
 			} else if t != nil {
 				obj["ac-discovery-type"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("mgmt_mode"); ok {
+		if setArgNil {
+			obj["mgmt-mode"] = nil
+		} else {
+
+			t, err := expandSwitchControllerGlobalMgmtMode(d, v, "mgmt_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["mgmt-mode"] = t
 			}
 		}
 	}

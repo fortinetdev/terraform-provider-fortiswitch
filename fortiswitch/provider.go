@@ -367,7 +367,10 @@ func Provider() *schema.Provider {
 			"fortiswitch_routerbgp_network6":               resourceRouterbgpNetwork6(),
 			"fortiswitch_routerospf_interface":             resourceRouterospfInterface(),
 			"fortiswitch_routerospf_network":               resourceRouterospfNetwork(),
+			"fortiswitch_routerospf_area":                  resourceRouterospfArea(),
 			"fortiswitch_routerospf6_interface":            resourceRouterospf6Interface(),
+			"fortiswitch_routerospf6_area":                 resourceRouterospf6Area(),
+			"fortiswitch_routerospf6_redistribute":         resourceRouterospf6Redistribute(),
 		},
 
 		ConfigureFunc: providerConfigure,
