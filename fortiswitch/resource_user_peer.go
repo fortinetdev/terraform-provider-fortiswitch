@@ -81,11 +81,13 @@ func resourceUserPeer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"ldap_password": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"ldap_mode": &schema.Schema{
 				Type:     schema.TypeString,
@@ -287,18 +289,6 @@ func refreshObjectUserPeer(d *schema.ResourceData, o map[string]interface{}, sv 
 	if err = d.Set("name", flattenUserPeerName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
-		}
-	}
-
-	if err = d.Set("passwd", flattenUserPeerPasswd(o["passwd"], d, "passwd", sv)); err != nil {
-		if !fortiAPIPatch(o["passwd"]) {
-			return fmt.Errorf("Error reading passwd: %v", err)
-		}
-	}
-
-	if err = d.Set("ldap_password", flattenUserPeerLdapPassword(o["ldap-password"], d, "ldap_password", sv)); err != nil {
-		if !fortiAPIPatch(o["ldap-password"]) {
-			return fmt.Errorf("Error reading ldap_password: %v", err)
 		}
 	}
 

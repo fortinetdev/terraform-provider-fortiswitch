@@ -141,6 +141,7 @@ func resourceLogFortianalyzerSetting() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"upload_time": &schema.Schema{
 				Type:     schema.TypeString,
@@ -429,12 +430,6 @@ func refreshObjectLogFortianalyzerSetting(d *schema.ResourceData, o map[string]i
 	if err = d.Set("conn_timeout", flattenLogFortianalyzerSettingConnTimeout(o["conn-timeout"], d, "conn_timeout", sv)); err != nil {
 		if !fortiAPIPatch(o["conn-timeout"]) {
 			return fmt.Errorf("Error reading conn_timeout: %v", err)
-		}
-	}
-
-	if err = d.Set("psksecret", flattenLogFortianalyzerSettingPsksecret(o["psksecret"], d, "psksecret", sv)); err != nil {
-		if !fortiAPIPatch(o["psksecret"]) {
-			return fmt.Errorf("Error reading psksecret: %v", err)
 		}
 	}
 

@@ -78,6 +78,7 @@ func resourceSystemEmailServer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"port": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -256,12 +257,6 @@ func refreshObjectSystemEmailServer(d *schema.ResourceData, o map[string]interfa
 	if err = d.Set("reply_to", flattenSystemEmailServerReplyTo(o["reply-to"], d, "reply_to", sv)); err != nil {
 		if !fortiAPIPatch(o["reply-to"]) {
 			return fmt.Errorf("Error reading reply_to: %v", err)
-		}
-	}
-
-	if err = d.Set("password", flattenSystemEmailServerPassword(o["password"], d, "password", sv)); err != nil {
-		if !fortiAPIPatch(o["password"]) {
-			return fmt.Errorf("Error reading password: %v", err)
 		}
 	}
 

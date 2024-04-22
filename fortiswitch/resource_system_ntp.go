@@ -70,6 +70,7 @@ func resourceSystemNtp() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 59),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"ntpsync": &schema.Schema{
 				Type:     schema.TypeString,
@@ -107,6 +108,7 @@ func resourceSystemNtp() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 59),
 							Optional:     true,
+							Sensitive:    true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
@@ -384,12 +386,6 @@ func refreshObjectSystemNtp(d *schema.ResourceData, o map[string]interface{}, sv
 	if err = d.Set("source_ip6", flattenSystemNtpSourceIp6(o["source-ip6"], d, "source_ip6", sv)); err != nil {
 		if !fortiAPIPatch(o["source-ip6"]) {
 			return fmt.Errorf("Error reading source_ip6: %v", err)
-		}
-	}
-
-	if err = d.Set("key", flattenSystemNtpKey(o["key"], d, "key", sv)); err != nil {
-		if !fortiAPIPatch(o["key"]) {
-			return fmt.Errorf("Error reading key: %v", err)
 		}
 	}
 

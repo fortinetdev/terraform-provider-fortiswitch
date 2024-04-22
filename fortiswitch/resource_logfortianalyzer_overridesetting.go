@@ -92,6 +92,7 @@ func resourceLogFortianalyzerOverrideSetting() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"mgmt_name": &schema.Schema{
 				Type:         schema.TypeString,
@@ -339,12 +340,6 @@ func refreshObjectLogFortianalyzerOverrideSetting(d *schema.ResourceData, o map[
 	if err = d.Set("max_buffer_size", flattenLogFortianalyzerOverrideSettingMaxBufferSize(o["max-buffer-size"], d, "max_buffer_size", sv)); err != nil {
 		if !fortiAPIPatch(o["max-buffer-size"]) {
 			return fmt.Errorf("Error reading max_buffer_size: %v", err)
-		}
-	}
-
-	if err = d.Set("psksecret", flattenLogFortianalyzerOverrideSettingPsksecret(o["psksecret"], d, "psksecret", sv)); err != nil {
-		if !fortiAPIPatch(o["psksecret"]) {
-			return fmt.Errorf("Error reading psksecret: %v", err)
 		}
 	}
 

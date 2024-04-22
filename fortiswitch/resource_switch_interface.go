@@ -697,6 +697,17 @@ func resourceSwitchInterfaceUpdate(d *schema.ResourceData, m interface{}) error 
 		return fmt.Errorf("Error updating SwitchInterface resource while getting object: %v", err)
 	}
 
+	log.Default().Printf("[INFO] updating obj: %v", *obj)
+
+	deobj := *obj
+	name := "name"
+	if _, ok := deobj[name]; ok {
+		delete(deobj, name)
+		log.Default().Printf("[INFO] after deletion: %v", *obj)
+	} else {
+		log.Default().Printf("[INFO] updating obj failed %v", deobj[name])
+	}
+
 	o, err := c.UpdateSwitchInterface(obj, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchInterface resource: %v", err)
@@ -1097,7 +1108,7 @@ func flattenSwitchInterfaceQnqUntaggedSVlan(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSwitchInterfaceQnqAddInner(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	if v == "" {
+	if v == "" || v == "none" {
 		return nil
 	}
 	return v
@@ -1421,6 +1432,7 @@ func flattenSwitchInterfacePortSecurity(v interface{}, d *schema.ResourceData, p
 	i := v.(map[string]interface{})
 	result := make(map[string]interface{})
 
+	log.Default().Printf("[INFO] flatten port security %v", i)
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "macsec_pae_mode"
 	if _, ok := i["macsec-pae-mode"]; ok {
@@ -2872,6 +2884,7 @@ func expandSwitchInterfacePortSecurity(d *schema.ResourceData, v interface{}, pr
 		result["eap-passthru"], _ = expandSwitchInterfacePortSecurityEapPassthru(d, i["eap_passthru"], pre_append, sv)
 	}
 
+	log.Default().Printf("[INFO] expand port security %v", result)
 	return result, nil
 }
 
@@ -3558,8 +3571,9 @@ func getObjectSwitchInterface(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
+	val := d.Get("post_security")
+	log.Default().Printf("[INFO] check expand port security %v", val)
 	if v, ok := d.GetOk("port_security"); ok {
-
 		t, err := expandSwitchInterfacePortSecurity(d, v, "port_security", sv)
 		if err != nil {
 			return &obj, err

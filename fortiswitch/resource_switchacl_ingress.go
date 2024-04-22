@@ -239,10 +239,10 @@ func resourceSwitchAclIngress() *schema.Resource {
 							Computed: true,
 						},
 						"cpu_cos_queue": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(17, 25),
-							Optional:     true,
-							Computed:     true,
+							Type: schema.TypeString,
+							//ValidateFunc: validation.IntBetween(17, 25),
+							Optional: true,
+							Computed: true,
 						},
 						"outer_vlan_tag": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -314,7 +314,7 @@ func resourceSwitchAclIngressUpdate(d *schema.ResourceData, m interface{}) error
 
 	log.Printf(strconv.Itoa(c.Retries))
 	if o["mkey"] != nil && o["mkey"] != "" {
-		d.SetId(strconv.Itoa(int(o["mkey"].(float64))))
+		d.SetId(o["mkey"].(string))
 	} else {
 		d.SetId("SwitchAclIngress")
 	}
@@ -570,6 +570,9 @@ func flattenSwitchAclIngressClassifierSrcMac(v interface{}, d *schema.ResourceDa
 }
 
 func flattenSwitchAclIngressClassifierDscp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == "" {
+		return nil
+	}
 	return v
 }
 

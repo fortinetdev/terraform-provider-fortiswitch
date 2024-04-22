@@ -71,6 +71,7 @@ func resourceSystemCertificateCrl() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"scep_cert": &schema.Schema{
 				Type:         schema.TypeString,
@@ -258,12 +259,6 @@ func refreshObjectSystemCertificateCrl(d *schema.ResourceData, o map[string]inte
 	if err = d.Set("update_interval", flattenSystemCertificateCrlUpdateInterval(o["update-interval"], d, "update_interval", sv)); err != nil {
 		if !fortiAPIPatch(o["update-interval"]) {
 			return fmt.Errorf("Error reading update_interval: %v", err)
-		}
-	}
-
-	if err = d.Set("ldap_password", flattenSystemCertificateCrlLdapPassword(o["ldap-password"], d, "ldap_password", sv)); err != nil {
-		if !fortiAPIPatch(o["ldap-password"]) {
-			return fmt.Errorf("Error reading ldap_password: %v", err)
 		}
 	}
 

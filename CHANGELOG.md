@@ -1,5 +1,13 @@
-## 1.1.2 (Unreleased)
+## 1.1.3 (Unreleased)
 
+
+## 1.1.2 (April 18, 2024)
+
+BUGFIXES:
+
+* Fix data type issues in `fortiswitch_switchacl_ingress` and `fortiswitch_switch_interface`;
+* Fix the provider crash issue in `fortiswitch_systemdhcp_server`;
+* Fix the issue that the sensitive parameter is changed to null while the parameter is not configured.
 
 ## 1.1.1 (February 9, 2024)
 

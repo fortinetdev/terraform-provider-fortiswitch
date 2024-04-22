@@ -148,6 +148,7 @@ func resourceSystemLinkMonitor() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"port": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -510,12 +511,6 @@ func refreshObjectSystemLinkMonitor(d *schema.ResourceData, o map[string]interfa
 	if err = d.Set("gateway_ip", flattenSystemLinkMonitorGatewayIp(o["gateway-ip"], d, "gateway_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["gateway-ip"]) {
 			return fmt.Errorf("Error reading gateway_ip: %v", err)
-		}
-	}
-
-	if err = d.Set("password", flattenSystemLinkMonitorPassword(o["password"], d, "password", sv)); err != nil {
-		if !fortiAPIPatch(o["password"]) {
-			return fmt.Errorf("Error reading password: %v", err)
 		}
 	}
 

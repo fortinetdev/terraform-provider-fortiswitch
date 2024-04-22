@@ -401,7 +401,7 @@ func resourceSystemDhcpServerUpdate(d *schema.ResourceData, m interface{}) error
 
 	log.Printf(strconv.Itoa(c.Retries))
 	if o["mkey"] != nil && o["mkey"] != "" {
-		d.SetId(strconv.Itoa(int(o["mkey"].(float64))))
+		d.SetId(o["mkey"].(string))
 	} else {
 		d.SetId("SystemDhcpServer")
 	}

@@ -99,6 +99,7 @@ func resourceUserLdap() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"type": &schema.Schema{
 				Type:     schema.TypeString,
@@ -335,12 +336,6 @@ func refreshObjectUserLdap(d *schema.ResourceData, o map[string]interface{}, sv 
 	if err = d.Set("password_renewal", flattenUserLdapPasswordRenewal(o["password-renewal"], d, "password_renewal", sv)); err != nil {
 		if !fortiAPIPatch(o["password-renewal"]) {
 			return fmt.Errorf("Error reading password_renewal: %v", err)
-		}
-	}
-
-	if err = d.Set("password", flattenUserLdapPassword(o["password"], d, "password", sv)); err != nil {
-		if !fortiAPIPatch(o["password"]) {
-			return fmt.Errorf("Error reading password: %v", err)
 		}
 	}
 

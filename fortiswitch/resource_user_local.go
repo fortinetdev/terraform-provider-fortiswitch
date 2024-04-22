@@ -47,6 +47,7 @@ func resourceUserLocal() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"ldap_server": &schema.Schema{
 				Type:         schema.TypeString,
@@ -204,12 +205,6 @@ func refreshObjectUserLocal(d *schema.ResourceData, o map[string]interface{}, sv
 	if err = d.Set("name", flattenUserLocalName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
-		}
-	}
-
-	if err = d.Set("passwd", flattenUserLocalPasswd(o["passwd"], d, "passwd", sv)); err != nil {
-		if !fortiAPIPatch(o["passwd"]) {
-			return fmt.Errorf("Error reading passwd: %v", err)
 		}
 	}
 

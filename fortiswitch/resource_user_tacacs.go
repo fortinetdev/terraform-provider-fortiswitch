@@ -58,6 +58,7 @@ func resourceUserTacacs() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"port": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -215,12 +216,6 @@ func refreshObjectUserTacacs(d *schema.ResourceData, o map[string]interface{}, s
 	if err = d.Set("server", flattenUserTacacsServer(o["server"], d, "server", sv)); err != nil {
 		if !fortiAPIPatch(o["server"]) {
 			return fmt.Errorf("Error reading server: %v", err)
-		}
-	}
-
-	if err = d.Set("key", flattenUserTacacsKey(o["key"], d, "key", sv)); err != nil {
-		if !fortiAPIPatch(o["key"]) {
-			return fmt.Errorf("Error reading key: %v", err)
 		}
 	}
 
