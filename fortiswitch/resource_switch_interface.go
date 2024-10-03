@@ -31,6 +31,11 @@ func resourceSwitchInterface() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"allow_arp_monitor": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"fortilink_l3_mode": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -204,6 +209,12 @@ func resourceSwitchInterface() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"native_c_vlan": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 4094),
+							Optional:     true,
+							Computed:     true,
+						},
 						"remove_inner": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -230,6 +241,11 @@ func resourceSwitchInterface() *schema.Resource {
 							ValidateFunc: validation.IntBetween(1, 4094),
 							Optional:     true,
 							Computed:     true,
+						},
+						"allowed_c_vlan": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 						"edge_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -529,6 +545,11 @@ func resourceSwitchInterface() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"authserver_timeout_tagged": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"mab_eapol_request": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
@@ -571,6 +592,16 @@ func resourceSwitchInterface() *schema.Resource {
 						},
 						"eap_auto_untagged_vlans": &schema.Schema{
 							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"authserver_timeout_tagged_lldp_voice_vlanid": &schema.Schema{
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
+						},
+						"authserver_timeout_tagged_vlanid": &schema.Schema{
+							Type:     schema.TypeInt,
 							Optional: true,
 							Computed: true,
 						},
@@ -697,17 +728,6 @@ func resourceSwitchInterfaceUpdate(d *schema.ResourceData, m interface{}) error 
 		return fmt.Errorf("Error updating SwitchInterface resource while getting object: %v", err)
 	}
 
-	log.Default().Printf("[INFO] updating obj: %v", *obj)
-
-	deobj := *obj
-	name := "name"
-	if _, ok := deobj[name]; ok {
-		delete(deobj, name)
-		log.Default().Printf("[INFO] after deletion: %v", *obj)
-	} else {
-		log.Default().Printf("[INFO] updating obj failed %v", deobj[name])
-	}
-
 	o, err := c.UpdateSwitchInterface(obj, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchInterface resource: %v", err)
@@ -761,6 +781,10 @@ func resourceSwitchInterfaceRead(d *schema.ResourceData, m interface{}) error {
 		return fmt.Errorf("Error reading SwitchInterface resource from API: %v", err)
 	}
 	return nil
+}
+
+func flattenSwitchInterfaceAllowArpMonitor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
 }
 
 func flattenSwitchInterfaceFortilinkL3Mode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -964,6 +988,12 @@ func flattenSwitchInterfaceQnq(v interface{}, d *schema.ResourceData, pre string
 		result["stp_qnq_admin"] = flattenSwitchInterfaceQnqStpQnqAdmin(i["stp-qnq-admin"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "native_c_vlan"
+	if _, ok := i["native-c-vlan"]; ok {
+
+		result["native_c_vlan"] = flattenSwitchInterfaceQnqNativeCVlan(i["native-c-vlan"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "remove_inner"
 	if _, ok := i["remove-inner"]; ok {
 
@@ -992,6 +1022,12 @@ func flattenSwitchInterfaceQnq(v interface{}, d *schema.ResourceData, pre string
 	if _, ok := i["add-inner"]; ok {
 
 		result["add_inner"] = flattenSwitchInterfaceQnqAddInner(i["add-inner"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "allowed_c_vlan"
+	if _, ok := i["allowed-c-vlan"]; ok {
+
+		result["allowed_c_vlan"] = flattenSwitchInterfaceQnqAllowedCVlan(i["allowed-c-vlan"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "edge_type"
@@ -1091,6 +1127,10 @@ func flattenSwitchInterfaceQnqStpQnqAdmin(v interface{}, d *schema.ResourceData,
 	return v
 }
 
+func flattenSwitchInterfaceQnqNativeCVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchInterfaceQnqRemoveInner(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1108,9 +1148,10 @@ func flattenSwitchInterfaceQnqUntaggedSVlan(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSwitchInterfaceQnqAddInner(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	if v == "" || v == "none" {
-		return nil
-	}
+	return v
+}
+
+func flattenSwitchInterfaceQnqAllowedCVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1432,7 +1473,6 @@ func flattenSwitchInterfacePortSecurity(v interface{}, d *schema.ResourceData, p
 	i := v.(map[string]interface{})
 	result := make(map[string]interface{})
 
-	log.Default().Printf("[INFO] flatten port security %v", i)
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "macsec_pae_mode"
 	if _, ok := i["macsec-pae-mode"]; ok {
@@ -1468,6 +1508,12 @@ func flattenSwitchInterfacePortSecurity(v interface{}, d *schema.ResourceData, p
 	if _, ok := i["port-security-mode"]; ok {
 
 		result["port_security_mode"] = flattenSwitchInterfacePortSecurityPortSecurityMode(i["port-security-mode"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "authserver_timeout_tagged"
+	if _, ok := i["authserver-timeout-tagged"]; ok {
+
+		result["authserver_timeout_tagged"] = flattenSwitchInterfacePortSecurityAuthserverTimeoutTagged(i["authserver-timeout-tagged"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "mab_eapol_request"
@@ -1522,6 +1568,18 @@ func flattenSwitchInterfacePortSecurity(v interface{}, d *schema.ResourceData, p
 	if _, ok := i["eap-auto-untagged-vlans"]; ok {
 
 		result["eap_auto_untagged_vlans"] = flattenSwitchInterfacePortSecurityEapAutoUntaggedVlans(i["eap-auto-untagged-vlans"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "authserver_timeout_tagged_lldp_voice_vlanid"
+	if _, ok := i["authserver-timeout-tagged-lldp-voice-vlanid"]; ok {
+
+		result["authserver_timeout_tagged_lldp_voice_vlanid"] = flattenSwitchInterfacePortSecurityAuthserverTimeoutTaggedLldpVoiceVlanid(i["authserver-timeout-tagged-lldp-voice-vlanid"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "authserver_timeout_tagged_vlanid"
+	if _, ok := i["authserver-timeout-tagged-vlanid"]; ok {
+
+		result["authserver_timeout_tagged_vlanid"] = flattenSwitchInterfacePortSecurityAuthserverTimeoutTaggedVlanid(i["authserver-timeout-tagged-vlanid"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "mac_auth_bypass"
@@ -1612,6 +1670,10 @@ func flattenSwitchInterfacePortSecurityPortSecurityMode(v interface{}, d *schema
 	return v
 }
 
+func flattenSwitchInterfacePortSecurityAuthserverTimeoutTagged(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchInterfacePortSecurityMabEapolRequest(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1645,6 +1707,14 @@ func flattenSwitchInterfacePortSecurityFramevidApply(v interface{}, d *schema.Re
 }
 
 func flattenSwitchInterfacePortSecurityEapAutoUntaggedVlans(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchInterfacePortSecurityAuthserverTimeoutTaggedLldpVoiceVlanid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchInterfacePortSecurityAuthserverTimeoutTaggedVlanid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1710,6 +1780,12 @@ func flattenSwitchInterfacePtpPolicy(v interface{}, d *schema.ResourceData, pre 
 
 func refreshObjectSwitchInterface(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+
+	if err = d.Set("allow_arp_monitor", flattenSwitchInterfaceAllowArpMonitor(o["allow-arp-monitor"], d, "allow_arp_monitor", sv)); err != nil {
+		if !fortiAPIPatch(o["allow-arp-monitor"]) {
+			return fmt.Errorf("Error reading allow_arp_monitor: %v", err)
+		}
+	}
 
 	if err = d.Set("fortilink_l3_mode", flattenSwitchInterfaceFortilinkL3Mode(o["fortilink-l3-mode"], d, "fortilink_l3_mode", sv)); err != nil {
 		if !fortiAPIPatch(o["fortilink-l3-mode"]) {
@@ -2152,6 +2228,10 @@ func flattenSwitchInterfaceFortiTestDebug(d *schema.ResourceData, fswdebugsn int
 	log.Printf("ER List: %v, %v", strings.Split("FortiSwitch Ver", " "), e)
 }
 
+func expandSwitchInterfaceAllowArpMonitor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchInterfaceFortilinkL3Mode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -2331,6 +2411,11 @@ func expandSwitchInterfaceQnq(d *schema.ResourceData, v interface{}, pre string,
 
 		result["stp-qnq-admin"], _ = expandSwitchInterfaceQnqStpQnqAdmin(d, i["stp_qnq_admin"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "native_c_vlan"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["native-c-vlan"], _ = expandSwitchInterfaceQnqNativeCVlan(d, i["native_c_vlan"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "remove_inner"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -2355,6 +2440,11 @@ func expandSwitchInterfaceQnq(d *schema.ResourceData, v interface{}, pre string,
 	if _, ok := d.GetOk(pre_append); ok {
 
 		result["add-inner"], _ = expandSwitchInterfaceQnqAddInner(d, i["add_inner"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "allowed_c_vlan"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["allowed-c-vlan"], _ = expandSwitchInterfaceQnqAllowedCVlan(d, i["allowed_c_vlan"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "edge_type"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2440,6 +2530,10 @@ func expandSwitchInterfaceQnqStpQnqAdmin(d *schema.ResourceData, v interface{}, 
 	return v, nil
 }
 
+func expandSwitchInterfaceQnqNativeCVlan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchInterfaceQnqRemoveInner(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -2457,6 +2551,10 @@ func expandSwitchInterfaceQnqUntaggedSVlan(d *schema.ResourceData, v interface{}
 }
 
 func expandSwitchInterfaceQnqAddInner(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchInterfaceQnqAllowedCVlan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2788,6 +2886,11 @@ func expandSwitchInterfacePortSecurity(d *schema.ResourceData, v interface{}, pr
 
 		result["port-security-mode"], _ = expandSwitchInterfacePortSecurityPortSecurityMode(d, i["port_security_mode"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "authserver_timeout_tagged"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["authserver-timeout-tagged"], _ = expandSwitchInterfacePortSecurityAuthserverTimeoutTagged(d, i["authserver_timeout_tagged"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "mab_eapol_request"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -2832,6 +2935,16 @@ func expandSwitchInterfacePortSecurity(d *schema.ResourceData, v interface{}, pr
 	if _, ok := d.GetOk(pre_append); ok {
 
 		result["eap-auto-untagged-vlans"], _ = expandSwitchInterfacePortSecurityEapAutoUntaggedVlans(d, i["eap_auto_untagged_vlans"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "authserver_timeout_tagged_lldp_voice_vlanid"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["authserver-timeout-tagged-lldp-voice-vlanid"], _ = expandSwitchInterfacePortSecurityAuthserverTimeoutTaggedLldpVoiceVlanid(d, i["authserver_timeout_tagged_lldp_voice_vlanid"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "authserver_timeout_tagged_vlanid"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["authserver-timeout-tagged-vlanid"], _ = expandSwitchInterfacePortSecurityAuthserverTimeoutTaggedVlanid(d, i["authserver_timeout_tagged_vlanid"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "mac_auth_bypass"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2884,7 +2997,6 @@ func expandSwitchInterfacePortSecurity(d *schema.ResourceData, v interface{}, pr
 		result["eap-passthru"], _ = expandSwitchInterfacePortSecurityEapPassthru(d, i["eap_passthru"], pre_append, sv)
 	}
 
-	log.Default().Printf("[INFO] expand port security %v", result)
 	return result, nil
 }
 
@@ -2909,6 +3021,10 @@ func expandSwitchInterfacePortSecurityAuthFailVlanid(d *schema.ResourceData, v i
 }
 
 func expandSwitchInterfacePortSecurityPortSecurityMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchInterfacePortSecurityAuthserverTimeoutTagged(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2945,6 +3061,14 @@ func expandSwitchInterfacePortSecurityFramevidApply(d *schema.ResourceData, v in
 }
 
 func expandSwitchInterfacePortSecurityEapAutoUntaggedVlans(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchInterfacePortSecurityAuthserverTimeoutTaggedLldpVoiceVlanid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchInterfacePortSecurityAuthserverTimeoutTaggedVlanid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3010,6 +3134,16 @@ func expandSwitchInterfacePtpPolicy(d *schema.ResourceData, v interface{}, pre s
 
 func getObjectSwitchInterface(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+
+	if v, ok := d.GetOk("allow_arp_monitor"); ok {
+
+		t, err := expandSwitchInterfaceAllowArpMonitor(d, v, "allow_arp_monitor", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["allow-arp-monitor"] = t
+		}
+	}
 
 	if v, ok := d.GetOk("fortilink_l3_mode"); ok {
 
@@ -3571,9 +3705,8 @@ func getObjectSwitchInterface(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	val := d.Get("post_security")
-	log.Default().Printf("[INFO] check expand port security %v", val)
 	if v, ok := d.GetOk("port_security"); ok {
+
 		t, err := expandSwitchInterfacePortSecurity(d, v, "port_security", sv)
 		if err != nil {
 			return &obj, err

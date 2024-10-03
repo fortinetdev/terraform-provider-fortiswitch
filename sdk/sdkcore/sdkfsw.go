@@ -1621,20 +1621,6 @@ func (c *FortiSDKClient) ReadRouterOspf6(mkey string) (mapTmp map[string]interfa
 	return
 }
 
-// CreateRouterPolicy API operation for FortiSwitch creates a new Policy.
-// Returns the index value of the Policy and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the router - policy chapter in the FortiSwitch Handbook - CLI Reference.
-func (c *FortiSDKClient) CreateRouterPolicy(params *map[string]interface{}) (output map[string]interface{}, err error) {
-
-	HTTPMethod := "POST"
-	path := "/api/v2/cmdb/router/policy"
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output)
-	return
-}
-
 // UpdateRouterPolicy API operation for FortiSwitch updates the specified Policy.
 // Returns the index value of the Policy and execution result when the request executes successfully.
 // Returns error for service API and SDK errors.
@@ -1642,7 +1628,6 @@ func (c *FortiSDKClient) CreateRouterPolicy(params *map[string]interface{}) (out
 func (c *FortiSDKClient) UpdateRouterPolicy(params *map[string]interface{}, mkey string) (output map[string]interface{}, err error) {
 	HTTPMethod := "PUT"
 	path := "/api/v2/cmdb/router/policy"
-	path += "/" + escapeURLString(mkey)
 	output = make(map[string]interface{})
 
 	err = createUpdate(c, HTTPMethod, path, params, output)
@@ -1653,11 +1638,8 @@ func (c *FortiSDKClient) UpdateRouterPolicy(params *map[string]interface{}, mkey
 // Returns error for service API and SDK errors.
 // See the router - policy chapter in the FortiSwitch Handbook - CLI Reference.
 func (c *FortiSDKClient) DeleteRouterPolicy(mkey string) (err error) {
-	HTTPMethod := "DELETE"
-	path := "/api/v2/cmdb/router/policy"
-	path += "/" + escapeURLString(mkey)
 
-	err = delete(c, HTTPMethod, path)
+	//No unset API for router - policy
 	return
 }
 
@@ -1669,9 +1651,8 @@ func (c *FortiSDKClient) DeleteRouterPolicy(mkey string) (err error) {
 func (c *FortiSDKClient) ReadRouterPolicy(mkey string) (mapTmp map[string]interface{}, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/router/policy"
-	path += "/" + escapeURLString(mkey)
 
-	mapTmp, err = read(c, HTTPMethod, path, false)
+	mapTmp, err = read(c, HTTPMethod, path, true)
 	return
 }
 

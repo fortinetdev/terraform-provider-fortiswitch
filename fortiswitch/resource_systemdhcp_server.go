@@ -376,7 +376,7 @@ func resourceSystemDhcpServerCreate(d *schema.ResourceData, m interface{}) error
 	}
 
 	if o["mkey"] != nil && o["mkey"] != "" {
-		d.SetId(strconv.Itoa(int(o["mkey"].(float64))))
+		d.SetId(fmt.Sprintf("%v", o["mkey"]))
 	} else {
 		d.SetId("SystemDhcpServer")
 	}
@@ -401,7 +401,7 @@ func resourceSystemDhcpServerUpdate(d *schema.ResourceData, m interface{}) error
 
 	log.Printf(strconv.Itoa(c.Retries))
 	if o["mkey"] != nil && o["mkey"] != "" {
-		d.SetId(o["mkey"].(string))
+		d.SetId(fmt.Sprintf("%v", o["mkey"]))
 	} else {
 		d.SetId("SystemDhcpServer")
 	}

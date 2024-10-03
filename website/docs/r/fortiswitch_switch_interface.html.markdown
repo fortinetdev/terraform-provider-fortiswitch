@@ -24,6 +24,7 @@ resource "fortiswitch_switch_interface" "name" {
 
 The following arguments are supported:
 
+* `allow_arp_monitor` - Enable/Disable ARP monitoring. Valid values: `disable`, `enable`.
 * `fortilink_l3_mode` - FortiLink L3 uplink port. Valid values: `enable`, `disable`.
 * `igmp_snooping_flood_reports` - Enable/disable flooding of IGMP snooping reports to this interface. Valid values: `enable`, `disable`.
 * `interface_mode` - Set interface mode - L2 or L3. Valid values: `L2`, `L3`.
@@ -103,11 +104,13 @@ The `qnq` block supports:
 * `status` - Enable/Disable QinQ mode. Valid values: `disable`, `enable`.
 * `vlan_mapping` - Configure Vlan Mapping. The structure of `vlan_mapping` block is documented below.
 * `stp_qnq_admin` - Enable/Disable QnQ to manage STP admin status. Valid values: `disable`, `enable`.
+* `native_c_vlan` - Native c vlan for untagged packets.
 * `remove_inner` - Remove inner-tag upon egress. Valid values: `disable`, `enable`.
 * `priority` - Follow S-Tag or C-Tag's priority. Valid values: `follow-c-tag`, `follow-s-tag`.
 * `vlan_mapping_miss_drop` - Enabled or disabled drop if mapping missed. Valid values: `disable`, `enable`.
 * `untagged_s_vlan` - Add s-vlan to untagged packet.
 * `add_inner` - Add inner-tag for untagged packets upon ingress.
+* `allowed_c_vlan` - Allowed c vlans.
 * `edge_type` - Choose edge type. Valid values: `customer`.
 * `s_tag_priority` - Set priority value if packets follow S-Tag's priority.
 
@@ -142,6 +145,7 @@ The `port_security` block supports:
 * `allow_mac_move_to` - Enable/disable allow mac move mode to this port. Valid values: `disable`, `enable`.
 * `auth_fail_vlanid` - Set auth_fail vlanid.
 * `port_security_mode` - Security mode. Valid values: `none`, `802.1X`, `802.1X-mac-based`, `macsec`.
+* `authserver_timeout_tagged` - Set authserver_timeout tagged vlan mode. Valid values: `disable`, `lldp-voice`, `static`.
 * `mab_eapol_request` - Set MAB EAPOL Request.
 * `dacl` - Enable/disable dynamic access control list mode. Valid values: `disable`, `enable`.
 * `authserver_timeout_vlan` - Enable/disable authserver_timeout vlan. Valid values: `disable`, `enable`.
@@ -151,6 +155,8 @@ The `port_security` block supports:
 * `auth_order` - set authentication auth order.
 * `framevid_apply` - Enable/disable the capbility to apply the EAP/MAB frame vlan to the port native vlan. Valid values: `disable`, `enable`.
 * `eap_auto_untagged_vlans` - Enable/disable EAP auto-untagged-vlans mode. Valid values: `disable`, `enable`.
+* `authserver_timeout_tagged_lldp_voice_vlanid` - authserver_timeout tagged lldp voice vlanid.
+* `authserver_timeout_tagged_vlanid` - Set authserver_timeout tagged vlanid.
 * `mac_auth_bypass` - Enable/disable mac-authentication-bypass on this interaface. Valid values: `disable`, `enable`.
 * `auth_priority` - set authentication auth priority. Valid values: `legacy`, `dot1x-MAB`, `MAB-dot1x`.
 * `radius_timeout_overwrite` - Enable/disable radius server session timeout to overwrite local timeout. Valid values: `disable`, `enable`.

@@ -163,6 +163,11 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"capability_extended_nexthop": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"bfd": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -658,6 +663,10 @@ func flattenRouterbgpNeighborCapabilityDefaultOriginate6(v interface{}, d *schem
 	return v
 }
 
+func flattenRouterbgpNeighborCapabilityExtendedNexthop(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterbgpNeighborBfd(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1034,6 +1043,12 @@ func refreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[string]interfa
 	if err = d.Set("capability_default_originate6", flattenRouterbgpNeighborCapabilityDefaultOriginate6(o["capability-default-originate6"], d, "capability_default_originate6", sv)); err != nil {
 		if !fortiAPIPatch(o["capability-default-originate6"]) {
 			return fmt.Errorf("Error reading capability_default_originate6: %v", err)
+		}
+	}
+
+	if err = d.Set("capability_extended_nexthop", flattenRouterbgpNeighborCapabilityExtendedNexthop(o["capability-extended-nexthop"], d, "capability_extended_nexthop", sv)); err != nil {
+		if !fortiAPIPatch(o["capability-extended-nexthop"]) {
+			return fmt.Errorf("Error reading capability_extended_nexthop: %v", err)
 		}
 	}
 
@@ -1487,6 +1502,10 @@ func expandRouterbgpNeighborPrefixListIn6(d *schema.ResourceData, v interface{},
 }
 
 func expandRouterbgpNeighborCapabilityDefaultOriginate6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterbgpNeighborCapabilityExtendedNexthop(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1962,6 +1981,16 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 			return &obj, err
 		} else if t != nil {
 			obj["capability-default-originate6"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("capability_extended_nexthop"); ok {
+
+		t, err := expandRouterbgpNeighborCapabilityExtendedNexthop(d, v, "capability_extended_nexthop", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["capability-extended-nexthop"] = t
 		}
 	}
 

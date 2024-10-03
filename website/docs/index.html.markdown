@@ -8,7 +8,7 @@ description: |-
 
 # FortiSwitch Provider
 
-The FortiSwitch provider is used to interact with the resources supported by FortiSwitch. We need to configure the provider with the proper credentials before it can be used.
+The FortiSwitch provider is used to interact with the resources supported by FortiSwitch. We need to configure the provider with the proper credentials before using it.
 
 ## Configuration for FortiSwitch
 

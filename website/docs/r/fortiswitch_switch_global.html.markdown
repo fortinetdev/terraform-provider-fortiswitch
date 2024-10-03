@@ -39,10 +39,12 @@ The following arguments are supported:
  (12:34:56:78:XX:XX, sixth byte automatically generated from managmenet MAC, channel, and port information). Valid values: `auto`, `manual`.
 * `virtual_wire_tpid` - TPID value used by virtual-wires.
 * `trunk_hash_unicast_src_port` - Enable/disable source port in Unicast trunk hashing. Valid values: `enable`, `disable`.
+* `storm_control_rate_filter` - Storm control rate filter.
 * `auto_fortilink_discovery` - Enable/disable automatic FortiLink discovery. Valid values: `enable`, `disable`.
 * `max_path_in_ecmp_group` - Set max path in one ecmp group.
 * `trunk_hash_mode` - Trunk hash mode. Valid values: `default`, `enhanced`.
 * `fortilink_p2p_tpid` - FortiLink point-to-point TPID.
+* `storm_control_high_rate` - Storm control high rate.
 * `flood_vtp` - Enable/disable Cisco VTP flood in the vlan. Valid values: `enable`, `disable`.
 * `mac_violation_timer` - Set a global timeout for Learning Limit Violations (0 = disabled).
 * `mirror_qos` - QOS value for locally mirrored traffic.
@@ -70,6 +72,7 @@ The following arguments are supported:
 * `name` - Name.
 * `auto_isl` - Enable/Disable automatic inter switch LAG. Valid values: `enable`, `disable`.
 * `dmi_global_all` - Enable/disable DMI global status. Valid values: `enable`, `disable`.
+* `storm_control_monitor` - Enable/disable storm control monitor. Valid values: `enable`, `disable`.
 * `l2_memory_check` - Enable/disable L2 memory check, default interval is 120 seconds. Valid values: `enable`, `disable`.
 * `mclag_split_brain_detect` - Enable/disable MCLAG split brain detect. Valid values: `enable`, `disable`.
 * `forti_trunk_dmac` - Destination MAC address to be used for FortiTrunk heartbeat packets.

@@ -12,6 +12,7 @@ package fortiswitch
 import (
 	"fmt"
 	"log"
+	"reflect"
 	"strconv"
 	"strings"
 
@@ -219,7 +220,7 @@ func resourceSwitchAclPrelookupUpdate(d *schema.ResourceData, m interface{}) err
 
 	log.Printf(strconv.Itoa(c.Retries))
 	if o["mkey"] != nil && o["mkey"] != "" {
-		d.SetId(o["mkey"].(string))
+		d.SetId(fmt.Sprintf("%v", o["mkey"]))
 	} else {
 		d.SetId("SwitchAclPrelookup")
 	}
@@ -394,7 +395,7 @@ func flattenSwitchAclPrelookupClassifierDstMac(v interface{}, d *schema.Resource
 }
 
 func flattenSwitchAclPrelookupClassifierCos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	if v == "" {
+	if v == "" || v == "none" || reflect.DeepEqual(v, []interface{}{}) {
 		return nil
 	}
 	return v
@@ -420,7 +421,7 @@ func flattenSwitchAclPrelookupClassifierSrcMac(v interface{}, d *schema.Resource
 }
 
 func flattenSwitchAclPrelookupClassifierDscp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	if v == "" {
+	if v == "" || v == "none" || reflect.DeepEqual(v, []interface{}{}) {
 		return nil
 	}
 	return v
@@ -493,7 +494,7 @@ func flattenSwitchAclPrelookupActionCount(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSwitchAclPrelookupActionRemarkCos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	if v == "" {
+	if v == "" || v == "none" || reflect.DeepEqual(v, []interface{}{}) {
 		return nil
 	}
 	return v
@@ -508,7 +509,7 @@ func flattenSwitchAclPrelookupActionOuterVlanTag(v interface{}, d *schema.Resour
 }
 
 func flattenSwitchAclPrelookupActionCosQueue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	if v == "" {
+	if v == "" || v == "none" || reflect.DeepEqual(v, []interface{}{}) {
 		return nil
 	}
 	return v

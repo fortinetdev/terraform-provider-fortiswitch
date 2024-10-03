@@ -521,6 +521,11 @@ func resourceRouterRip() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"bfd": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"auth_mode": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -1910,6 +1915,12 @@ func flattenRouterRipInterface(v interface{}, d *schema.ResourceData, pre string
 			tmp["split_horizon_status"] = flattenRouterRipInterfaceSplitHorizonStatus(i["split-horizon-status"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "bfd"
+		if _, ok := i["bfd"]; ok {
+
+			tmp["bfd"] = flattenRouterRipInterfaceBfd(i["bfd"], d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_mode"
 		if _, ok := i["auth-mode"]; ok {
 
@@ -1974,6 +1985,10 @@ func flattenRouterRipInterface(v interface{}, d *schema.ResourceData, pre string
 }
 
 func flattenRouterRipInterfaceSplitHorizonStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterRipInterfaceBfd(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3404,6 +3419,12 @@ func expandRouterRipInterface(d *schema.ResourceData, v interface{}, pre string,
 			tmp["split-horizon-status"], _ = expandRouterRipInterfaceSplitHorizonStatus(d, i["split_horizon_status"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "bfd"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["bfd"], _ = expandRouterRipInterfaceBfd(d, i["bfd"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_mode"
 		if _, ok := d.GetOk(pre_append); ok {
 
@@ -3467,6 +3488,10 @@ func expandRouterRipInterface(d *schema.ResourceData, v interface{}, pre string,
 }
 
 func expandRouterRipInterfaceSplitHorizonStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterRipInterfaceBfd(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

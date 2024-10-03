@@ -109,7 +109,10 @@ The following arguments are supported:
 * `admin_password_hash` - Admin password hash algorithm. (sha1, sha256, pbkdf2) Valid values: `sha1`, `sha256`, `pbkdf2`, `pbkdf2-high`.
 * `dh_params` - Minimum size of Diffie-Hellman prime for HTTPS/SSH (bits).
 * `ldapconntimeout` - LDAP connection time-out (0 - 2147483647 milliseconds).
+* `reset_button` - When disabled, reset is ignored while the OS is running.
+				  BIOS will still detect button press on reboot. Valid values: `enable`, `disable`.
 * `tcp_mss_min` - Minimum allowed TCP MSS value in bytes.
+* `admin_restrict_local` - Enable/disable local admin authentication restriction when remote authenticator is up and running. (default = disable) Valid values: `enable`, `disable`.
 * `admin_concurrent` - Enable/disable concurrent login of adminstrative users. Valid values: `enable`, `disable`.
 * `admintimeout` - Idle time-out for firewall administration.
 * `arp_timeout` - ARP timeout value in seconds.
@@ -125,6 +128,7 @@ The following arguments are supported:
 * `n8021x_ca_certificate` - CA certificate for Port Security (802.1x).
 * `dhcp_remote_id` - List the parameters to be included in remote-id field. Valid values: `mac`, `hostname`, `ip`.
 * `dhcp_snoop_client_req` - Client DHCP packet broadcast mode. Valid values: `forward-untrusted`, `drop-untrusted`.
+* `arp_inspection_monitor_timeout` - Timeout used when MAC-VLAN-IP learned from ARP traffic.
 * `dhcp_client_location` - List the parameters to be included to inform about client location. Valid values: `intfname`, `vlan`, `hostname`, `mode`, `description`.
 * `csr_ca_attribute` - Enable/disable CA attribute in CSR. Valid values: `enable`, `disable`.
 * `delaycli_timeout_cleanup` - Time-out for cleaning up the delay cli execution completion data (1-1440 minutes, default=15min).

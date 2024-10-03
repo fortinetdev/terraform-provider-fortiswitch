@@ -133,6 +133,12 @@ func resourceSwitchMacsecProfile() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"mka_sak_rekey_time": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 1000000),
+				Optional:     true,
+				Computed:     true,
+			},
 			"encrypt_traffic": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -411,6 +417,10 @@ func flattenSwitchMacsecProfileMkaPriority(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenSwitchMacsecProfileMkaSakRekeyTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchMacsecProfileEncryptTraffic(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -609,6 +619,12 @@ func refreshObjectSwitchMacsecProfile(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
+	if err = d.Set("mka_sak_rekey_time", flattenSwitchMacsecProfileMkaSakRekeyTime(o["mka-sak-rekey-time"], d, "mka_sak_rekey_time", sv)); err != nil {
+		if !fortiAPIPatch(o["mka-sak-rekey-time"]) {
+			return fmt.Errorf("Error reading mka_sak_rekey_time: %v", err)
+		}
+	}
+
 	if err = d.Set("encrypt_traffic", flattenSwitchMacsecProfileEncryptTraffic(o["encrypt-traffic"], d, "encrypt_traffic", sv)); err != nil {
 		if !fortiAPIPatch(o["encrypt-traffic"]) {
 			return fmt.Errorf("Error reading encrypt_traffic: %v", err)
@@ -767,6 +783,10 @@ func expandSwitchMacsecProfileMacsecValidate(d *schema.ResourceData, v interface
 }
 
 func expandSwitchMacsecProfileMkaPriority(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchMacsecProfileMkaSakRekeyTime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1004,6 +1024,16 @@ func getObjectSwitchMacsecProfile(d *schema.ResourceData, sv string) (*map[strin
 			return &obj, err
 		} else if t != nil {
 			obj["mka-priority"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("mka_sak_rekey_time"); ok {
+
+		t, err := expandSwitchMacsecProfileMkaSakRekeyTime(d, v, "mka_sak_rekey_time", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["mka-sak-rekey-time"] = t
 		}
 	}
 

@@ -60,6 +60,18 @@ func dataSourceSystemLinkMonitor() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"server": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"address": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"failtime": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -97,8 +109,9 @@ func dataSourceSystemLinkMonitor() *schema.Resource {
 				Computed: true,
 			},
 			"password": &schema.Schema{
-				Type:     schema.TypeString,
-				Computed: true,
+				Type:      schema.TypeString,
+				Sensitive: true,
+				Computed:  true,
 			},
 			"port": &schema.Schema{
 				Type:     schema.TypeInt,
@@ -180,6 +193,42 @@ func dataSourceFlattenSystemLinkMonitorInterval(v interface{}, d *schema.Resourc
 }
 
 func dataSourceFlattenSystemLinkMonitorGatewayIp6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemLinkMonitorServer(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "address"
+		if _, ok := i["address"]; ok {
+			tmp["address"] = dataSourceFlattenSystemLinkMonitorServerAddress(i["address"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemLinkMonitorServerAddress(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -288,6 +337,12 @@ func dataSourceRefreshObjectSystemLinkMonitor(d *schema.ResourceData, o map[stri
 		}
 	}
 
+	if err = d.Set("server", dataSourceFlattenSystemLinkMonitorServer(o["server"], d, "server")); err != nil {
+		if !fortiAPIPatch(o["server"]) {
+			return fmt.Errorf("Error reading server: %v", err)
+		}
+	}
+
 	if err = d.Set("failtime", dataSourceFlattenSystemLinkMonitorFailtime(o["failtime"], d, "failtime")); err != nil {
 		if !fortiAPIPatch(o["failtime"]) {
 			return fmt.Errorf("Error reading failtime: %v", err)
@@ -339,12 +394,6 @@ func dataSourceRefreshObjectSystemLinkMonitor(d *schema.ResourceData, o map[stri
 	if err = d.Set("gateway_ip", dataSourceFlattenSystemLinkMonitorGatewayIp(o["gateway-ip"], d, "gateway_ip")); err != nil {
 		if !fortiAPIPatch(o["gateway-ip"]) {
 			return fmt.Errorf("Error reading gateway_ip: %v", err)
-		}
-	}
-
-	if err = d.Set("password", dataSourceFlattenSystemLinkMonitorPassword(o["password"], d, "password")); err != nil {
-		if !fortiAPIPatch(o["password"]) {
-			return fmt.Errorf("Error reading password: %v", err)
 		}
 	}
 

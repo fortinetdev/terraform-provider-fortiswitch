@@ -413,6 +413,10 @@ func dataSourceRouterBgp() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"capability_extended_nexthop": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"bfd": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
@@ -642,6 +646,350 @@ func dataSourceRouterBgp() *schema.Resource {
 							Computed: true,
 						},
 						"soft_reconfiguration": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"neighbor_group": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"advertisement_interval": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"allowas_in_enable": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"allowas_in_enable_evpn": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"allowas_in_enable6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"enforce_first_as": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"allowas_in": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"allowas_in6": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"attribute_unchanged": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"attribute_unchanged_evpn": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"attribute_unchanged6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"activate": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"activate6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"activate_evpn": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"bfd": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"capability_dynamic": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"capability_orf": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"capability_orf6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"capability_default_originate": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"capability_default_originate6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"capability_extended_nexthop": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"dont_capability_negotiate": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"ebgp_enforce_multihop": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"next_hop_self": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"next_hop_self6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"override_capability": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"passive": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"remove_private_as": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"remove_private_as6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"route_reflector_client": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"route_reflector_client_evpn": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"route_reflector_client6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"route_server_client": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"route_server_client6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"shutdown": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"soft_reconfiguration": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"soft_reconfiguration_evpn": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"soft_reconfiguration6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"as_override": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"as_override6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"strict_capability_match": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"default_originate_routemap": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"default_originate_routemap6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"distribute_list_in": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"distribute_list_in6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"distribute_list_out": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"distribute_list_out6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"ebgp_multihop_ttl": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"ebgp_ttl_security_hops": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"filter_list_in": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"filter_list_in6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"filter_list_out": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"filter_list_out6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"interface": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"interface_name": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"maximum_prefix": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"maximum_prefix6": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"maximum_prefix_threshold": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"maximum_prefix_threshold6": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"maximum_prefix_warning_only": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"maximum_prefix_warning_only6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"prefix_list_in": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"prefix_list_in6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"prefix_list_out": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"prefix_list_out6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"remote_as": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"route_map_in": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"route_map_in_evpn": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"route_map_in6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"route_map_out": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"route_map_out_evpn": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"route_map_out6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"send_community": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"send_community6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"keep_alive_timer": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"holdtime_timer": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"connect_timer": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"unsuppress_map": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"unsuppress_map6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"update_source": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"weight": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"password": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -1435,6 +1783,11 @@ func dataSourceFlattenRouterBgpNeighbor(v interface{}, d *schema.ResourceData, p
 			tmp["capability_default_originate6"] = dataSourceFlattenRouterBgpNeighborCapabilityDefaultOriginate6(i["capability-default-originate6"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_extended_nexthop"
+		if _, ok := i["capability-extended-nexthop"]; ok {
+			tmp["capability_extended_nexthop"] = dataSourceFlattenRouterBgpNeighborCapabilityExtendedNexthop(i["capability-extended-nexthop"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bfd"
 		if _, ok := i["bfd"]; ok {
 			tmp["bfd"] = dataSourceFlattenRouterBgpNeighborBfd(i["bfd"], d, pre_append)
@@ -1829,6 +2182,10 @@ func dataSourceFlattenRouterBgpNeighborCapabilityDefaultOriginate6(v interface{}
 	return v
 }
 
+func dataSourceFlattenRouterBgpNeighborCapabilityExtendedNexthop(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenRouterBgpNeighborBfd(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -2058,6 +2415,803 @@ func dataSourceFlattenRouterBgpNeighborPrefixListOut(v interface{}, d *schema.Re
 }
 
 func dataSourceFlattenRouterBgpNeighborSoftReconfiguration(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroup(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenRouterBgpNeighborGroupName(i["name"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "advertisement_interval"
+		if _, ok := i["advertisement-interval"]; ok {
+			tmp["advertisement_interval"] = dataSourceFlattenRouterBgpNeighborGroupAdvertisementInterval(i["advertisement-interval"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_enable"
+		if _, ok := i["allowas-in-enable"]; ok {
+			tmp["allowas_in_enable"] = dataSourceFlattenRouterBgpNeighborGroupAllowasInEnable(i["allowas-in-enable"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_enable_evpn"
+		if _, ok := i["allowas-in-enable-evpn"]; ok {
+			tmp["allowas_in_enable_evpn"] = dataSourceFlattenRouterBgpNeighborGroupAllowasInEnableEvpn(i["allowas-in-enable-evpn"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_enable6"
+		if _, ok := i["allowas-in-enable6"]; ok {
+			tmp["allowas_in_enable6"] = dataSourceFlattenRouterBgpNeighborGroupAllowasInEnable6(i["allowas-in-enable6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "enforce_first_as"
+		if _, ok := i["enforce-first-as"]; ok {
+			tmp["enforce_first_as"] = dataSourceFlattenRouterBgpNeighborGroupEnforceFirstAs(i["enforce-first-as"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in"
+		if _, ok := i["allowas-in"]; ok {
+			tmp["allowas_in"] = dataSourceFlattenRouterBgpNeighborGroupAllowasIn(i["allowas-in"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in6"
+		if _, ok := i["allowas-in6"]; ok {
+			tmp["allowas_in6"] = dataSourceFlattenRouterBgpNeighborGroupAllowasIn6(i["allowas-in6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "attribute_unchanged"
+		if _, ok := i["attribute-unchanged"]; ok {
+			tmp["attribute_unchanged"] = dataSourceFlattenRouterBgpNeighborGroupAttributeUnchanged(i["attribute-unchanged"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "attribute_unchanged_evpn"
+		if _, ok := i["attribute-unchanged-evpn"]; ok {
+			tmp["attribute_unchanged_evpn"] = dataSourceFlattenRouterBgpNeighborGroupAttributeUnchangedEvpn(i["attribute-unchanged-evpn"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "attribute_unchanged6"
+		if _, ok := i["attribute-unchanged6"]; ok {
+			tmp["attribute_unchanged6"] = dataSourceFlattenRouterBgpNeighborGroupAttributeUnchanged6(i["attribute-unchanged6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "activate"
+		if _, ok := i["activate"]; ok {
+			tmp["activate"] = dataSourceFlattenRouterBgpNeighborGroupActivate(i["activate"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "activate6"
+		if _, ok := i["activate6"]; ok {
+			tmp["activate6"] = dataSourceFlattenRouterBgpNeighborGroupActivate6(i["activate6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "activate_evpn"
+		if _, ok := i["activate-evpn"]; ok {
+			tmp["activate_evpn"] = dataSourceFlattenRouterBgpNeighborGroupActivateEvpn(i["activate-evpn"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "bfd"
+		if _, ok := i["bfd"]; ok {
+			tmp["bfd"] = dataSourceFlattenRouterBgpNeighborGroupBfd(i["bfd"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_dynamic"
+		if _, ok := i["capability-dynamic"]; ok {
+			tmp["capability_dynamic"] = dataSourceFlattenRouterBgpNeighborGroupCapabilityDynamic(i["capability-dynamic"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_orf"
+		if _, ok := i["capability-orf"]; ok {
+			tmp["capability_orf"] = dataSourceFlattenRouterBgpNeighborGroupCapabilityOrf(i["capability-orf"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_orf6"
+		if _, ok := i["capability-orf6"]; ok {
+			tmp["capability_orf6"] = dataSourceFlattenRouterBgpNeighborGroupCapabilityOrf6(i["capability-orf6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_default_originate"
+		if _, ok := i["capability-default-originate"]; ok {
+			tmp["capability_default_originate"] = dataSourceFlattenRouterBgpNeighborGroupCapabilityDefaultOriginate(i["capability-default-originate"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_default_originate6"
+		if _, ok := i["capability-default-originate6"]; ok {
+			tmp["capability_default_originate6"] = dataSourceFlattenRouterBgpNeighborGroupCapabilityDefaultOriginate6(i["capability-default-originate6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_extended_nexthop"
+		if _, ok := i["capability-extended-nexthop"]; ok {
+			tmp["capability_extended_nexthop"] = dataSourceFlattenRouterBgpNeighborGroupCapabilityExtendedNexthop(i["capability-extended-nexthop"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "dont_capability_negotiate"
+		if _, ok := i["dont-capability-negotiate"]; ok {
+			tmp["dont_capability_negotiate"] = dataSourceFlattenRouterBgpNeighborGroupDontCapabilityNegotiate(i["dont-capability-negotiate"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ebgp_enforce_multihop"
+		if _, ok := i["ebgp-enforce-multihop"]; ok {
+			tmp["ebgp_enforce_multihop"] = dataSourceFlattenRouterBgpNeighborGroupEbgpEnforceMultihop(i["ebgp-enforce-multihop"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "next_hop_self"
+		if _, ok := i["next-hop-self"]; ok {
+			tmp["next_hop_self"] = dataSourceFlattenRouterBgpNeighborGroupNextHopSelf(i["next-hop-self"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "next_hop_self6"
+		if _, ok := i["next-hop-self6"]; ok {
+			tmp["next_hop_self6"] = dataSourceFlattenRouterBgpNeighborGroupNextHopSelf6(i["next-hop-self6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "override_capability"
+		if _, ok := i["override-capability"]; ok {
+			tmp["override_capability"] = dataSourceFlattenRouterBgpNeighborGroupOverrideCapability(i["override-capability"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "passive"
+		if _, ok := i["passive"]; ok {
+			tmp["passive"] = dataSourceFlattenRouterBgpNeighborGroupPassive(i["passive"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "remove_private_as"
+		if _, ok := i["remove-private-as"]; ok {
+			tmp["remove_private_as"] = dataSourceFlattenRouterBgpNeighborGroupRemovePrivateAs(i["remove-private-as"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "remove_private_as6"
+		if _, ok := i["remove-private-as6"]; ok {
+			tmp["remove_private_as6"] = dataSourceFlattenRouterBgpNeighborGroupRemovePrivateAs6(i["remove-private-as6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_reflector_client"
+		if _, ok := i["route-reflector-client"]; ok {
+			tmp["route_reflector_client"] = dataSourceFlattenRouterBgpNeighborGroupRouteReflectorClient(i["route-reflector-client"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_reflector_client_evpn"
+		if _, ok := i["route-reflector-client-evpn"]; ok {
+			tmp["route_reflector_client_evpn"] = dataSourceFlattenRouterBgpNeighborGroupRouteReflectorClientEvpn(i["route-reflector-client-evpn"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_reflector_client6"
+		if _, ok := i["route-reflector-client6"]; ok {
+			tmp["route_reflector_client6"] = dataSourceFlattenRouterBgpNeighborGroupRouteReflectorClient6(i["route-reflector-client6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_server_client"
+		if _, ok := i["route-server-client"]; ok {
+			tmp["route_server_client"] = dataSourceFlattenRouterBgpNeighborGroupRouteServerClient(i["route-server-client"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_server_client6"
+		if _, ok := i["route-server-client6"]; ok {
+			tmp["route_server_client6"] = dataSourceFlattenRouterBgpNeighborGroupRouteServerClient6(i["route-server-client6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "shutdown"
+		if _, ok := i["shutdown"]; ok {
+			tmp["shutdown"] = dataSourceFlattenRouterBgpNeighborGroupShutdown(i["shutdown"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "soft_reconfiguration"
+		if _, ok := i["soft-reconfiguration"]; ok {
+			tmp["soft_reconfiguration"] = dataSourceFlattenRouterBgpNeighborGroupSoftReconfiguration(i["soft-reconfiguration"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "soft_reconfiguration_evpn"
+		if _, ok := i["soft-reconfiguration-evpn"]; ok {
+			tmp["soft_reconfiguration_evpn"] = dataSourceFlattenRouterBgpNeighborGroupSoftReconfigurationEvpn(i["soft-reconfiguration-evpn"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "soft_reconfiguration6"
+		if _, ok := i["soft-reconfiguration6"]; ok {
+			tmp["soft_reconfiguration6"] = dataSourceFlattenRouterBgpNeighborGroupSoftReconfiguration6(i["soft-reconfiguration6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "as_override"
+		if _, ok := i["as-override"]; ok {
+			tmp["as_override"] = dataSourceFlattenRouterBgpNeighborGroupAsOverride(i["as-override"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "as_override6"
+		if _, ok := i["as-override6"]; ok {
+			tmp["as_override6"] = dataSourceFlattenRouterBgpNeighborGroupAsOverride6(i["as-override6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "strict_capability_match"
+		if _, ok := i["strict-capability-match"]; ok {
+			tmp["strict_capability_match"] = dataSourceFlattenRouterBgpNeighborGroupStrictCapabilityMatch(i["strict-capability-match"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "default_originate_routemap"
+		if _, ok := i["default-originate-routemap"]; ok {
+			tmp["default_originate_routemap"] = dataSourceFlattenRouterBgpNeighborGroupDefaultOriginateRoutemap(i["default-originate-routemap"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "default_originate_routemap6"
+		if _, ok := i["default-originate-routemap6"]; ok {
+			tmp["default_originate_routemap6"] = dataSourceFlattenRouterBgpNeighborGroupDefaultOriginateRoutemap6(i["default-originate-routemap6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
+		if _, ok := i["description"]; ok {
+			tmp["description"] = dataSourceFlattenRouterBgpNeighborGroupDescription(i["description"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_in"
+		if _, ok := i["distribute-list-in"]; ok {
+			tmp["distribute_list_in"] = dataSourceFlattenRouterBgpNeighborGroupDistributeListIn(i["distribute-list-in"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_in6"
+		if _, ok := i["distribute-list-in6"]; ok {
+			tmp["distribute_list_in6"] = dataSourceFlattenRouterBgpNeighborGroupDistributeListIn6(i["distribute-list-in6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_out"
+		if _, ok := i["distribute-list-out"]; ok {
+			tmp["distribute_list_out"] = dataSourceFlattenRouterBgpNeighborGroupDistributeListOut(i["distribute-list-out"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_out6"
+		if _, ok := i["distribute-list-out6"]; ok {
+			tmp["distribute_list_out6"] = dataSourceFlattenRouterBgpNeighborGroupDistributeListOut6(i["distribute-list-out6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ebgp_multihop_ttl"
+		if _, ok := i["ebgp-multihop-ttl"]; ok {
+			tmp["ebgp_multihop_ttl"] = dataSourceFlattenRouterBgpNeighborGroupEbgpMultihopTtl(i["ebgp-multihop-ttl"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ebgp_ttl_security_hops"
+		if _, ok := i["ebgp-ttl-security-hops"]; ok {
+			tmp["ebgp_ttl_security_hops"] = dataSourceFlattenRouterBgpNeighborGroupEbgpTtlSecurityHops(i["ebgp-ttl-security-hops"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_in"
+		if _, ok := i["filter-list-in"]; ok {
+			tmp["filter_list_in"] = dataSourceFlattenRouterBgpNeighborGroupFilterListIn(i["filter-list-in"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_in6"
+		if _, ok := i["filter-list-in6"]; ok {
+			tmp["filter_list_in6"] = dataSourceFlattenRouterBgpNeighborGroupFilterListIn6(i["filter-list-in6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_out"
+		if _, ok := i["filter-list-out"]; ok {
+			tmp["filter_list_out"] = dataSourceFlattenRouterBgpNeighborGroupFilterListOut(i["filter-list-out"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_out6"
+		if _, ok := i["filter-list-out6"]; ok {
+			tmp["filter_list_out6"] = dataSourceFlattenRouterBgpNeighborGroupFilterListOut6(i["filter-list-out6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
+		if _, ok := i["interface"]; ok {
+			tmp["interface"] = dataSourceFlattenRouterBgpNeighborGroupInterface(i["interface"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix"
+		if _, ok := i["maximum-prefix"]; ok {
+			tmp["maximum_prefix"] = dataSourceFlattenRouterBgpNeighborGroupMaximumPrefix(i["maximum-prefix"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix6"
+		if _, ok := i["maximum-prefix6"]; ok {
+			tmp["maximum_prefix6"] = dataSourceFlattenRouterBgpNeighborGroupMaximumPrefix6(i["maximum-prefix6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_threshold"
+		if _, ok := i["maximum-prefix-threshold"]; ok {
+			tmp["maximum_prefix_threshold"] = dataSourceFlattenRouterBgpNeighborGroupMaximumPrefixThreshold(i["maximum-prefix-threshold"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_threshold6"
+		if _, ok := i["maximum-prefix-threshold6"]; ok {
+			tmp["maximum_prefix_threshold6"] = dataSourceFlattenRouterBgpNeighborGroupMaximumPrefixThreshold6(i["maximum-prefix-threshold6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_warning_only"
+		if _, ok := i["maximum-prefix-warning-only"]; ok {
+			tmp["maximum_prefix_warning_only"] = dataSourceFlattenRouterBgpNeighborGroupMaximumPrefixWarningOnly(i["maximum-prefix-warning-only"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_warning_only6"
+		if _, ok := i["maximum-prefix-warning-only6"]; ok {
+			tmp["maximum_prefix_warning_only6"] = dataSourceFlattenRouterBgpNeighborGroupMaximumPrefixWarningOnly6(i["maximum-prefix-warning-only6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_in"
+		if _, ok := i["prefix-list-in"]; ok {
+			tmp["prefix_list_in"] = dataSourceFlattenRouterBgpNeighborGroupPrefixListIn(i["prefix-list-in"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_in6"
+		if _, ok := i["prefix-list-in6"]; ok {
+			tmp["prefix_list_in6"] = dataSourceFlattenRouterBgpNeighborGroupPrefixListIn6(i["prefix-list-in6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_out"
+		if _, ok := i["prefix-list-out"]; ok {
+			tmp["prefix_list_out"] = dataSourceFlattenRouterBgpNeighborGroupPrefixListOut(i["prefix-list-out"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_out6"
+		if _, ok := i["prefix-list-out6"]; ok {
+			tmp["prefix_list_out6"] = dataSourceFlattenRouterBgpNeighborGroupPrefixListOut6(i["prefix-list-out6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_as"
+		if _, ok := i["remote-as"]; ok {
+			tmp["remote_as"] = dataSourceFlattenRouterBgpNeighborGroupRemoteAs(i["remote-as"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_in"
+		if _, ok := i["route-map-in"]; ok {
+			tmp["route_map_in"] = dataSourceFlattenRouterBgpNeighborGroupRouteMapIn(i["route-map-in"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_in_evpn"
+		if _, ok := i["route-map-in-evpn"]; ok {
+			tmp["route_map_in_evpn"] = dataSourceFlattenRouterBgpNeighborGroupRouteMapInEvpn(i["route-map-in-evpn"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_in6"
+		if _, ok := i["route-map-in6"]; ok {
+			tmp["route_map_in6"] = dataSourceFlattenRouterBgpNeighborGroupRouteMapIn6(i["route-map-in6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out"
+		if _, ok := i["route-map-out"]; ok {
+			tmp["route_map_out"] = dataSourceFlattenRouterBgpNeighborGroupRouteMapOut(i["route-map-out"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out_evpn"
+		if _, ok := i["route-map-out-evpn"]; ok {
+			tmp["route_map_out_evpn"] = dataSourceFlattenRouterBgpNeighborGroupRouteMapOutEvpn(i["route-map-out-evpn"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out6"
+		if _, ok := i["route-map-out6"]; ok {
+			tmp["route_map_out6"] = dataSourceFlattenRouterBgpNeighborGroupRouteMapOut6(i["route-map-out6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "send_community"
+		if _, ok := i["send-community"]; ok {
+			tmp["send_community"] = dataSourceFlattenRouterBgpNeighborGroupSendCommunity(i["send-community"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "send_community6"
+		if _, ok := i["send-community6"]; ok {
+			tmp["send_community6"] = dataSourceFlattenRouterBgpNeighborGroupSendCommunity6(i["send-community6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "keep_alive_timer"
+		if _, ok := i["keep-alive-timer"]; ok {
+			tmp["keep_alive_timer"] = dataSourceFlattenRouterBgpNeighborGroupKeepAliveTimer(i["keep-alive-timer"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "holdtime_timer"
+		if _, ok := i["holdtime-timer"]; ok {
+			tmp["holdtime_timer"] = dataSourceFlattenRouterBgpNeighborGroupHoldtimeTimer(i["holdtime-timer"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "connect_timer"
+		if _, ok := i["connect-timer"]; ok {
+			tmp["connect_timer"] = dataSourceFlattenRouterBgpNeighborGroupConnectTimer(i["connect-timer"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "unsuppress_map"
+		if _, ok := i["unsuppress-map"]; ok {
+			tmp["unsuppress_map"] = dataSourceFlattenRouterBgpNeighborGroupUnsuppressMap(i["unsuppress-map"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "unsuppress_map6"
+		if _, ok := i["unsuppress-map6"]; ok {
+			tmp["unsuppress_map6"] = dataSourceFlattenRouterBgpNeighborGroupUnsuppressMap6(i["unsuppress-map6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "update_source"
+		if _, ok := i["update-source"]; ok {
+			tmp["update_source"] = dataSourceFlattenRouterBgpNeighborGroupUpdateSource(i["update-source"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
+		if _, ok := i["weight"]; ok {
+			tmp["weight"] = dataSourceFlattenRouterBgpNeighborGroupWeight(i["weight"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "password"
+		if _, ok := i["password"]; ok {
+			tmp["password"] = dataSourceFlattenRouterBgpNeighborGroupPassword(i["password"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupAdvertisementInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupAllowasInEnable(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupAllowasInEnableEvpn(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupAllowasInEnable6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupEnforceFirstAs(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupAllowasIn(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupAllowasIn6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupAttributeUnchanged(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupAttributeUnchangedEvpn(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupAttributeUnchanged6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupActivate(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupActivate6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupActivateEvpn(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupBfd(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupCapabilityDynamic(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupCapabilityOrf(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupCapabilityOrf6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupCapabilityDefaultOriginate(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupCapabilityDefaultOriginate6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupCapabilityExtendedNexthop(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupDontCapabilityNegotiate(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupEbgpEnforceMultihop(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupNextHopSelf(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupNextHopSelf6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupOverrideCapability(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupPassive(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupRemovePrivateAs(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupRemovePrivateAs6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupRouteReflectorClient(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupRouteReflectorClientEvpn(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupRouteReflectorClient6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupRouteServerClient(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupRouteServerClient6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupShutdown(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupSoftReconfiguration(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupSoftReconfigurationEvpn(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupSoftReconfiguration6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupAsOverride(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupAsOverride6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupStrictCapabilityMatch(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupDefaultOriginateRoutemap(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupDefaultOriginateRoutemap6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupDescription(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupDistributeListIn(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupDistributeListIn6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupDistributeListOut(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupDistributeListOut6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupEbgpMultihopTtl(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupEbgpTtlSecurityHops(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupFilterListIn(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupFilterListIn6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupFilterListOut(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupFilterListOut6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupInterface(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
+		if _, ok := i["interface-name"]; ok {
+			tmp["interface_name"] = dataSourceFlattenRouterBgpNeighborGroupInterfaceInterfaceName(i["interface-name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupInterfaceInterfaceName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupMaximumPrefix(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupMaximumPrefix6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupMaximumPrefixThreshold(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupMaximumPrefixThreshold6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupMaximumPrefixWarningOnly(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupMaximumPrefixWarningOnly6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupPrefixListIn(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupPrefixListIn6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupPrefixListOut(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupPrefixListOut6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupRemoteAs(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupRouteMapIn(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupRouteMapInEvpn(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupRouteMapIn6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupRouteMapOut(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupRouteMapOutEvpn(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupRouteMapOut6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupSendCommunity(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupSendCommunity6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupKeepAliveTimer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupHoldtimeTimer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupConnectTimer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupUnsuppressMap(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupUnsuppressMap6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupUpdateSource(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupWeight(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupPassword(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -2372,6 +3526,12 @@ func dataSourceRefreshObjectRouterBgp(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("neighbor", dataSourceFlattenRouterBgpNeighbor(o["neighbor"], d, "neighbor")); err != nil {
 		if !fortiAPIPatch(o["neighbor"]) {
 			return fmt.Errorf("Error reading neighbor: %v", err)
+		}
+	}
+
+	if err = d.Set("neighbor_group", dataSourceFlattenRouterBgpNeighborGroup(o["neighbor-group"], d, "neighbor_group")); err != nil {
+		if !fortiAPIPatch(o["neighbor-group"]) {
+			return fmt.Errorf("Error reading neighbor_group: %v", err)
 		}
 	}
 

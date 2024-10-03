@@ -55,12 +55,12 @@ func resourceSystemSnmpUser() *schema.Resource {
 			},
 			"auth_pwd": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 32),
+				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
 			},
 			"priv_pwd": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 32),
+				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
 			},
 			"security_level": &schema.Schema{

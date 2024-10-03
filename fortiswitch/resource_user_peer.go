@@ -292,6 +292,12 @@ func refreshObjectUserPeer(d *schema.ResourceData, o map[string]interface{}, sv 
 		}
 	}
 
+	if err = d.Set("ldap_password", flattenUserPeerLdapPassword(o["ldap-password"], d, "ldap_password", sv)); err != nil {
+		if !fortiAPIPatch(o["ldap-password"]) {
+			return fmt.Errorf("Error reading ldap_password: %v", err)
+		}
+	}
+
 	if err = d.Set("ldap_mode", flattenUserPeerLdapMode(o["ldap-mode"], d, "ldap_mode", sv)); err != nil {
 		if !fortiAPIPatch(o["ldap-mode"]) {
 			return fmt.Errorf("Error reading ldap_mode: %v", err)

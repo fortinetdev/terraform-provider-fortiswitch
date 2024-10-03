@@ -12,6 +12,7 @@ package fortiswitch
 import (
 	"fmt"
 	"log"
+	"reflect"
 	"strconv"
 	"strings"
 
@@ -205,7 +206,7 @@ func resourceSwitchAclEgressCreate(d *schema.ResourceData, m interface{}) error 
 	}
 
 	if o["mkey"] != nil && o["mkey"] != "" {
-		d.SetId(strconv.Itoa(int(o["mkey"].(float64))))
+		d.SetId(fmt.Sprintf("%v", o["mkey"]))
 	} else {
 		d.SetId("SwitchAclEgress")
 	}
@@ -230,7 +231,7 @@ func resourceSwitchAclEgressUpdate(d *schema.ResourceData, m interface{}) error 
 
 	log.Printf(strconv.Itoa(c.Retries))
 	if o["mkey"] != nil && o["mkey"] != "" {
-		d.SetId(o["mkey"].(string))
+		d.SetId(fmt.Sprintf("%v", o["mkey"]))
 	} else {
 		d.SetId("SwitchAclEgress")
 	}
@@ -405,7 +406,7 @@ func flattenSwitchAclEgressClassifierDstMac(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSwitchAclEgressClassifierCos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	if v == "" {
+	if v == "" || v == "none" || reflect.DeepEqual(v, []interface{}{}) {
 		return nil
 	}
 	return v
@@ -431,7 +432,7 @@ func flattenSwitchAclEgressClassifierSrcMac(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSwitchAclEgressClassifierDscp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	if v == "" {
+	if v == "" || v == "none" || reflect.DeepEqual(v, []interface{}{}) {
 		return nil
 	}
 	return v
@@ -526,7 +527,7 @@ func flattenSwitchAclEgressActionRedirect(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSwitchAclEgressActionRemarkDscp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	if v == "" {
+	if v == "" || v == "none" || reflect.DeepEqual(v, []interface{}{}) {
 		return nil
 	}
 	return v

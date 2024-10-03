@@ -155,6 +155,7 @@ The `passive_interface` block supports:
 The `interface` block supports:
 
 * `split_horizon_status` - Split horizon status. Valid values: `enable`, `disable`.
+* `bfd` - Bidirectional Forwarding Detection (BFD). Valid values: `enable`, `disable`.
 * `auth_mode` - Authentication mode. Valid values: `none`, `text`, `md5`.
 * `name` - interface name
 * `send_version2_broadcast` - broadcast version 1 compatible packets Valid values: `disable`, `enable`.

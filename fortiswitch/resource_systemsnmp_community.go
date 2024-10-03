@@ -186,7 +186,7 @@ func resourceSystemSnmpCommunityCreate(d *schema.ResourceData, m interface{}) er
 	}
 
 	if o["mkey"] != nil && o["mkey"] != "" {
-		d.SetId(strconv.Itoa(int(o["mkey"].(float64))))
+		d.SetId(fmt.Sprintf("%v", o["mkey"]))
 	} else {
 		d.SetId("SystemSnmpCommunity")
 	}
@@ -211,7 +211,7 @@ func resourceSystemSnmpCommunityUpdate(d *schema.ResourceData, m interface{}) er
 
 	log.Printf(strconv.Itoa(c.Retries))
 	if o["mkey"] != nil && o["mkey"] != "" {
-		d.SetId(strconv.Itoa(int(o["mkey"].(float64))))
+		d.SetId(fmt.Sprintf("%v", o["mkey"]))
 	} else {
 		d.SetId("SystemSnmpCommunity")
 	}

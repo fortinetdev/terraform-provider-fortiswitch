@@ -107,7 +107,7 @@ The `vrrp` block supports:
 
 The `ipv6` block supports:
 
-* `ip6_allowaccess` - Allow management access to the interface. Valid values: `any`, `ping`, `https`, `http`, `ssh`, `snmp`, `telnet`, `radius-acct`.
+* `ip6_allowaccess` - Allow management access to the interface.
 * `ip6_retrans_time` - IPv6 retransmit time (milliseconds).
 * `vrrp6` - IPv6 VRRP configuration. The structure of `vrrp6` block is documented below.
 * `ip6_other_flag` - Enable/disable sending of IPv6 other flag. Valid values: `enable`, `disable`.

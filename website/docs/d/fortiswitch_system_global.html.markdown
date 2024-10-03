@@ -59,7 +59,10 @@ The following attributes are exported:
 * `admin_password_hash` - Admin password hash algorithm. (sha1, sha256, pbkdf2)
 * `dh_params` - Minimum size of Diffie-Hellman prime for HTTPS/SSH (bits).
 * `ldapconntimeout` - LDAP connection time-out (0 - 2147483647 milliseconds).
+* `reset_button` - When disabled, reset is ignored while the OS is running.
+				  BIOS will still detect button press on reboot.
 * `tcp_mss_min` - Minimum allowed TCP MSS value in bytes.
+* `admin_restrict_local` - Enable/disable local admin authentication restriction when remote authenticator is up and running. (default = disable)
 * `admin_concurrent` - Enable/disable concurrent login of adminstrative users.
 * `admintimeout` - Idle time-out for firewall administration.
 * `arp_timeout` - ARP timeout value in seconds.
@@ -75,6 +78,7 @@ The following attributes are exported:
 * `n8021x_ca_certificate` - CA certificate for Port Security (802.1x).
 * `dhcp_remote_id` - List the parameters to be included in remote-id field.
 * `dhcp_snoop_client_req` - Client DHCP packet broadcast mode.
+* `arp_inspection_monitor_timeout` - Timeout used when MAC-VLAN-IP learned from ARP traffic.
 * `dhcp_client_location` - List the parameters to be included to inform about client location.
 * `csr_ca_attribute` - Enable/disable CA attribute in CSR.
 * `delaycli_timeout_cleanup` - Time-out for cleaning up the delay cli execution completion data (1-1440 minutes, default=15min).

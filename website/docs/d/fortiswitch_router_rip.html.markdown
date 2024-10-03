@@ -150,6 +150,7 @@ The `passive_interface` block contains:
 The `interface` block contains:
 
 * `split_horizon_status` - Split horizon status.
+* `bfd` - Bidirectional Forwarding Detection (BFD).
 * `auth_mode` - Authentication mode.
 * `name` - interface name
 * `send_version2_broadcast` - broadcast version 1 compatible packets

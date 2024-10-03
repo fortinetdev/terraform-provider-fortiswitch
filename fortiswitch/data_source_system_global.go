@@ -148,8 +148,16 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"reset_button": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"tcp_mss_min": &schema.Schema{
 				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"admin_restrict_local": &schema.Schema{
+				Type:     schema.TypeString,
 				Computed: true,
 			},
 			"admin_concurrent": &schema.Schema{
@@ -210,6 +218,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 			},
 			"dhcp_snoop_client_req": &schema.Schema{
 				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"arp_inspection_monitor_timeout": &schema.Schema{
+				Type:     schema.TypeInt,
 				Computed: true,
 			},
 			"dhcp_client_location": &schema.Schema{
@@ -454,7 +466,15 @@ func dataSourceFlattenSystemGlobalLdapconntimeout(v interface{}, d *schema.Resou
 	return v
 }
 
+func dataSourceFlattenSystemGlobalResetButton(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemGlobalTcpMssMin(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalAdminRestrictLocal(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -515,6 +535,10 @@ func dataSourceFlattenSystemGlobalDhcpRemoteId(v interface{}, d *schema.Resource
 }
 
 func dataSourceFlattenSystemGlobalDhcpSnoopClientReq(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalArpInspectionMonitorTimeout(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -795,9 +819,21 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("reset_button", dataSourceFlattenSystemGlobalResetButton(o["reset-button"], d, "reset_button")); err != nil {
+		if !fortiAPIPatch(o["reset-button"]) {
+			return fmt.Errorf("Error reading reset_button: %v", err)
+		}
+	}
+
 	if err = d.Set("tcp_mss_min", dataSourceFlattenSystemGlobalTcpMssMin(o["tcp-mss-min"], d, "tcp_mss_min")); err != nil {
 		if !fortiAPIPatch(o["tcp-mss-min"]) {
 			return fmt.Errorf("Error reading tcp_mss_min: %v", err)
+		}
+	}
+
+	if err = d.Set("admin_restrict_local", dataSourceFlattenSystemGlobalAdminRestrictLocal(o["admin-restrict-local"], d, "admin_restrict_local")); err != nil {
+		if !fortiAPIPatch(o["admin-restrict-local"]) {
+			return fmt.Errorf("Error reading admin_restrict_local: %v", err)
 		}
 	}
 
@@ -888,6 +924,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("dhcp_snoop_client_req", dataSourceFlattenSystemGlobalDhcpSnoopClientReq(o["dhcp-snoop-client-req"], d, "dhcp_snoop_client_req")); err != nil {
 		if !fortiAPIPatch(o["dhcp-snoop-client-req"]) {
 			return fmt.Errorf("Error reading dhcp_snoop_client_req: %v", err)
+		}
+	}
+
+	if err = d.Set("arp_inspection_monitor_timeout", dataSourceFlattenSystemGlobalArpInspectionMonitorTimeout(o["arp-inspection-monitor-timeout"], d, "arp_inspection_monitor_timeout")); err != nil {
+		if !fortiAPIPatch(o["arp-inspection-monitor-timeout"]) {
+			return fmt.Errorf("Error reading arp_inspection_monitor_timeout: %v", err)
 		}
 	}
 

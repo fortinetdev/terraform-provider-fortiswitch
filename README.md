@@ -4,12 +4,12 @@
 - [![Gitter chat](https://badges.gitter.im/hashicorp-terraform/Lobby.png)](https://gitter.im/hashicorp-terraform/Lobby)
 - Mailing list: [Google Groups](http://groups.google.com/group/terraform-tool)
 
-<img src="https://cdn.rawgit.com/hashicorp/terraform-website/master/content/source/assets/images/logo-hashicorp.svg" width="600px">
+<img src="https://www.datocms-assets.com/2885/1629941242-logo-terraform-main.svg" width="600px">
 
 ## Requirements
 
 - [Terraform](https://www.terraform.io/downloads.html) 0.12.x +
-- [Go](https://golang.org/doc/install) 1.13.x (to build the provider plugin)
+- [Go](https://golang.org/doc/install) 1.21.x (to build the provider plugin)
 - The provider can cover Fortiswitch 7.0 versions, the configuration of all parameters should be based on the relevant Fortiswitch version manual.
 
 ## Building the Provider
@@ -38,7 +38,7 @@ $ terraform init
 
 ## Developing the Provider
 
-If you wish to work on the provider, you'll first need Go installed on your machine (version 1.13+ is required). You'll also need to correctly setup a GOPATH, as well as adding $GOPATH/bin to your $PATH.
+If you wish to work on the provider, you'll first need Go installed on your machine (version 1.21+ is required). You'll also need to correctly setup a GOPATH, as well as adding $GOPATH/bin to your $PATH.
 
 To compile the provider, run `make build`. This will build the provider and put the provider binary in the $GOPATH/bin directory.
 

@@ -425,6 +425,10 @@ func dataSourceRouterRip() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"bfd": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"auth_mode": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
@@ -1586,6 +1590,11 @@ func dataSourceFlattenRouterRipInterface(v interface{}, d *schema.ResourceData, 
 			tmp["split_horizon_status"] = dataSourceFlattenRouterRipInterfaceSplitHorizonStatus(i["split-horizon-status"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "bfd"
+		if _, ok := i["bfd"]; ok {
+			tmp["bfd"] = dataSourceFlattenRouterRipInterfaceBfd(i["bfd"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_mode"
 		if _, ok := i["auth-mode"]; ok {
 			tmp["auth_mode"] = dataSourceFlattenRouterRipInterfaceAuthMode(i["auth-mode"], d, pre_append)
@@ -1640,6 +1649,10 @@ func dataSourceFlattenRouterRipInterface(v interface{}, d *schema.ResourceData, 
 }
 
 func dataSourceFlattenRouterRipInterfaceSplitHorizonStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterRipInterfaceBfd(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

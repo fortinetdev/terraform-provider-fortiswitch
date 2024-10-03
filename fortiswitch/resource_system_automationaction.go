@@ -621,6 +621,12 @@ func flattenSystemAutomationActionAlicloudFunctionAuthorization(v interface{}, d
 func refreshObjectSystemAutomationAction(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
+	if err = d.Set("aws_api_key", flattenSystemAutomationActionAwsApiKey(o["aws-api-key"], d, "aws_api_key", sv)); err != nil {
+		if !fortiAPIPatch(o["aws-api-key"]) {
+			return fmt.Errorf("Error reading aws_api_key: %v", err)
+		}
+	}
+
 	if err = d.Set("alicloud_account_id", flattenSystemAutomationActionAlicloudAccountId(o["alicloud-account-id"], d, "alicloud_account_id", sv)); err != nil {
 		if !fortiAPIPatch(o["alicloud-account-id"]) {
 			return fmt.Errorf("Error reading alicloud_account_id: %v", err)
@@ -664,6 +670,12 @@ func refreshObjectSystemAutomationAction(d *schema.ResourceData, o map[string]in
 					return fmt.Errorf("Error reading email_to: %v", err)
 				}
 			}
+		}
+	}
+
+	if err = d.Set("azure_api_key", flattenSystemAutomationActionAzureApiKey(o["azure-api-key"], d, "azure_api_key", sv)); err != nil {
+		if !fortiAPIPatch(o["azure-api-key"]) {
+			return fmt.Errorf("Error reading azure_api_key: %v", err)
 		}
 	}
 
@@ -794,6 +806,12 @@ func refreshObjectSystemAutomationAction(d *schema.ResourceData, o map[string]in
 	if err = d.Set("gcp_project", flattenSystemAutomationActionGcpProject(o["gcp-project"], d, "gcp_project", sv)); err != nil {
 		if !fortiAPIPatch(o["gcp-project"]) {
 			return fmt.Errorf("Error reading gcp_project: %v", err)
+		}
+	}
+
+	if err = d.Set("alicloud_access_key_secret", flattenSystemAutomationActionAlicloudAccessKeySecret(o["alicloud-access-key-secret"], d, "alicloud_access_key_secret", sv)); err != nil {
+		if !fortiAPIPatch(o["alicloud-access-key-secret"]) {
+			return fmt.Errorf("Error reading alicloud_access_key_secret: %v", err)
 		}
 	}
 

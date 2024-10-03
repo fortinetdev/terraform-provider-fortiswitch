@@ -12,6 +12,7 @@ package fortiswitch
 import (
 	"fmt"
 	"log"
+	"reflect"
 	"strconv"
 	"strings"
 
@@ -289,7 +290,7 @@ func resourceSwitchAclIngressCreate(d *schema.ResourceData, m interface{}) error
 	}
 
 	if o["mkey"] != nil && o["mkey"] != "" {
-		d.SetId(strconv.Itoa(int(o["mkey"].(float64))))
+		d.SetId(fmt.Sprintf("%v", o["mkey"]))
 	} else {
 		d.SetId("SwitchAclIngress")
 	}
@@ -310,6 +311,13 @@ func resourceSwitchAclIngressUpdate(d *schema.ResourceData, m interface{}) error
 	o, err := c.UpdateSwitchAclIngress(obj, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchAclIngress resource: %v", err)
+	}
+
+	log.Printf(strconv.Itoa(c.Retries))
+	if o["mkey"] != nil && o["mkey"] != "" {
+		d.SetId(fmt.Sprintf("%v", o["mkey"]))
+	} else {
+		d.SetId("SwitchAclIngress")
 	}
 
 	log.Printf(strconv.Itoa(c.Retries))
@@ -544,9 +552,10 @@ func flattenSwitchAclIngressClassifierDstMac(v interface{}, d *schema.ResourceDa
 }
 
 func flattenSwitchAclIngressClassifierCos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	if v == "" {
+	if v == "" || v == "none" || reflect.DeepEqual(v, []interface{}{}) {
 		return nil
 	}
+
 	return v
 }
 
@@ -570,9 +579,10 @@ func flattenSwitchAclIngressClassifierSrcMac(v interface{}, d *schema.ResourceDa
 }
 
 func flattenSwitchAclIngressClassifierDscp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	if v == "" {
+	if v == "" || v == "none" || reflect.DeepEqual(v, []interface{}{}) {
 		return nil
 	}
+
 	return v
 }
 
@@ -762,16 +772,18 @@ func flattenSwitchAclIngressActionRedirectPhysicalPortMemberName(v interface{}, 
 }
 
 func flattenSwitchAclIngressActionCosQueue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	if v == "" {
+	if v == "" || v == "none" || reflect.DeepEqual(v, []interface{}{}) {
 		return nil
 	}
+
 	return v
 }
 
 func flattenSwitchAclIngressActionRemarkDscp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	if v == "" {
+	if v == "" || v == "none" || reflect.DeepEqual(v, []interface{}{}) {
 		return nil
 	}
+
 	return v
 }
 
@@ -831,9 +843,10 @@ func flattenSwitchAclIngressActionPolicer(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSwitchAclIngressActionRemarkCos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	if v == "" {
+	if v == "" || v == "none" || reflect.DeepEqual(v, []interface{}{}) {
 		return nil
 	}
+
 	return v
 }
 

@@ -41,6 +41,7 @@ The following arguments are supported:
 * `advertisement_interval` - Minimum interval (seconds) between sending updates.
 * `prefix_list_in6` - IPv6 Inbound filter for updates from this neighbor.
 * `capability_default_originate6` - Enable/disable advertise default IPv6 route to this neighbor. Valid values: `enable`, `disable`.
+* `capability_extended_nexthop` - Enable/disable extended nexthop capability. Valid values: `enable`, `disable`.
 * `bfd` - Enable/disable BFD for this neighbor. Valid values: `enable`, `disable`.
 * `capability_orf` - Accept/Send IPv4 ORF lists to/from this neighbor. Valid values: `none`, `receive`, `send`, `both`.
 * `next_hop_self` - Enable/disable IPv4 next-hop calculation for this neighbor. Valid values: `enable`, `disable`.

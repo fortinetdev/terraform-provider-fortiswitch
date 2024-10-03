@@ -13,11 +13,17 @@ PTP policy configuration. Applies to FortiSwitch Version `>= 7.2.5`.
 
 The following arguments are supported:
 
+* `priority1` - PTP priority1 (0-255)
 * `domain` - PTP domain (0-255)
+* `announce_interval` - Announce interval. Valid values: `0.25sec`, `0.5sec`, `1sec`, `2sec`, `4sec`.
 * `name` - Profile name.
+* `min_delay_req_interval` - Min Delay Request interval. Valid values: `0.25sec`, `0.5sec`, `1sec`, `2sec`, `4sec`.
 * `pdelay_req_interval` - PDelay Request interval. Valid values: `0.25sec`, `0.5sec`, `1sec`, `2sec`, `4sec`.
+* `sync_interval` - Sync interval. Valid values: `0.25sec`, `0.5sec`, `1sec`, `2sec`, `4sec`.
+* `priority2` - PTP priority2 (0-255)
 * `mode` - Select PTP mode. Valid values: `transparent-e2e`.
-* `ptp_profile` - Select PTP profile. Valid values: `C37.238-2017`.
+* `ptp_profile` - Select PTP profile.
+* `announce_timeout` - PTP Announce timeout (2-10)
 * `transport` - Select PTP transport. Valid values: `l2-mcast`.
 * `description` - Description.
 

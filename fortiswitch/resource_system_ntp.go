@@ -293,6 +293,10 @@ func flattenSystemNtpNtpserver(v interface{}, d *schema.ResourceData, pre string
 		if _, ok := i["key"]; ok {
 
 			tmp["key"] = flattenSystemNtpNtpserverKey(i["key"], d, pre_append, sv)
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["key"] = c
+			}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"

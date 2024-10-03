@@ -32,9 +32,10 @@ func resourceRouterIsis() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"default_information_metric6": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
-				Computed: true,
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 16777215),
+				Optional:     true,
+				Computed:     true,
 			},
 			"auth_sendonly_domain": &schema.Schema{
 				Type:     schema.TypeString,
@@ -193,9 +194,10 @@ func resourceRouterIsis() *schema.Resource {
 				Optional:     true,
 			},
 			"default_information_metric": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
-				Computed: true,
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 16777215),
+				Optional:     true,
+				Computed:     true,
 			},
 			"default_information_originate": &schema.Schema{
 				Type:     schema.TypeString,

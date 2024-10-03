@@ -49,7 +49,7 @@ The following arguments are supported:
 * `alicloud_region` - AliCloud region.
 * `uri` - Request API URI.
 * `azure_function_authorization` - Azure function authorization level. Valid values: `anonymous`, `function`, `admin`.
-* `snmp_trap` - SNMP trap. Valid values: `cpu-high`, `mem-low`, `syslog-full`, `test-trap`.
+* `snmp_trap` - SNMP trap.
 * `gcp_function_region` - Google Cloud function region.
 * `alicloud_service` - AliCloud service name.
 * `alicloud_function_authorization` - AliCloud function authorization type. Valid values: `anonymous`, `function`.

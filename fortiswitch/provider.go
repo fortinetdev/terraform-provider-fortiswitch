@@ -162,7 +162,6 @@ func Provider() *schema.Provider {
 			"fortiswitch_router_communitylistlist":         dataSourceRouterCommunityListList(),
 			"fortiswitch_router_keychainlist":              dataSourceRouterKeyChainList(),
 			"fortiswitch_router_multicastflowlist":         dataSourceRouterMulticastFlowList(),
-			"fortiswitch_router_policylist":                dataSourceRouterPolicyList(),
 			"fortiswitch_router_prefixlistlist":            dataSourceRouterPrefixListList(),
 			"fortiswitch_router_prefixlist6list":           dataSourceRouterPrefixList6List(),
 			"fortiswitch_router_routemaplist":              dataSourceRouterRouteMapList(),

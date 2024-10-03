@@ -262,6 +262,12 @@ func refreshObjectSystemCertificateCrl(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
+	if err = d.Set("ldap_password", flattenSystemCertificateCrlLdapPassword(o["ldap-password"], d, "ldap_password", sv)); err != nil {
+		if !fortiAPIPatch(o["ldap-password"]) {
+			return fmt.Errorf("Error reading ldap_password: %v", err)
+		}
+	}
+
 	if err = d.Set("scep_cert", flattenSystemCertificateCrlScepCert(o["scep-cert"], d, "scep_cert", sv)); err != nil {
 		if !fortiAPIPatch(o["scep-cert"]) {
 			return fmt.Errorf("Error reading scep_cert: %v", err)

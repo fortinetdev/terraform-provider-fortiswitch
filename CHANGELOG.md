@@ -1,4 +1,18 @@
-## 1.1.3 (Unreleased)
+## 1.1.4 (Unreleased)
+
+
+## 1.1.3 (September 30, 2024)
+
+BUGFIXES:
+
+* Fix the provider crash issue in `fortiswitch_switch_ipmacbinding`, `fortiswitch_system_proxyarp` and `fortiswitch_systemsnmp_community`.
+* Fix the issue in `data_source_router_policy` and delete the redundant data resource `data_source_router_policylist`.
+* Fix the return data type change in v7.6.0 `fortiswitch_switchacl_ingress`, `fortiswitch_switchacl_egree` and `fortiswitch_switchacl_prelookup`.
+
+IMPROVEMENTS:
+
+* Support new version 7.6.0.
+* Add a new documentation for concurrent operations on FortiSwitch.
 
 
 ## 1.1.2 (April 18, 2024)

@@ -120,6 +120,10 @@ func dataSourceRouterbgpNeighbor() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"capability_extended_nexthop": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"bfd": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -484,6 +488,10 @@ func dataSourceFlattenRouterbgpNeighborPrefixListIn6(v interface{}, d *schema.Re
 }
 
 func dataSourceFlattenRouterbgpNeighborCapabilityDefaultOriginate6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterbgpNeighborCapabilityExtendedNexthop(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -863,6 +871,12 @@ func dataSourceRefreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[stri
 	if err = d.Set("capability_default_originate6", dataSourceFlattenRouterbgpNeighborCapabilityDefaultOriginate6(o["capability-default-originate6"], d, "capability_default_originate6")); err != nil {
 		if !fortiAPIPatch(o["capability-default-originate6"]) {
 			return fmt.Errorf("Error reading capability_default_originate6: %v", err)
+		}
+	}
+
+	if err = d.Set("capability_extended_nexthop", dataSourceFlattenRouterbgpNeighborCapabilityExtendedNexthop(o["capability-extended-nexthop"], d, "capability_extended_nexthop")); err != nil {
+		if !fortiAPIPatch(o["capability-extended-nexthop"]) {
+			return fmt.Errorf("Error reading capability_extended_nexthop: %v", err)
 		}
 	}
 

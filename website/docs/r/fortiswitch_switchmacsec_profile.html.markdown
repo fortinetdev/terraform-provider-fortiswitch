@@ -44,7 +44,7 @@ The following arguments are supported:
 * `replay_window` - MACsec replay window size.
 * `name` - Profile name.
 * `macsec_mode` - Set mode of the MACsec Profile.
-* `include_mka_icv_ind` - Include MKA ICV indicator. Valid values: `enable`.
+* `include_mka_icv_ind` - Include MKA ICV indicator.
 * `eap_tls_cert` - Client certificate for MACSEC CAK EAP-TLS.
 * `cipher_suite` - MACsec cipher suite. Valid values: `GCM-AES-128`.
 * `traffic_policy` - MACsec traffic policy configuration. The structure of `traffic_policy` block is documented below.
@@ -52,6 +52,7 @@ The following arguments are supported:
 * `cipher_suite` - MACsec cipher suite.
 * `macsec_validate` - Choose different MACsec validate mode. Valid values: `strict`.
 * `mka_priority` - MACsec MKA priority.
+* `mka_sak_rekey_time` - MACsec MKA Session SAK rekey timer.
 * `encrypt_traffic` - Enable/disable Encryption of MACsec traffic. Valid values: `enable`, `disable`.
 * `mka_psk` - MACsec MKA pre-shared key configuration. The structure of `mka_psk` block is documented below.
 * `confident_offset` - Choose different confident offset bytes. Valid values: `0`, `30`, `50`.
@@ -68,7 +69,7 @@ The `traffic_policy` block supports:
 The `mka_psk` block supports:
 
 * `status` - Status of this PSK. Valid values: `active`.
-* `crypto_alg` - PSK crypto algorithm. Valid values: `AES_128_CMAC`.
+* `crypto_alg` - PSK crypto algorithm.
 * `name` - pre-shared-key name.
 * `mka_cak` - MKA CAK pre-shared key hex string.
 * `mka_ckn` - MKA CKN pre-shared key hex string.

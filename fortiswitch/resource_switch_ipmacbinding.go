@@ -72,7 +72,7 @@ func resourceSwitchIpMacBindingCreate(d *schema.ResourceData, m interface{}) err
 	}
 
 	if o["mkey"] != nil && o["mkey"] != "" {
-		d.SetId(strconv.Itoa(int(o["mkey"].(float64))))
+		d.SetId(fmt.Sprintf("%v", o["mkey"]))
 	} else {
 		d.SetId("SwitchIpMacBinding")
 	}
@@ -97,7 +97,7 @@ func resourceSwitchIpMacBindingUpdate(d *schema.ResourceData, m interface{}) err
 
 	log.Printf(strconv.Itoa(c.Retries))
 	if o["mkey"] != nil && o["mkey"] != "" {
-		d.SetId(strconv.Itoa(int(o["mkey"].(float64))))
+		d.SetId(fmt.Sprintf("%v", o["mkey"]))
 	} else {
 		d.SetId("SwitchIpMacBinding")
 	}

@@ -194,8 +194,18 @@ func resourceSystemGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"reset_button": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"tcp_mss_min": &schema.Schema{
 				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
+			"admin_restrict_local": &schema.Schema{
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
@@ -277,6 +287,12 @@ func resourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"arp_inspection_monitor_timeout": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 10080),
+				Optional:     true,
+				Computed:     true,
 			},
 			"dhcp_client_location": &schema.Schema{
 				Type:     schema.TypeString,
@@ -590,7 +606,15 @@ func flattenSystemGlobalLdapconntimeout(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func flattenSystemGlobalResetButton(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemGlobalTcpMssMin(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalAdminRestrictLocal(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -651,6 +675,10 @@ func flattenSystemGlobalDhcpRemoteId(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenSystemGlobalDhcpSnoopClientReq(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalArpInspectionMonitorTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -931,9 +959,21 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("reset_button", flattenSystemGlobalResetButton(o["reset-button"], d, "reset_button", sv)); err != nil {
+		if !fortiAPIPatch(o["reset-button"]) {
+			return fmt.Errorf("Error reading reset_button: %v", err)
+		}
+	}
+
 	if err = d.Set("tcp_mss_min", flattenSystemGlobalTcpMssMin(o["tcp-mss-min"], d, "tcp_mss_min", sv)); err != nil {
 		if !fortiAPIPatch(o["tcp-mss-min"]) {
 			return fmt.Errorf("Error reading tcp_mss_min: %v", err)
+		}
+	}
+
+	if err = d.Set("admin_restrict_local", flattenSystemGlobalAdminRestrictLocal(o["admin-restrict-local"], d, "admin_restrict_local", sv)); err != nil {
+		if !fortiAPIPatch(o["admin-restrict-local"]) {
+			return fmt.Errorf("Error reading admin_restrict_local: %v", err)
 		}
 	}
 
@@ -1024,6 +1064,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 	if err = d.Set("dhcp_snoop_client_req", flattenSystemGlobalDhcpSnoopClientReq(o["dhcp-snoop-client-req"], d, "dhcp_snoop_client_req", sv)); err != nil {
 		if !fortiAPIPatch(o["dhcp-snoop-client-req"]) {
 			return fmt.Errorf("Error reading dhcp_snoop_client_req: %v", err)
+		}
+	}
+
+	if err = d.Set("arp_inspection_monitor_timeout", flattenSystemGlobalArpInspectionMonitorTimeout(o["arp-inspection-monitor-timeout"], d, "arp_inspection_monitor_timeout", sv)); err != nil {
+		if !fortiAPIPatch(o["arp-inspection-monitor-timeout"]) {
+			return fmt.Errorf("Error reading arp_inspection_monitor_timeout: %v", err)
 		}
 	}
 
@@ -1292,7 +1338,15 @@ func expandSystemGlobalLdapconntimeout(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
+func expandSystemGlobalResetButton(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemGlobalTcpMssMin(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalAdminRestrictLocal(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1353,6 +1407,10 @@ func expandSystemGlobalDhcpRemoteId(d *schema.ResourceData, v interface{}, pre s
 }
 
 func expandSystemGlobalDhcpSnoopClientReq(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalArpInspectionMonitorTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1881,6 +1939,20 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		}
 	}
 
+	if v, ok := d.GetOk("reset_button"); ok {
+		if setArgNil {
+			obj["reset-button"] = nil
+		} else {
+
+			t, err := expandSystemGlobalResetButton(d, v, "reset_button", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["reset-button"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("tcp_mss_min"); ok {
 		if setArgNil {
 			obj["tcp-mss-min"] = nil
@@ -1891,6 +1963,20 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 				return &obj, err
 			} else if t != nil {
 				obj["tcp-mss-min"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("admin_restrict_local"); ok {
+		if setArgNil {
+			obj["admin-restrict-local"] = nil
+		} else {
+
+			t, err := expandSystemGlobalAdminRestrictLocal(d, v, "admin_restrict_local", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["admin-restrict-local"] = t
 			}
 		}
 	}
@@ -2101,6 +2187,20 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 				return &obj, err
 			} else if t != nil {
 				obj["dhcp-snoop-client-req"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOkExists("arp_inspection_monitor_timeout"); ok {
+		if setArgNil {
+			obj["arp-inspection-monitor-timeout"] = nil
+		} else {
+
+			t, err := expandSystemGlobalArpInspectionMonitorTimeout(d, v, "arp_inspection_monitor_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["arp-inspection-monitor-timeout"] = t
 			}
 		}
 	}

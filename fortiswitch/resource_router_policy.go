@@ -21,7 +21,7 @@ import (
 
 func resourceRouterPolicy() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceRouterPolicyCreate,
+		Create: resourceRouterPolicyUpdate,
 		Read:   resourceRouterPolicyRead,
 		Update: resourceRouterPolicyUpdate,
 		Delete: resourceRouterPolicyDelete,
@@ -155,67 +155,6 @@ func resourceRouterPolicy() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
-			"src": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
-			},
-			"output_device": &schema.Schema{
-				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional:     true,
-				Computed:     true,
-			},
-			"protocol": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 255),
-				Optional:     true,
-				Computed:     true,
-			},
-			"end_port": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional:     true,
-				Computed:     true,
-			},
-			"dst": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
-			},
-			"seq_num": &schema.Schema{
-				Type:     schema.TypeInt,
-				ForceNew: true,
-				Optional: true,
-				Computed: true,
-			},
-			"tos_mask": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
-			},
-			"input_device": &schema.Schema{
-				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional:     true,
-				Computed:     true,
-			},
-			"tos": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
-			},
-			"gateway": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
-			},
-			"start_port": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional:     true,
-				Computed:     true,
-			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -225,36 +164,12 @@ func resourceRouterPolicy() *schema.Resource {
 	}
 }
 
-func resourceRouterPolicyCreate(d *schema.ResourceData, m interface{}) error {
-	c := m.(*FortiClient).Client
-	c.Retries = 1
-
-	obj, err := getObjectRouterPolicy(d, c.Fv)
-	if err != nil {
-		return fmt.Errorf("Error creating RouterPolicy resource while getting object: %v", err)
-	}
-
-	o, err := c.CreateRouterPolicy(obj)
-
-	if err != nil {
-		return fmt.Errorf("Error creating RouterPolicy resource: %v", err)
-	}
-
-	if o["mkey"] != nil && o["mkey"] != "" {
-		d.SetId(strconv.Itoa(int(o["mkey"].(float64))))
-	} else {
-		d.SetId("RouterPolicy")
-	}
-
-	return resourceRouterPolicyRead(d, m)
-}
-
 func resourceRouterPolicyUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectRouterPolicy(d, c.Fv)
+	obj, err := getObjectRouterPolicy(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterPolicy resource while getting object: %v", err)
 	}
@@ -266,7 +181,7 @@ func resourceRouterPolicyUpdate(d *schema.ResourceData, m interface{}) error {
 
 	log.Printf(strconv.Itoa(c.Retries))
 	if o["mkey"] != nil && o["mkey"] != "" {
-		d.SetId(strconv.Itoa(int(o["mkey"].(float64))))
+		d.SetId(o["mkey"].(string))
 	} else {
 		d.SetId("RouterPolicy")
 	}
@@ -276,13 +191,18 @@ func resourceRouterPolicyUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceRouterPolicyDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteRouterPolicy(mkey)
+	obj, err := getObjectRouterPolicy(d, true, c.Fv)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting RouterPolicy resource: %v", err)
+		return fmt.Errorf("Error updating RouterPolicy resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateRouterPolicy(obj, mkey)
+	if err != nil {
+		return fmt.Errorf("Error clearing RouterPolicy resource: %v", err)
 	}
 
 	d.SetId("")
@@ -649,64 +569,6 @@ func flattenRouterPolicyComments(v interface{}, d *schema.ResourceData, pre stri
 	return v
 }
 
-func flattenRouterPolicySrc(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	if v1, ok := d.GetOkExists(pre); ok && v != nil {
-		if s, ok := v1.(string); ok {
-			v = validateConvIPMask2CIDR(s, v.(string))
-			return v
-		}
-	}
-
-	return v
-}
-
-func flattenRouterPolicyOutputDevice(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenRouterPolicyProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenRouterPolicyEndPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenRouterPolicyDst(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	if v1, ok := d.GetOkExists(pre); ok && v != nil {
-		if s, ok := v1.(string); ok {
-			v = validateConvIPMask2CIDR(s, v.(string))
-			return v
-		}
-	}
-
-	return v
-}
-
-func flattenRouterPolicySeqNum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenRouterPolicyTosMask(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenRouterPolicyInputDevice(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenRouterPolicyTos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenRouterPolicyGateway(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenRouterPolicyStartPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func refreshObjectRouterPolicy(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -761,72 +623,6 @@ func refreshObjectRouterPolicy(d *schema.ResourceData, o map[string]interface{},
 	if err = d.Set("comments", flattenRouterPolicyComments(o["comments"], d, "comments", sv)); err != nil {
 		if !fortiAPIPatch(o["comments"]) {
 			return fmt.Errorf("Error reading comments: %v", err)
-		}
-	}
-
-	if err = d.Set("src", flattenRouterPolicySrc(o["src"], d, "src", sv)); err != nil {
-		if !fortiAPIPatch(o["src"]) {
-			return fmt.Errorf("Error reading src: %v", err)
-		}
-	}
-
-	if err = d.Set("output_device", flattenRouterPolicyOutputDevice(o["output-device"], d, "output_device", sv)); err != nil {
-		if !fortiAPIPatch(o["output-device"]) {
-			return fmt.Errorf("Error reading output_device: %v", err)
-		}
-	}
-
-	if err = d.Set("protocol", flattenRouterPolicyProtocol(o["protocol"], d, "protocol", sv)); err != nil {
-		if !fortiAPIPatch(o["protocol"]) {
-			return fmt.Errorf("Error reading protocol: %v", err)
-		}
-	}
-
-	if err = d.Set("end_port", flattenRouterPolicyEndPort(o["end-port"], d, "end_port", sv)); err != nil {
-		if !fortiAPIPatch(o["end-port"]) {
-			return fmt.Errorf("Error reading end_port: %v", err)
-		}
-	}
-
-	if err = d.Set("dst", flattenRouterPolicyDst(o["dst"], d, "dst", sv)); err != nil {
-		if !fortiAPIPatch(o["dst"]) {
-			return fmt.Errorf("Error reading dst: %v", err)
-		}
-	}
-
-	if err = d.Set("seq_num", flattenRouterPolicySeqNum(o["seq-num"], d, "seq_num", sv)); err != nil {
-		if !fortiAPIPatch(o["seq-num"]) {
-			return fmt.Errorf("Error reading seq_num: %v", err)
-		}
-	}
-
-	if err = d.Set("tos_mask", flattenRouterPolicyTosMask(o["tos-mask"], d, "tos_mask", sv)); err != nil {
-		if !fortiAPIPatch(o["tos-mask"]) {
-			return fmt.Errorf("Error reading tos_mask: %v", err)
-		}
-	}
-
-	if err = d.Set("input_device", flattenRouterPolicyInputDevice(o["input-device"], d, "input_device", sv)); err != nil {
-		if !fortiAPIPatch(o["input-device"]) {
-			return fmt.Errorf("Error reading input_device: %v", err)
-		}
-	}
-
-	if err = d.Set("tos", flattenRouterPolicyTos(o["tos"], d, "tos", sv)); err != nil {
-		if !fortiAPIPatch(o["tos"]) {
-			return fmt.Errorf("Error reading tos: %v", err)
-		}
-	}
-
-	if err = d.Set("gateway", flattenRouterPolicyGateway(o["gateway"], d, "gateway", sv)); err != nil {
-		if !fortiAPIPatch(o["gateway"]) {
-			return fmt.Errorf("Error reading gateway: %v", err)
-		}
-	}
-
-	if err = d.Set("start_port", flattenRouterPolicyStartPort(o["start-port"], d, "start_port", sv)); err != nil {
-		if !fortiAPIPatch(o["start-port"]) {
-			return fmt.Errorf("Error reading start_port: %v", err)
 		}
 	}
 
@@ -1109,200 +905,62 @@ func expandRouterPolicyComments(d *schema.ResourceData, v interface{}, pre strin
 	return v, nil
 }
 
-func expandRouterPolicySrc(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRouterPolicyOutputDevice(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRouterPolicyProtocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRouterPolicyEndPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRouterPolicyDst(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRouterPolicySeqNum(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRouterPolicyTosMask(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRouterPolicyInputDevice(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRouterPolicyTos(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRouterPolicyGateway(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRouterPolicyStartPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
+func getObjectRouterPolicy(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("interface"); ok || d.HasChange("interface") {
+		if setArgNil {
+			obj["interface"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandRouterPolicyInterface(d, v, "interface", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface"] = t
+			t, err := expandRouterPolicyInterface(d, v, "interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("nexthop_group"); ok || d.HasChange("nexthop_group") {
+		if setArgNil {
+			obj["nexthop-group"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandRouterPolicyNexthopGroup(d, v, "nexthop_group", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["nexthop-group"] = t
+			t, err := expandRouterPolicyNexthopGroup(d, v, "nexthop_group", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["nexthop-group"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("pbr_map"); ok || d.HasChange("pbr_map") {
+		if setArgNil {
+			obj["pbr-map"] = make([]struct{}, 0)
+		} else {
 
-		t, err := expandRouterPolicyPbrMap(d, v, "pbr_map", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["pbr-map"] = t
+			t, err := expandRouterPolicyPbrMap(d, v, "pbr_map", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["pbr-map"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
+		if setArgNil {
+			obj["comments"] = nil
+		} else {
 
-		t, err := expandRouterPolicyComments(d, v, "comments", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["comments"] = t
-		}
-	}
-
-	if v, ok := d.GetOk("src"); ok {
-
-		t, err := expandRouterPolicySrc(d, v, "src", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["src"] = t
-		}
-	}
-
-	if v, ok := d.GetOk("output_device"); ok {
-
-		t, err := expandRouterPolicyOutputDevice(d, v, "output_device", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["output-device"] = t
-		}
-	}
-
-	if v, ok := d.GetOkExists("protocol"); ok {
-
-		t, err := expandRouterPolicyProtocol(d, v, "protocol", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["protocol"] = t
-		}
-	}
-
-	if v, ok := d.GetOkExists("end_port"); ok {
-
-		t, err := expandRouterPolicyEndPort(d, v, "end_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["end-port"] = t
-		}
-	}
-
-	if v, ok := d.GetOk("dst"); ok {
-
-		t, err := expandRouterPolicyDst(d, v, "dst", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["dst"] = t
-		}
-	}
-
-	if v, ok := d.GetOk("seq_num"); ok {
-
-		t, err := expandRouterPolicySeqNum(d, v, "seq_num", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["seq-num"] = t
-		}
-	}
-
-	if v, ok := d.GetOk("tos_mask"); ok {
-
-		t, err := expandRouterPolicyTosMask(d, v, "tos_mask", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["tos-mask"] = t
-		}
-	}
-
-	if v, ok := d.GetOk("input_device"); ok {
-
-		t, err := expandRouterPolicyInputDevice(d, v, "input_device", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["input-device"] = t
-		}
-	}
-
-	if v, ok := d.GetOk("tos"); ok {
-
-		t, err := expandRouterPolicyTos(d, v, "tos", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["tos"] = t
-		}
-	}
-
-	if v, ok := d.GetOk("gateway"); ok {
-
-		t, err := expandRouterPolicyGateway(d, v, "gateway", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["gateway"] = t
-		}
-	}
-
-	if v, ok := d.GetOkExists("start_port"); ok {
-
-		t, err := expandRouterPolicyStartPort(d, v, "start_port", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["start-port"] = t
+			t, err := expandRouterPolicyComments(d, v, "comments", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["comments"] = t
+			}
 		}
 	}
 

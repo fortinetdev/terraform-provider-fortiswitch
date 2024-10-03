@@ -91,6 +91,11 @@ func resourceSwitchGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"storm_control_rate_filter": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
 			"auto_fortilink_discovery": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -107,6 +112,11 @@ func resourceSwitchGlobal() *schema.Resource {
 				Computed: true,
 			},
 			"fortilink_p2p_tpid": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
+			"storm_control_high_rate": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
 				Computed: true,
@@ -244,6 +254,11 @@ func resourceSwitchGlobal() *schema.Resource {
 				Computed: true,
 			},
 			"dmi_global_all": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"storm_control_monitor": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -469,6 +484,10 @@ func flattenSwitchGlobalTrunkHashUnicastSrcPort(v interface{}, d *schema.Resourc
 	return v
 }
 
+func flattenSwitchGlobalStormControlRateFilter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchGlobalAutoFortilinkDiscovery(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -482,6 +501,10 @@ func flattenSwitchGlobalTrunkHashMode(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSwitchGlobalFortilinkP2PTpid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchGlobalStormControlHighRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -590,6 +613,10 @@ func flattenSwitchGlobalAutoIsl(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenSwitchGlobalDmiGlobalAll(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchGlobalStormControlMonitor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -825,6 +852,12 @@ func refreshObjectSwitchGlobal(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("storm_control_rate_filter", flattenSwitchGlobalStormControlRateFilter(o["storm-control-rate-filter"], d, "storm_control_rate_filter", sv)); err != nil {
+		if !fortiAPIPatch(o["storm-control-rate-filter"]) {
+			return fmt.Errorf("Error reading storm_control_rate_filter: %v", err)
+		}
+	}
+
 	if err = d.Set("auto_fortilink_discovery", flattenSwitchGlobalAutoFortilinkDiscovery(o["auto-fortilink-discovery"], d, "auto_fortilink_discovery", sv)); err != nil {
 		if !fortiAPIPatch(o["auto-fortilink-discovery"]) {
 			return fmt.Errorf("Error reading auto_fortilink_discovery: %v", err)
@@ -846,6 +879,12 @@ func refreshObjectSwitchGlobal(d *schema.ResourceData, o map[string]interface{},
 	if err = d.Set("fortilink_p2p_tpid", flattenSwitchGlobalFortilinkP2PTpid(o["fortilink-p2p-tpid"], d, "fortilink_p2p_tpid", sv)); err != nil {
 		if !fortiAPIPatch(o["fortilink-p2p-tpid"]) {
 			return fmt.Errorf("Error reading fortilink_p2p_tpid: %v", err)
+		}
+	}
+
+	if err = d.Set("storm_control_high_rate", flattenSwitchGlobalStormControlHighRate(o["storm-control-high-rate"], d, "storm_control_high_rate", sv)); err != nil {
+		if !fortiAPIPatch(o["storm-control-high-rate"]) {
+			return fmt.Errorf("Error reading storm_control_high_rate: %v", err)
 		}
 	}
 
@@ -1011,6 +1050,12 @@ func refreshObjectSwitchGlobal(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("storm_control_monitor", flattenSwitchGlobalStormControlMonitor(o["storm-control-monitor"], d, "storm_control_monitor", sv)); err != nil {
+		if !fortiAPIPatch(o["storm-control-monitor"]) {
+			return fmt.Errorf("Error reading storm_control_monitor: %v", err)
+		}
+	}
+
 	if err = d.Set("l2_memory_check", flattenSwitchGlobalL2MemoryCheck(o["l2-memory-check"], d, "l2_memory_check", sv)); err != nil {
 		if !fortiAPIPatch(o["l2-memory-check"]) {
 			return fmt.Errorf("Error reading l2_memory_check: %v", err)
@@ -1120,6 +1165,10 @@ func expandSwitchGlobalTrunkHashUnicastSrcPort(d *schema.ResourceData, v interfa
 	return v, nil
 }
 
+func expandSwitchGlobalStormControlRateFilter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchGlobalAutoFortilinkDiscovery(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1133,6 +1182,10 @@ func expandSwitchGlobalTrunkHashMode(d *schema.ResourceData, v interface{}, pre 
 }
 
 func expandSwitchGlobalFortilinkP2PTpid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchGlobalStormControlHighRate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1241,6 +1294,10 @@ func expandSwitchGlobalAutoIsl(d *schema.ResourceData, v interface{}, pre string
 }
 
 func expandSwitchGlobalDmiGlobalAll(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchGlobalStormControlMonitor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1609,6 +1666,20 @@ func getObjectSwitchGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		}
 	}
 
+	if v, ok := d.GetOk("storm_control_rate_filter"); ok {
+		if setArgNil {
+			obj["storm-control-rate-filter"] = nil
+		} else {
+
+			t, err := expandSwitchGlobalStormControlRateFilter(d, v, "storm_control_rate_filter", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["storm-control-rate-filter"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("auto_fortilink_discovery"); ok {
 		if setArgNil {
 			obj["auto-fortilink-discovery"] = nil
@@ -1661,6 +1732,20 @@ func getObjectSwitchGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 				return &obj, err
 			} else if t != nil {
 				obj["fortilink-p2p-tpid"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("storm_control_high_rate"); ok {
+		if setArgNil {
+			obj["storm-control-high-rate"] = nil
+		} else {
+
+			t, err := expandSwitchGlobalStormControlHighRate(d, v, "storm_control_high_rate", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["storm-control-high-rate"] = t
 			}
 		}
 	}
@@ -2039,6 +2124,20 @@ func getObjectSwitchGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 				return &obj, err
 			} else if t != nil {
 				obj["dmi-global-all"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("storm_control_monitor"); ok {
+		if setArgNil {
+			obj["storm-control-monitor"] = nil
+		} else {
+
+			t, err := expandSwitchGlobalStormControlMonitor(d, v, "storm_control_monitor", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["storm-control-monitor"] = t
 			}
 		}
 	}

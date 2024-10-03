@@ -57,8 +57,9 @@ func dataSourceSystemEmailServer() *schema.Resource {
 				Computed: true,
 			},
 			"password": &schema.Schema{
-				Type:     schema.TypeString,
-				Computed: true,
+				Type:      schema.TypeString,
+				Sensitive: true,
+				Computed:  true,
 			},
 			"port": &schema.Schema{
 				Type:     schema.TypeInt,
@@ -190,12 +191,6 @@ func dataSourceRefreshObjectSystemEmailServer(d *schema.ResourceData, o map[stri
 	if err = d.Set("reply_to", dataSourceFlattenSystemEmailServerReplyTo(o["reply-to"], d, "reply_to")); err != nil {
 		if !fortiAPIPatch(o["reply-to"]) {
 			return fmt.Errorf("Error reading reply_to: %v", err)
-		}
-	}
-
-	if err = d.Set("password", dataSourceFlattenSystemEmailServerPassword(o["password"], d, "password")); err != nil {
-		if !fortiAPIPatch(o["password"]) {
-			return fmt.Errorf("Error reading password: %v", err)
 		}
 	}
 

@@ -53,8 +53,9 @@ func dataSourceSystemNtp() *schema.Resource {
 				Computed: true,
 			},
 			"key": &schema.Schema{
-				Type:     schema.TypeString,
-				Computed: true,
+				Type:      schema.TypeString,
+				Sensitive: true,
+				Computed:  true,
 			},
 			"ntpsync": &schema.Schema{
 				Type:     schema.TypeString,
@@ -82,8 +83,9 @@ func dataSourceSystemNtp() *schema.Resource {
 							Computed: true,
 						},
 						"key": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Type:      schema.TypeString,
+							Sensitive: true,
+							Computed:  true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
@@ -207,6 +209,10 @@ func dataSourceFlattenSystemNtpNtpserver(v interface{}, d *schema.ResourceData, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key"
 		if _, ok := i["key"]; ok {
 			tmp["key"] = dataSourceFlattenSystemNtpNtpserverKey(i["key"], d, pre_append)
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["key"] = c
+			}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
@@ -297,12 +303,6 @@ func dataSourceRefreshObjectSystemNtp(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("source_ip6", dataSourceFlattenSystemNtpSourceIp6(o["source-ip6"], d, "source_ip6")); err != nil {
 		if !fortiAPIPatch(o["source-ip6"]) {
 			return fmt.Errorf("Error reading source_ip6: %v", err)
-		}
-	}
-
-	if err = d.Set("key", dataSourceFlattenSystemNtpKey(o["key"], d, "key")); err != nil {
-		if !fortiAPIPatch(o["key"]) {
-			return fmt.Errorf("Error reading key: %v", err)
 		}
 	}
 

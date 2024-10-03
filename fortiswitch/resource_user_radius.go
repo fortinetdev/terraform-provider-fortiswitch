@@ -462,6 +462,12 @@ func refreshObjectUserRadius(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
+	if err = d.Set("secondary_secret", flattenUserRadiusSecondarySecret(o["secondary-secret"], d, "secondary_secret", sv)); err != nil {
+		if !fortiAPIPatch(o["secondary-secret"]) {
+			return fmt.Errorf("Error reading secondary_secret: %v", err)
+		}
+	}
+
 	if err = d.Set("source_ip6", flattenUserRadiusSourceIp6(o["source-ip6"], d, "source_ip6", sv)); err != nil {
 		if !fortiAPIPatch(o["source-ip6"]) {
 			return fmt.Errorf("Error reading source_ip6: %v", err)
@@ -549,6 +555,12 @@ func refreshObjectUserRadius(d *schema.ResourceData, o map[string]interface{}, s
 	if err = d.Set("addr_mode", flattenUserRadiusAddrMode(o["addr-mode"], d, "addr_mode", sv)); err != nil {
 		if !fortiAPIPatch(o["addr-mode"]) {
 			return fmt.Errorf("Error reading addr_mode: %v", err)
+		}
+	}
+
+	if err = d.Set("radius_coa_secret", flattenUserRadiusRadiusCoaSecret(o["radius-coa-secret"], d, "radius_coa_secret", sv)); err != nil {
+		if !fortiAPIPatch(o["radius-coa-secret"]) {
+			return fmt.Errorf("Error reading radius_coa_secret: %v", err)
 		}
 	}
 

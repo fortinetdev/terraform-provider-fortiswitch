@@ -15,7 +15,7 @@ The following arguments are supported:
 
 * `community_vlans` - Communities within this private VLAN.
 * `lan_subvlans` - LAN segment subvlans.
-* `arp_inspection` - Enable/Disable Dynamic ARP Inspection. Valid values: `disable`, `enable`.
+* `arp_inspection` - Enable/Disable Dynamic ARP Inspection.
 * `igmp_snooping_proxy` - Enable/disable IGMP snooping proxy for the VLAN interface. Valid values: `enable`, `disable`.
 * `policer` - Set policer on the VLAN traffic.
 * `dhcp6_snooping` - Enable/Disable DHCPv6 snooping on this vlan. Valid values: `disable`, `enable`.
