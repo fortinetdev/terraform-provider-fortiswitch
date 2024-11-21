@@ -728,7 +728,13 @@ func resourceSwitchInterfaceUpdate(d *schema.ResourceData, m interface{}) error 
 		return fmt.Errorf("Error updating SwitchInterface resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSwitchInterface(obj, mkey)
+	// Create the request body in the required format
+	data := map[string]interface{}{
+		"json": obj, // Assuming `obj` contains the request body data
+	}
+
+	// Pass the `data` to the `UpdateSwitchInterface` function
+	o, err := c.UpdateSwitchInterface(&data, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchInterface resource: %v", err)
 	}
@@ -1128,6 +1134,9 @@ func flattenSwitchInterfaceQnqStpQnqAdmin(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSwitchInterfaceQnqNativeCVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == "" || v == "none" {
+		return nil
+	}
 	return v
 }
 
@@ -1148,6 +1157,9 @@ func flattenSwitchInterfaceQnqUntaggedSVlan(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSwitchInterfaceQnqAddInner(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == "" || v == "none" {
+		return nil
+	}
 	return v
 }
 

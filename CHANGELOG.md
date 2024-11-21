@@ -1,5 +1,11 @@
-## 1.1.4 (Unreleased)
+## 1.1.5 (Unreleased)
 
+
+## 1.1.4 (November 21, 2024)
+
+BUGFIXES:
+
+* Fix the error in `fortiswitch_awitch_interface`.
 
 ## 1.1.3 (September 30, 2024)
 
