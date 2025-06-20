@@ -13,25 +13,25 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func dataSourceSystemAccprofileList() *schema.Resource {
+func dataSourceRouterPolicyList() *schema.Resource {
 	return &schema.Resource{
-		Read: dataSourceSystemAccprofileListRead,
+		Read: dataSourceRouterPolicyListRead,
 
 		Schema: map[string]*schema.Schema{
 			"filter": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 			},
-			"namelist": {
+			"seq_numlist": {
 				Type:     schema.TypeList,
 				Computed: true,
-				Elem:     &schema.Schema{Type: schema.TypeString},
+				Elem:     &schema.Schema{Type: schema.TypeInt},
 			},
 		},
 	}
 }
 
-func dataSourceSystemAccprofileListRead(d *schema.ResourceData, m interface{}) error {
+func dataSourceRouterPolicyListRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -40,12 +40,12 @@ func dataSourceSystemAccprofileListRead(d *schema.ResourceData, m interface{}) e
 		filter = escapeFilter(filter)
 	}
 
-	o, err := c.GenericGroupRead("/api/v2/cmdb/system/accprofile", filter)
+	o, err := c.GenericGroupRead("/api/v2/cmdb/router/policy", filter)
 	if err != nil {
-		return fmt.Errorf("Error describing SystemAccprofile: %v", err)
+		return fmt.Errorf("Error describing RouterPolicy: %v", err)
 	}
 
-	var tmps []string
+	var tmps []int
 	if o != nil {
 		for _, r := range o {
 			if r == nil {
@@ -53,14 +53,14 @@ func dataSourceSystemAccprofileListRead(d *schema.ResourceData, m interface{}) e
 			}
 			i := r.(map[string]interface{})
 
-			if _, ok := i["name"]; ok {
-				tmps = append(tmps, fortiStringValue(i["name"]))
+			if _, ok := i["seq-num"]; ok {
+				tmps = append(tmps, fortiIntValue(i["seq-num"]))
 			}
 		}
 	}
-	d.Set("namelist", tmps)
+	d.Set("seq_numlist", tmps)
 
-	d.SetId("DataSourceSystemAccprofileList")
+	d.SetId("DataSourceRouterPolicyList")
 
 	return nil
 }

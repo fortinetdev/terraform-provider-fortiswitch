@@ -40,6 +40,7 @@ The following arguments are supported:
 * `virtual_wire_tpid` - TPID value used by virtual-wires.
 * `trunk_hash_unicast_src_port` - Enable/disable source port in Unicast trunk hashing. Valid values: `enable`, `disable`.
 * `storm_control_rate_filter` - Storm control rate filter.
+* `vlan_pruning` - Enable/disable VLAN pruning. Valid values: `enable`, `disable`.
 * `auto_fortilink_discovery` - Enable/disable automatic FortiLink discovery. Valid values: `enable`, `disable`.
 * `max_path_in_ecmp_group` - Set max path in one ecmp group.
 * `trunk_hash_mode` - Trunk hash mode. Valid values: `default`, `enhanced`.

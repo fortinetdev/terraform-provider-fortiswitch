@@ -41,6 +41,11 @@ func resourceSwitchLldpSettings() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"forward_profinet_packet": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"management_address": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -151,6 +156,10 @@ func flattenSwitchLldpSettingsDeviceDetection(v interface{}, d *schema.ResourceD
 	return v
 }
 
+func flattenSwitchLldpSettingsForwardProfinetPacket(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchLldpSettingsManagementAddress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -183,6 +192,12 @@ func refreshObjectSwitchLldpSettings(d *schema.ResourceData, o map[string]interf
 	if err = d.Set("device_detection", flattenSwitchLldpSettingsDeviceDetection(o["device-detection"], d, "device_detection", sv)); err != nil {
 		if !fortiAPIPatch(o["device-detection"]) {
 			return fmt.Errorf("Error reading device_detection: %v", err)
+		}
+	}
+
+	if err = d.Set("forward_profinet_packet", flattenSwitchLldpSettingsForwardProfinetPacket(o["forward-profinet-packet"], d, "forward_profinet_packet", sv)); err != nil {
+		if !fortiAPIPatch(o["forward-profinet-packet"]) {
+			return fmt.Errorf("Error reading forward_profinet_packet: %v", err)
 		}
 	}
 
@@ -233,6 +248,10 @@ func expandSwitchLldpSettingsDeviceDetection(d *schema.ResourceData, v interface
 	return v, nil
 }
 
+func expandSwitchLldpSettingsForwardProfinetPacket(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchLldpSettingsManagementAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -280,6 +299,20 @@ func getObjectSwitchLldpSettings(d *schema.ResourceData, setArgNil bool, sv stri
 				return &obj, err
 			} else if t != nil {
 				obj["device-detection"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("forward_profinet_packet"); ok {
+		if setArgNil {
+			obj["forward-profinet-packet"] = nil
+		} else {
+
+			t, err := expandSwitchLldpSettingsForwardProfinetPacket(d, v, "forward_profinet_packet", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["forward-profinet-packet"] = t
 			}
 		}
 	}

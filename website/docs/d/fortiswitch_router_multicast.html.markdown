@@ -17,6 +17,7 @@ Use this data source to get information on fortiswitch router multicast
 
 The following attributes are exported:
 
+* `comments` - Description/comments.
 * `interface` - Pim interfaces. The structure of `interface` block is documented below.
 * `multicast_routing` - Enable multicast routing.
 

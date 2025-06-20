@@ -96,6 +96,11 @@ func resourceSwitchGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"vlan_pruning": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"auto_fortilink_discovery": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -488,6 +493,10 @@ func flattenSwitchGlobalStormControlRateFilter(v interface{}, d *schema.Resource
 	return v
 }
 
+func flattenSwitchGlobalVlanPruning(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchGlobalAutoFortilinkDiscovery(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -858,6 +867,12 @@ func refreshObjectSwitchGlobal(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("vlan_pruning", flattenSwitchGlobalVlanPruning(o["vlan-pruning"], d, "vlan_pruning", sv)); err != nil {
+		if !fortiAPIPatch(o["vlan-pruning"]) {
+			return fmt.Errorf("Error reading vlan_pruning: %v", err)
+		}
+	}
+
 	if err = d.Set("auto_fortilink_discovery", flattenSwitchGlobalAutoFortilinkDiscovery(o["auto-fortilink-discovery"], d, "auto_fortilink_discovery", sv)); err != nil {
 		if !fortiAPIPatch(o["auto-fortilink-discovery"]) {
 			return fmt.Errorf("Error reading auto_fortilink_discovery: %v", err)
@@ -1166,6 +1181,10 @@ func expandSwitchGlobalTrunkHashUnicastSrcPort(d *schema.ResourceData, v interfa
 }
 
 func expandSwitchGlobalStormControlRateFilter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchGlobalVlanPruning(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1676,6 +1695,20 @@ func getObjectSwitchGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 				return &obj, err
 			} else if t != nil {
 				obj["storm-control-rate-filter"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("vlan_pruning"); ok {
+		if setArgNil {
+			obj["vlan-pruning"] = nil
+		} else {
+
+			t, err := expandSwitchGlobalVlanPruning(d, v, "vlan_pruning", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vlan-pruning"] = t
 			}
 		}
 	}

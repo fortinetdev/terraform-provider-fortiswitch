@@ -27,6 +27,7 @@ resource "fortiswitch_router_multicast" "name" {
 
 The following arguments are supported:
 
+* `comments` - Description/comments.
 * `interface` - Pim interfaces. The structure of `interface` block is documented below.
 * `multicast_routing` - Enable multicast routing. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].

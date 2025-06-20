@@ -70,6 +70,21 @@ func resourceSwitchAclServiceCustom() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"tcp_portmask": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"udp_portmask": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"sctp_portmask": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"udp_portrange": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -206,6 +221,18 @@ func flattenSwitchAclServiceCustomSctpPortrange(v interface{}, d *schema.Resourc
 	return v
 }
 
+func flattenSwitchAclServiceCustomTcpPortmask(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchAclServiceCustomUdpPortmask(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchAclServiceCustomSctpPortmask(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchAclServiceCustomUdpPortrange(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -263,6 +290,24 @@ func refreshObjectSwitchAclServiceCustom(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("tcp_portmask", flattenSwitchAclServiceCustomTcpPortmask(o["tcp-portmask"], d, "tcp_portmask", sv)); err != nil {
+		if !fortiAPIPatch(o["tcp-portmask"]) {
+			return fmt.Errorf("Error reading tcp_portmask: %v", err)
+		}
+	}
+
+	if err = d.Set("udp_portmask", flattenSwitchAclServiceCustomUdpPortmask(o["udp-portmask"], d, "udp_portmask", sv)); err != nil {
+		if !fortiAPIPatch(o["udp-portmask"]) {
+			return fmt.Errorf("Error reading udp_portmask: %v", err)
+		}
+	}
+
+	if err = d.Set("sctp_portmask", flattenSwitchAclServiceCustomSctpPortmask(o["sctp-portmask"], d, "sctp_portmask", sv)); err != nil {
+		if !fortiAPIPatch(o["sctp-portmask"]) {
+			return fmt.Errorf("Error reading sctp_portmask: %v", err)
+		}
+	}
+
 	if err = d.Set("udp_portrange", flattenSwitchAclServiceCustomUdpPortrange(o["udp-portrange"], d, "udp_portrange", sv)); err != nil {
 		if !fortiAPIPatch(o["udp-portrange"]) {
 			return fmt.Errorf("Error reading udp_portrange: %v", err)
@@ -315,6 +360,18 @@ func expandSwitchAclServiceCustomIcmptype(d *schema.ResourceData, v interface{},
 }
 
 func expandSwitchAclServiceCustomSctpPortrange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchAclServiceCustomTcpPortmask(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchAclServiceCustomUdpPortmask(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchAclServiceCustomSctpPortmask(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -400,6 +457,36 @@ func getObjectSwitchAclServiceCustom(d *schema.ResourceData, sv string) (*map[st
 			return &obj, err
 		} else if t != nil {
 			obj["sctp-portrange"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("tcp_portmask"); ok {
+
+		t, err := expandSwitchAclServiceCustomTcpPortmask(d, v, "tcp_portmask", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["tcp-portmask"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("udp_portmask"); ok {
+
+		t, err := expandSwitchAclServiceCustomUdpPortmask(d, v, "udp_portmask", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["udp-portmask"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("sctp_portmask"); ok {
+
+		t, err := expandSwitchAclServiceCustomSctpPortmask(d, v, "sctp_portmask", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["sctp-portmask"] = t
 		}
 	}
 

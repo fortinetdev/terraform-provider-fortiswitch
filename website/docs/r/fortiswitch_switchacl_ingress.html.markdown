@@ -49,6 +49,7 @@ The `classifier` block supports:
 * `dst_mac` - Destination mac address to be matched.
 * `cos` - 802.1Q CoS value to be matched.
 * `service` - Service name.
+* `l3_interface` - l3 interface name.
 * `dst_ip_prefix` - Destination-ip address to be matched.
 * `src_mac` - Source mac address to be matched.
 * `dscp` - DSCP value to be matched.

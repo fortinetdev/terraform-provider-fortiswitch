@@ -28,6 +28,7 @@ The following arguments are supported:
 
 * `status` - Enable/disable LLDP. Valid values: `disable`, `enable`.
 * `device_detection` - Enable/disable dynamic updates of LLDP neighbor devices to fortilink. Valid values: `disable`, `enable`.
+* `forward_profinet_packet` - Enable/disable profinet packet forwarding. Valid values: `disable`, `enable`.
 * `management_address` - Advertise IPv4 and/or IPv6 address. Valid values: `ipv4`, `ipv6`, `none`.
 * `tx_hold` - Number of TX intervals before local LLDP data expires(tx-hold x tx-interval = packet TTL).
 * `tx_interval` - Frequency of LLDP PDU transmit (seconds).

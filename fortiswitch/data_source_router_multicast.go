@@ -24,6 +24,10 @@ func dataSourceRouterMulticast() *schema.Resource {
 		Read: dataSourceRouterMulticastRead,
 		Schema: map[string]*schema.Schema{
 
+			"comments": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"interface": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -100,6 +104,10 @@ func dataSourceRouterMulticastRead(d *schema.ResourceData, m interface{}) error 
 	d.SetId(mkey)
 
 	return nil
+}
+
+func dataSourceFlattenRouterMulticastComments(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
 }
 
 func dataSourceFlattenRouterMulticastInterface(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
@@ -216,6 +224,12 @@ func dataSourceFlattenRouterMulticastMulticastRouting(v interface{}, d *schema.R
 
 func dataSourceRefreshObjectRouterMulticast(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
+
+	if err = d.Set("comments", dataSourceFlattenRouterMulticastComments(o["comments"], d, "comments")); err != nil {
+		if !fortiAPIPatch(o["comments"]) {
+			return fmt.Errorf("Error reading comments: %v", err)
+		}
+	}
 
 	if err = d.Set("interface", dataSourceFlattenRouterMulticastInterface(o["interface"], d, "interface")); err != nil {
 		if !fortiAPIPatch(o["interface"]) {

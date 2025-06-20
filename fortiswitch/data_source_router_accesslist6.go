@@ -86,7 +86,7 @@ func dataSourceRouterAccessList6Read(d *schema.ResourceData, m interface{}) erro
 
 	if o == nil {
 		d.SetId("")
-		return nil
+		return fmt.Errorf("Error describing RouterAccessList6:  resource not found")
 	}
 
 	err = dataSourceRefreshObjectRouterAccessList6(d, o)

@@ -59,6 +59,11 @@ func resourceSystemFlanCloud() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"source_ip": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -153,6 +158,10 @@ func flattenSystemFlanCloudName(v interface{}, d *schema.ResourceData, pre strin
 	return v
 }
 
+func flattenSystemFlanCloudSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSystemFlanCloud(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -186,6 +195,12 @@ func refreshObjectSystemFlanCloud(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
+	if err = d.Set("source_ip", flattenSystemFlanCloudSourceIp(o["source-ip"], d, "source_ip", sv)); err != nil {
+		if !fortiAPIPatch(o["source-ip"]) {
+			return fmt.Errorf("Error reading source_ip: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -212,6 +227,10 @@ func expandSystemFlanCloudPort(d *schema.ResourceData, v interface{}, pre string
 }
 
 func expandSystemFlanCloudName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemFlanCloudSourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -284,6 +303,20 @@ func getObjectSystemFlanCloud(d *schema.ResourceData, setArgNil bool, sv string)
 				return &obj, err
 			} else if t != nil {
 				obj["name"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("source_ip"); ok {
+		if setArgNil {
+			obj["source-ip"] = nil
+		} else {
+
+			t, err := expandSystemFlanCloudSourceIp(d, v, "source_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-ip"] = t
 			}
 		}
 	}

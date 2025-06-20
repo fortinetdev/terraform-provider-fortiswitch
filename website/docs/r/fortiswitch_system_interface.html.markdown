@@ -104,6 +104,7 @@ The `vrrp` block supports:
 * `version` - VRRP version. Valid values: `2`, `3`.
 * `vrdst` - Monitor the route to this destination.
 * `vrip` - IP address of the virtual router.
+* `netmask` - Netmask of the virtual router.
 
 The `ipv6` block supports:
 

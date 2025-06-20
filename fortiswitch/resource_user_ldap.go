@@ -72,6 +72,11 @@ func resourceUserLdap() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"server_identity_check": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"group_object_filter": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 511),
@@ -238,6 +243,10 @@ func flattenUserLdapCaCert(v interface{}, d *schema.ResourceData, pre string, sv
 	return v
 }
 
+func flattenUserLdapServerIdentityCheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserLdapGroupObjectFilter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -312,6 +321,12 @@ func refreshObjectUserLdap(d *schema.ResourceData, o map[string]interface{}, sv 
 	if err = d.Set("ca_cert", flattenUserLdapCaCert(o["ca-cert"], d, "ca_cert", sv)); err != nil {
 		if !fortiAPIPatch(o["ca-cert"]) {
 			return fmt.Errorf("Error reading ca_cert: %v", err)
+		}
+	}
+
+	if err = d.Set("server_identity_check", flattenUserLdapServerIdentityCheck(o["server-identity-check"], d, "server_identity_check", sv)); err != nil {
+		if !fortiAPIPatch(o["server-identity-check"]) {
+			return fmt.Errorf("Error reading server_identity_check: %v", err)
 		}
 	}
 
@@ -391,6 +406,10 @@ func expandUserLdapServer(d *schema.ResourceData, v interface{}, pre string, sv 
 }
 
 func expandUserLdapCaCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserLdapServerIdentityCheck(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -496,6 +515,16 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 			return &obj, err
 		} else if t != nil {
 			obj["ca-cert"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("server_identity_check"); ok {
+
+		t, err := expandUserLdapServerIdentityCheck(d, v, "server_identity_check", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["server-identity-check"] = t
 		}
 	}
 

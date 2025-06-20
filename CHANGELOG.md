@@ -1,5 +1,15 @@
-## 1.1.5 (Unreleased)
+## 1.1.6 (Unreleased)
 
+## 1.1.5 (June 20, 2025)
+
+BUGFIXES:
+
+* Fixed a crash that could occur when provider information was missing from the configuration.
+* Now returns an error message when the resource does not exist.
+
+IMPROVEMENTS:
+
+* Support new version 7.6.1 and 7.6.2.
 
 ## 1.1.4 (November 21, 2024)
 

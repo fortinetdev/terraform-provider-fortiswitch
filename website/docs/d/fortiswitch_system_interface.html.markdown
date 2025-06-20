@@ -88,6 +88,7 @@ The `vrrp` block contains:
 * `version` - VRRP version.
 * `vrdst` - Monitor the route to this destination.
 * `vrip` - IP address of the virtual router.
+* `netmask` - Netmask of the virtual router.
 
 The `ipv6` block contains:
 

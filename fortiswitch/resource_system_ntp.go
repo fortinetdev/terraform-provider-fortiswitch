@@ -128,6 +128,20 @@ func resourceSystemNtp() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"interface": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"interface_name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 63),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -348,6 +362,49 @@ func flattenSystemNtpKeyId(v interface{}, d *schema.ResourceData, pre string, sv
 	return v
 }
 
+func flattenSystemNtpInterface(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
+		if _, ok := i["interface-name"]; ok {
+
+			tmp["interface_name"] = flattenSystemNtpInterfaceInterfaceName(i["interface-name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "interface_name", d)
+	return result
+}
+
+func flattenSystemNtpInterfaceInterfaceName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSystemNtp(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -424,6 +481,22 @@ func refreshObjectSystemNtp(d *schema.ResourceData, o map[string]interface{}, sv
 	if err = d.Set("key_id", flattenSystemNtpKeyId(o["key-id"], d, "key_id", sv)); err != nil {
 		if !fortiAPIPatch(o["key-id"]) {
 			return fmt.Errorf("Error reading key_id: %v", err)
+		}
+	}
+
+	if isImportTable() {
+		if err = d.Set("interface", flattenSystemNtpInterface(o["interface"], d, "interface", sv)); err != nil {
+			if !fortiAPIPatch(o["interface"]) {
+				return fmt.Errorf("Error reading interface: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("interface"); ok {
+			if err = d.Set("interface", flattenSystemNtpInterface(o["interface"], d, "interface", sv)); err != nil {
+				if !fortiAPIPatch(o["interface"]) {
+					return fmt.Errorf("Error reading interface: %v", err)
+				}
+			}
 		}
 	}
 
@@ -559,6 +632,38 @@ func expandSystemNtpNtpserverKeyId(d *schema.ResourceData, v interface{}, pre st
 }
 
 func expandSystemNtpKeyId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemNtpInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["interface-name"], _ = expandSystemNtpInterfaceInterfaceName(d, i["interface_name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemNtpInterfaceInterfaceName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -729,6 +834,20 @@ func getObjectSystemNtp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 				return &obj, err
 			} else if t != nil {
 				obj["key-id"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("interface"); ok || d.HasChange("interface") {
+		if setArgNil {
+			obj["interface"] = make([]struct{}, 0)
+		} else {
+
+			t, err := expandSystemNtpInterface(d, v, "interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface"] = t
 			}
 		}
 	}

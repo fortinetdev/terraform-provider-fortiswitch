@@ -214,6 +214,11 @@ func resourceSystemInterface() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"netmask": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -964,6 +969,12 @@ func flattenSystemInterfaceVrrp(v interface{}, d *schema.ResourceData, pre strin
 			tmp["vrip"] = flattenSystemInterfaceVrrpVrip(i["vrip"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "netmask"
+		if _, ok := i["netmask"]; ok {
+
+			tmp["netmask"] = flattenSystemInterfaceVrrpNetmask(i["netmask"], d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -1014,6 +1025,10 @@ func flattenSystemInterfaceVrrpVrdst(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenSystemInterfaceVrrpVrip(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceVrrpNetmask(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2339,6 +2354,12 @@ func expandSystemInterfaceVrrp(d *schema.ResourceData, v interface{}, pre string
 			tmp["vrip"], _ = expandSystemInterfaceVrrpVrip(d, i["vrip"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "netmask"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["netmask"], _ = expandSystemInterfaceVrrpNetmask(d, i["netmask"], pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -2388,6 +2409,10 @@ func expandSystemInterfaceVrrpVrdst(d *schema.ResourceData, v interface{}, pre s
 }
 
 func expandSystemInterfaceVrrpVrip(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceVrrpNetmask(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

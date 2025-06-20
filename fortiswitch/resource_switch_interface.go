@@ -580,6 +580,12 @@ func resourceSwitchInterface() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"client_limit": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(2, 20),
+							Optional:     true,
+							Computed:     true,
+						},
 						"auth_order": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -1564,6 +1570,12 @@ func flattenSwitchInterfacePortSecurity(v interface{}, d *schema.ResourceData, p
 		result["guest_auth_delay"] = flattenSwitchInterfacePortSecurityGuestAuthDelay(i["guest-auth-delay"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "client_limit"
+	if _, ok := i["client-limit"]; ok {
+
+		result["client_limit"] = flattenSwitchInterfacePortSecurityClientLimit(i["client-limit"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "auth_order"
 	if _, ok := i["auth-order"]; ok {
 
@@ -1707,6 +1719,10 @@ func flattenSwitchInterfacePortSecurityGuestVlan(v interface{}, d *schema.Resour
 }
 
 func flattenSwitchInterfacePortSecurityGuestAuthDelay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchInterfacePortSecurityClientLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2933,6 +2949,11 @@ func expandSwitchInterfacePortSecurity(d *schema.ResourceData, v interface{}, pr
 
 		result["guest-auth-delay"], _ = expandSwitchInterfacePortSecurityGuestAuthDelay(d, i["guest_auth_delay"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "client_limit"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["client-limit"], _ = expandSwitchInterfacePortSecurityClientLimit(d, i["client_limit"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "auth_order"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -3061,6 +3082,10 @@ func expandSwitchInterfacePortSecurityGuestVlan(d *schema.ResourceData, v interf
 }
 
 func expandSwitchInterfacePortSecurityGuestAuthDelay(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchInterfacePortSecurityClientLimit(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

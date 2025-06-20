@@ -124,6 +124,50 @@ func dataSourceRouterPolicy() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"src": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"output_device": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"protocol": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"end_port": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"dst": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"seq_num": &schema.Schema{
+				Type:     schema.TypeInt,
+				Required: true,
+			},
+			"tos_mask": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"input_device": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"tos": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"gateway": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"start_port": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -133,6 +177,15 @@ func dataSourceRouterPolicyRead(d *schema.ResourceData, m interface{}) error {
 	c.Retries = 1
 
 	mkey := ""
+
+	t := d.Get("seq_num")
+	if v, ok := t.(string); ok {
+		mkey = v
+	} else if v, ok := t.(int); ok {
+		mkey = strconv.Itoa(v)
+	} else {
+		return fmt.Errorf("Error describing RouterPolicy: type error")
+	}
 
 	o, err := c.ReadRouterPolicy(mkey)
 	if err != nil {
@@ -443,6 +496,64 @@ func dataSourceFlattenRouterPolicyComments(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func dataSourceFlattenRouterPolicySrc(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	if v1, ok := d.GetOkExists(pre); ok && v != nil {
+		if s, ok := v1.(string); ok {
+			v = validateConvIPMask2CIDR(s, v.(string))
+			return v
+		}
+	}
+
+	return v
+}
+
+func dataSourceFlattenRouterPolicyOutputDevice(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterPolicyProtocol(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterPolicyEndPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterPolicyDst(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	if v1, ok := d.GetOkExists(pre); ok && v != nil {
+		if s, ok := v1.(string); ok {
+			v = validateConvIPMask2CIDR(s, v.(string))
+			return v
+		}
+	}
+
+	return v
+}
+
+func dataSourceFlattenRouterPolicySeqNum(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterPolicyTosMask(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterPolicyInputDevice(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterPolicyTos(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterPolicyGateway(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterPolicyStartPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectRouterPolicy(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -467,6 +578,72 @@ func dataSourceRefreshObjectRouterPolicy(d *schema.ResourceData, o map[string]in
 	if err = d.Set("comments", dataSourceFlattenRouterPolicyComments(o["comments"], d, "comments")); err != nil {
 		if !fortiAPIPatch(o["comments"]) {
 			return fmt.Errorf("Error reading comments: %v", err)
+		}
+	}
+
+	if err = d.Set("src", dataSourceFlattenRouterPolicySrc(o["src"], d, "src")); err != nil {
+		if !fortiAPIPatch(o["src"]) {
+			return fmt.Errorf("Error reading src: %v", err)
+		}
+	}
+
+	if err = d.Set("output_device", dataSourceFlattenRouterPolicyOutputDevice(o["output-device"], d, "output_device")); err != nil {
+		if !fortiAPIPatch(o["output-device"]) {
+			return fmt.Errorf("Error reading output_device: %v", err)
+		}
+	}
+
+	if err = d.Set("protocol", dataSourceFlattenRouterPolicyProtocol(o["protocol"], d, "protocol")); err != nil {
+		if !fortiAPIPatch(o["protocol"]) {
+			return fmt.Errorf("Error reading protocol: %v", err)
+		}
+	}
+
+	if err = d.Set("end_port", dataSourceFlattenRouterPolicyEndPort(o["end-port"], d, "end_port")); err != nil {
+		if !fortiAPIPatch(o["end-port"]) {
+			return fmt.Errorf("Error reading end_port: %v", err)
+		}
+	}
+
+	if err = d.Set("dst", dataSourceFlattenRouterPolicyDst(o["dst"], d, "dst")); err != nil {
+		if !fortiAPIPatch(o["dst"]) {
+			return fmt.Errorf("Error reading dst: %v", err)
+		}
+	}
+
+	if err = d.Set("seq_num", dataSourceFlattenRouterPolicySeqNum(o["seq-num"], d, "seq_num")); err != nil {
+		if !fortiAPIPatch(o["seq-num"]) {
+			return fmt.Errorf("Error reading seq_num: %v", err)
+		}
+	}
+
+	if err = d.Set("tos_mask", dataSourceFlattenRouterPolicyTosMask(o["tos-mask"], d, "tos_mask")); err != nil {
+		if !fortiAPIPatch(o["tos-mask"]) {
+			return fmt.Errorf("Error reading tos_mask: %v", err)
+		}
+	}
+
+	if err = d.Set("input_device", dataSourceFlattenRouterPolicyInputDevice(o["input-device"], d, "input_device")); err != nil {
+		if !fortiAPIPatch(o["input-device"]) {
+			return fmt.Errorf("Error reading input_device: %v", err)
+		}
+	}
+
+	if err = d.Set("tos", dataSourceFlattenRouterPolicyTos(o["tos"], d, "tos")); err != nil {
+		if !fortiAPIPatch(o["tos"]) {
+			return fmt.Errorf("Error reading tos: %v", err)
+		}
+	}
+
+	if err = d.Set("gateway", dataSourceFlattenRouterPolicyGateway(o["gateway"], d, "gateway")); err != nil {
+		if !fortiAPIPatch(o["gateway"]) {
+			return fmt.Errorf("Error reading gateway: %v", err)
+		}
+	}
+
+	if err = d.Set("start_port", dataSourceFlattenRouterPolicyStartPort(o["start-port"], d, "start_port")); err != nil {
+		if !fortiAPIPatch(o["start-port"]) {
+			return fmt.Errorf("Error reading start_port: %v", err)
 		}
 	}
 

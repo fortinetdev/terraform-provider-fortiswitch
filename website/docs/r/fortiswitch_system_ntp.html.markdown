@@ -33,6 +33,7 @@ The following arguments are supported:
 * `syncinterval` - NTP synchronization interval (1 - 1440) min.
 * `ntpserver` - NTP server. The structure of `ntpserver` block is documented below.
 * `key_id` - Key ID for authentication.
+* `interface` - FortiSwitch interface(s) with NTP server mode enabled. Devices on your network can contact these interfaces for NTP services. The structure of `interface` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 
 The `ntpserver` block supports:
@@ -43,6 +44,10 @@ The `ntpserver` block supports:
 * `key` - Key for MD5(NTPv3)/SHA1(NTPv4) authentication.
 * `id` - Time server ID.
 * `key_id` - Key ID for authentication.
+
+The `interface` block supports:
+
+* `interface_name` - Interface name.
 
 
 ## Attribute Reference

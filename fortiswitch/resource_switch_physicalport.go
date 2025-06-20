@@ -242,6 +242,11 @@ func resourceSwitchPhysicalPort() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"poe_max_power_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"port_index": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -559,6 +564,10 @@ func flattenSwitchPhysicalPortPoePortMode(v interface{}, d *schema.ResourceData,
 	return v
 }
 
+func flattenSwitchPhysicalPortPoeMaxPowerMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchPhysicalPortPortIndex(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -802,6 +811,12 @@ func refreshObjectSwitchPhysicalPort(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
+	if err = d.Set("poe_max_power_mode", flattenSwitchPhysicalPortPoeMaxPowerMode(o["poe-max-power-mode"], d, "poe_max_power_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["poe-max-power-mode"]) {
+			return fmt.Errorf("Error reading poe_max_power_mode: %v", err)
+		}
+	}
+
 	if err = d.Set("port_index", flattenSwitchPhysicalPortPortIndex(o["port-index"], d, "port_index", sv)); err != nil {
 		if !fortiAPIPatch(o["port-index"]) {
 			return fmt.Errorf("Error reading port_index: %v", err)
@@ -1033,6 +1048,10 @@ func expandSwitchPhysicalPortFlapTimeout(d *schema.ResourceData, v interface{}, 
 }
 
 func expandSwitchPhysicalPortPoePortMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchPhysicalPortPoeMaxPowerMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1406,6 +1425,16 @@ func getObjectSwitchPhysicalPort(d *schema.ResourceData, sv string) (*map[string
 			return &obj, err
 		} else if t != nil {
 			obj["poe-port-mode"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("poe_max_power_mode"); ok {
+
+		t, err := expandSwitchPhysicalPortPoeMaxPowerMode(d, v, "poe_max_power_mode", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["poe-max-power-mode"] = t
 		}
 	}
 

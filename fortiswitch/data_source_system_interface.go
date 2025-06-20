@@ -161,6 +161,10 @@ func dataSourceSystemInterface() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"netmask": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -724,6 +728,11 @@ func dataSourceFlattenSystemInterfaceVrrp(v interface{}, d *schema.ResourceData,
 			tmp["vrip"] = dataSourceFlattenSystemInterfaceVrrpVrip(i["vrip"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "netmask"
+		if _, ok := i["netmask"]; ok {
+			tmp["netmask"] = dataSourceFlattenSystemInterfaceVrrpNetmask(i["netmask"], d, pre_append)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -773,6 +782,10 @@ func dataSourceFlattenSystemInterfaceVrrpVrdst(v interface{}, d *schema.Resource
 }
 
 func dataSourceFlattenSystemInterfaceVrrpVrip(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceVrrpNetmask(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

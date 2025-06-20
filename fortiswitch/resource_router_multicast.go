@@ -31,6 +31,12 @@ func resourceRouterMulticast() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"comments": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
+			},
 			"interface": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -169,6 +175,10 @@ func resourceRouterMulticastRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
+func flattenRouterMulticastComments(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterMulticastInterface(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -298,6 +308,12 @@ func flattenRouterMulticastMulticastRouting(v interface{}, d *schema.ResourceDat
 func refreshObjectRouterMulticast(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
+	if err = d.Set("comments", flattenRouterMulticastComments(o["comments"], d, "comments", sv)); err != nil {
+		if !fortiAPIPatch(o["comments"]) {
+			return fmt.Errorf("Error reading comments: %v", err)
+		}
+	}
+
 	if isImportTable() {
 		if err = d.Set("interface", flattenRouterMulticastInterface(o["interface"], d, "interface", sv)); err != nil {
 			if !fortiAPIPatch(o["interface"]) {
@@ -327,6 +343,10 @@ func flattenRouterMulticastFortiTestDebug(d *schema.ResourceData, fswdebugsn int
 	log.Printf(strconv.Itoa(fswdebugsn))
 	e := validation.IntBetween(fswdebugbeg, fswdebugend)
 	log.Printf("ER List: %v, %v", strings.Split("FortiSwitch Ver", " "), e)
+}
+
+func expandRouterMulticastComments(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
 }
 
 func expandRouterMulticastInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -447,6 +467,20 @@ func expandRouterMulticastMulticastRouting(d *schema.ResourceData, v interface{}
 
 func getObjectRouterMulticast(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+
+	if v, ok := d.GetOk("comments"); ok {
+		if setArgNil {
+			obj["comments"] = nil
+		} else {
+
+			t, err := expandRouterMulticastComments(d, v, "comments", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["comments"] = t
+			}
+		}
+	}
 
 	if v, ok := d.GetOk("interface"); ok || d.HasChange("interface") {
 		if setArgNil {

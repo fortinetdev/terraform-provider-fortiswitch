@@ -116,6 +116,16 @@ func resourceSwitchControllerGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"source_ip": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"source_ip6": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"tunnel_mode": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -307,6 +317,14 @@ func flattenSwitchControllerGlobalMgmtMode(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenSwitchControllerGlobalSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerGlobalSourceIp6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchControllerGlobalTunnelMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -393,6 +411,18 @@ func refreshObjectSwitchControllerGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("mgmt_mode", flattenSwitchControllerGlobalMgmtMode(o["mgmt-mode"], d, "mgmt_mode", sv)); err != nil {
 		if !fortiAPIPatch(o["mgmt-mode"]) {
 			return fmt.Errorf("Error reading mgmt_mode: %v", err)
+		}
+	}
+
+	if err = d.Set("source_ip", flattenSwitchControllerGlobalSourceIp(o["source-ip"], d, "source_ip", sv)); err != nil {
+		if !fortiAPIPatch(o["source-ip"]) {
+			return fmt.Errorf("Error reading source_ip: %v", err)
+		}
+	}
+
+	if err = d.Set("source_ip6", flattenSwitchControllerGlobalSourceIp6(o["source-ip6"], d, "source_ip6", sv)); err != nil {
+		if !fortiAPIPatch(o["source-ip6"]) {
+			return fmt.Errorf("Error reading source_ip6: %v", err)
 		}
 	}
 
@@ -504,6 +534,14 @@ func expandSwitchControllerGlobalAcDiscoveryType(d *schema.ResourceData, v inter
 }
 
 func expandSwitchControllerGlobalMgmtMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerGlobalSourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerGlobalSourceIp6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -678,6 +716,34 @@ func getObjectSwitchControllerGlobal(d *schema.ResourceData, setArgNil bool, sv 
 				return &obj, err
 			} else if t != nil {
 				obj["mgmt-mode"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("source_ip"); ok {
+		if setArgNil {
+			obj["source-ip"] = nil
+		} else {
+
+			t, err := expandSwitchControllerGlobalSourceIp(d, v, "source_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-ip"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("source_ip6"); ok {
+		if setArgNil {
+			obj["source-ip6"] = nil
+		} else {
+
+			t, err := expandSwitchControllerGlobalSourceIp6(d, v, "source_ip6", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-ip6"] = t
 			}
 		}
 	}

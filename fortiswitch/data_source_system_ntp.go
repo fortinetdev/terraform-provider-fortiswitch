@@ -102,6 +102,18 @@ func dataSourceSystemNtp() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"interface": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"interface_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 		},
 	}
 }
@@ -261,6 +273,42 @@ func dataSourceFlattenSystemNtpKeyId(v interface{}, d *schema.ResourceData, pre 
 	return v
 }
 
+func dataSourceFlattenSystemNtpInterface(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
+		if _, ok := i["interface-name"]; ok {
+			tmp["interface_name"] = dataSourceFlattenSystemNtpInterfaceInterfaceName(i["interface-name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemNtpInterfaceInterfaceName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectSystemNtp(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -327,6 +375,12 @@ func dataSourceRefreshObjectSystemNtp(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("key_id", dataSourceFlattenSystemNtpKeyId(o["key-id"], d, "key_id")); err != nil {
 		if !fortiAPIPatch(o["key-id"]) {
 			return fmt.Errorf("Error reading key_id: %v", err)
+		}
+	}
+
+	if err = d.Set("interface", dataSourceFlattenSystemNtpInterface(o["interface"], d, "interface")); err != nil {
+		if !fortiAPIPatch(o["interface"]) {
+			return fmt.Errorf("Error reading interface: %v", err)
 		}
 	}
 

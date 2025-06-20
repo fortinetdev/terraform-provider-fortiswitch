@@ -99,6 +99,12 @@ func resourceSwitchAclIngress() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"l3_interface": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 63),
+							Optional:     true,
+							Computed:     true,
+						},
 						"dst_ip_prefix": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -495,6 +501,12 @@ func flattenSwitchAclIngressClassifier(v interface{}, d *schema.ResourceData, pr
 		result["service"] = flattenSwitchAclIngressClassifierService(i["service"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "l3_interface"
+	if _, ok := i["l3-interface"]; ok {
+
+		result["l3_interface"] = flattenSwitchAclIngressClassifierL3Interface(i["l3-interface"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "dst_ip_prefix"
 	if _, ok := i["dst-ip-prefix"]; ok {
 
@@ -555,11 +567,14 @@ func flattenSwitchAclIngressClassifierCos(v interface{}, d *schema.ResourceData,
 	if v == "" || v == "none" || reflect.DeepEqual(v, []interface{}{}) {
 		return nil
 	}
-
 	return v
 }
 
 func flattenSwitchAclIngressClassifierService(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchAclIngressClassifierL3Interface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1081,6 +1096,11 @@ func expandSwitchAclIngressClassifier(d *schema.ResourceData, v interface{}, pre
 
 		result["service"], _ = expandSwitchAclIngressClassifierService(d, i["service"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "l3_interface"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["l3-interface"], _ = expandSwitchAclIngressClassifierL3Interface(d, i["l3_interface"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "dst_ip_prefix"
 	if _, ok := d.GetOk(pre_append); ok {
 
@@ -1134,6 +1154,10 @@ func expandSwitchAclIngressClassifierCos(d *schema.ResourceData, v interface{}, 
 }
 
 func expandSwitchAclIngressClassifierService(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchAclIngressClassifierL3Interface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

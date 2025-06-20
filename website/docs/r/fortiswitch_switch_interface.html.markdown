@@ -152,6 +152,7 @@ The `port_security` block supports:
 * `allow_mac_move` - Enable/disable allow mac move mode. Valid values: `disable`, `enable`.
 * `guest_vlan` - Enable/disable guest vlan. Valid values: `disable`, `enable`.
 * `guest_auth_delay` - Set guest auth delay.
+* `client_limit` - Set MAX number of devices can accept in MAC mode.
 * `auth_order` - set authentication auth order.
 * `framevid_apply` - Enable/disable the capbility to apply the EAP/MAB frame vlan to the port native vlan. Valid values: `disable`, `enable`.
 * `eap_auto_untagged_vlans` - Enable/disable EAP auto-untagged-vlans mode. Valid values: `disable`, `enable`.

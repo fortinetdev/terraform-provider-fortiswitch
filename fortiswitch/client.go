@@ -54,6 +54,10 @@ func (c *Config) CreateClient() (interface{}, error) {
 		}
 	}
 
+	if !bFSWExist {
+		return nil, fmt.Errorf("FortiSwitch Provider configuration is incomplete. Please ensure the required environment variables or provider settings are properly specified.")
+	}
+
 	return &fClient, nil
 }
 

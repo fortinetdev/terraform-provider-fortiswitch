@@ -48,6 +48,7 @@ The following arguments are supported:
 * `link_status` - Physical link status.
 * `flap_timeout` - Flap guard disabling protection (min).
 * `poe_port_mode` - IEEE802.3AF/IEEE802.3AT Valid values: `IEEE802_3AF`, `IEEE802_3AT`.
+* `poe_max_power_mode` - poe: set max power mode Valid values: `class-based`, `30W`.
 * `port_index` - Port index.
 * `max_frame_size` - Maximum frame size.
 * `flow_control` - Configure flow control pause frames. Valid values: `disable`, `tx`, `rx`, `both`.

@@ -29,6 +29,7 @@ The following attributes are exported:
 * `syncinterval` - NTP synchronization interval (1 - 1440) min.
 * `ntpserver` - NTP server. The structure of `ntpserver` block is documented below.
 * `key_id` - Key ID for authentication.
+* `interface` - FortiSwitch interface(s) with NTP server mode enabled. Devices on your network can contact these interfaces for NTP services. The structure of `interface` block is documented below.
 
 The `ntpserver` block contains:
 
@@ -38,4 +39,8 @@ The `ntpserver` block contains:
 * `key` - Key for MD5(NTPv3)/SHA1(NTPv4) authentication.
 * `id` - Time server ID.
 * `key_id` - Key ID for authentication.
+
+The `interface` block contains:
+
+* `interface_name` - Interface name.
 

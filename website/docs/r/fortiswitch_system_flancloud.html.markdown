@@ -29,6 +29,7 @@ The following arguments are supported:
 * `interval` - Service name resolution time interval (3-300sec, default=3).
 * `port` - Port Number.
 * `name` - Fully qualified domain name or IP address of FortiLAN-cloud service.
+* `source_ip` - Source IPv4 for communication to FGT.
 
 
 ## Attribute Reference

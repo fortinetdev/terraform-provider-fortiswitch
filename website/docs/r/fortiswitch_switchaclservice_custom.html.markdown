@@ -37,6 +37,9 @@ The following arguments are supported:
 * `color` - Set GUI icon color.
 * `icmptype` - ICMP type.
 * `sctp_portrange` - Multiple sctp port ranges.
+* `tcp_portmask` - Tcp port mask.
+* `udp_portmask` - Udp port mask.
+* `sctp_portmask` - Sctp port mask.
 * `udp_portrange` - Multiple udp port ranges.
 * `icmpcode` - ICMP code.
 * `tcp_portrange` - Multiple tcp port ranges.

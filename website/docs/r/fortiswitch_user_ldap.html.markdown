@@ -35,6 +35,7 @@ The following arguments are supported:
 * `group_member_check` - Group member checking options. Valid values: `user-attr`, `group-object`.
 * `server` - LDAP server domain name or IP address.
 * `ca_cert` - CA certificate name.
+* `server_identity_check` - Enable/disable LDAP server identity check (verify server domain name/IP address against the server certificate). Valid values: `enable`, `disable`.
 * `group_object_filter` - Group searching filter.
 * `cnid` - Common Name identifier (default = "cn").
 * `member_attr` - Name of attribute from which to get group membership.

@@ -1621,6 +1621,20 @@ func (c *FortiSDKClient) ReadRouterOspf6(mkey string) (mapTmp map[string]interfa
 	return
 }
 
+// CreateRouterPolicy API operation for FortiSwitch creates a new Policy.
+// Returns the index value of the Policy and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router - policy chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateRouterPolicy(params *map[string]interface{}) (output map[string]interface{}, err error) {
+
+	HTTPMethod := "POST"
+	path := "/api/v2/cmdb/router/policy"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
 // UpdateRouterPolicy API operation for FortiSwitch updates the specified Policy.
 // Returns the index value of the Policy and execution result when the request executes successfully.
 // Returns error for service API and SDK errors.
@@ -1628,6 +1642,7 @@ func (c *FortiSDKClient) ReadRouterOspf6(mkey string) (mapTmp map[string]interfa
 func (c *FortiSDKClient) UpdateRouterPolicy(params *map[string]interface{}, mkey string) (output map[string]interface{}, err error) {
 	HTTPMethod := "PUT"
 	path := "/api/v2/cmdb/router/policy"
+	path += "/" + escapeURLString(mkey)
 	output = make(map[string]interface{})
 
 	err = createUpdate(c, HTTPMethod, path, params, output)
@@ -1638,8 +1653,11 @@ func (c *FortiSDKClient) UpdateRouterPolicy(params *map[string]interface{}, mkey
 // Returns error for service API and SDK errors.
 // See the router - policy chapter in the FortiSwitch Handbook - CLI Reference.
 func (c *FortiSDKClient) DeleteRouterPolicy(mkey string) (err error) {
+	HTTPMethod := "DELETE"
+	path := "/api/v2/cmdb/router/policy"
+	path += "/" + escapeURLString(mkey)
 
-	//No unset API for router - policy
+	err = delete(c, HTTPMethod, path)
 	return
 }
 
@@ -1651,8 +1669,9 @@ func (c *FortiSDKClient) DeleteRouterPolicy(mkey string) (err error) {
 func (c *FortiSDKClient) ReadRouterPolicy(mkey string) (mapTmp map[string]interface{}, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/router/policy"
+	path += "/" + escapeURLString(mkey)
 
-	mapTmp, err = read(c, HTTPMethod, path, true)
+	mapTmp, err = read(c, HTTPMethod, path, false)
 	return
 }
 
@@ -2905,6 +2924,41 @@ func (c *FortiSDKClient) ReadSwitchVlan(mkey string) (mapTmp map[string]interfac
 	path += "/" + escapeURLString(mkey)
 
 	mapTmp, err = read(c, HTTPMethod, path, false)
+	return
+}
+
+// UpdateSwitchVlanPruning API operation for FortiSwitch updates the specified Vlan Pruning.
+// Returns the index value of the Vlan Pruning and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the switch - vlan-pruning chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateSwitchVlanPruning(params *map[string]interface{}, mkey string) (output map[string]interface{}, err error) {
+	HTTPMethod := "PUT"
+	path := "/api/v2/cmdb/switch/vlan-pruning"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// DeleteSwitchVlanPruning API operation for FortiSwitch deletes the specified Vlan Pruning.
+// Returns error for service API and SDK errors.
+// See the switch - vlan-pruning chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteSwitchVlanPruning(mkey string) (err error) {
+
+	//No unset API for switch - vlan-pruning
+	return
+}
+
+// ReadSwitchVlanPruning API operation for FortiSwitch gets the Vlan Pruning
+// with the specified index value.
+// Returns the requested Vlan Pruning value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the switch - vlan-pruning chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadSwitchVlanPruning(mkey string) (mapTmp map[string]interface{}, err error) {
+	HTTPMethod := "GET"
+	path := "/api/v2/cmdb/switch/vlan-pruning"
+
+	mapTmp, err = read(c, HTTPMethod, path, true)
 	return
 }
 
@@ -4600,6 +4654,41 @@ func (c *FortiSDKClient) DeleteSystemConsole(mkey string) (err error) {
 func (c *FortiSDKClient) ReadSystemConsole(mkey string) (mapTmp map[string]interface{}, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/system/console"
+
+	mapTmp, err = read(c, HTTPMethod, path, true)
+	return
+}
+
+// UpdateSystemDebug API operation for FortiSwitch updates the specified Debug.
+// Returns the index value of the Debug and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - debug chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateSystemDebug(params *map[string]interface{}, mkey string) (output map[string]interface{}, err error) {
+	HTTPMethod := "PUT"
+	path := "/api/v2/cmdb/system/debug"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// DeleteSystemDebug API operation for FortiSwitch deletes the specified Debug.
+// Returns error for service API and SDK errors.
+// See the system - debug chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteSystemDebug(mkey string) (err error) {
+
+	//No unset API for system - debug
+	return
+}
+
+// ReadSystemDebug API operation for FortiSwitch gets the Debug
+// with the specified index value.
+// Returns the requested Debug value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - debug chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadSystemDebug(mkey string) (mapTmp map[string]interface{}, err error) {
+	HTTPMethod := "GET"
+	path := "/api/v2/cmdb/system/debug"
 
 	mapTmp, err = read(c, HTTPMethod, path, true)
 	return
