@@ -57,6 +57,17 @@ The following arguments are supported:
 * `server` - Primary server domain name or IP address.
 * `addr_mode` - Address mode (IPv4 or IPv6). Valid values: `ipv4`, `ipv6`.
 * `radius_coa_secret` - Secret key to access the local Radius CoA server.
+* `transport_type` - Enable/disable Radsec ( Radius Security ) services with different protocol from this server. Valid values: `UDP`, `TLS`, `DTLS`.
+* `radsec_port` - Server Radsec service port number.
+* `radsec_oper_mode` - Radsec ( Radius Security ) TLS operation mode. Valid values: `TLS-X.509`.
+* `radsec_tls_min_ver` - Radsec ( Radius Security ) TLS min version. Valid values: `TLSv1`, `TLSv1-1`, `TLSv1-2`, `TLSv1-3`.
+* `radsec_dtls_min_ver` - Radsec ( Radius Security ) DTLS min version. Valid values: `DTLSv1`, `DTLSv1-2`.
+* `radsec_server_ca_cert` - CA certificate for Radsec Server.
+* `radsec_client_cert` - Client certificate for Radsec Client.
+* `radsec_cert_validate` - Enable/disable RADSEC TLS peer certificate check. Valid values: `disable`, `enable`.
+* `radsec_cert_cn_dns` - Radsec certificate CN or DNS string.
+* `radsec_idle_timeout` - Server Radsec Idle timout 60 to 3600 seconds.
+* `radsec_connect_timeout` - Server Radsec connection timeout 1 to 5 seconds.
 * `acct_server` - Additional accounting servers. The structure of `acct_server` block is documented below.
 * `radius_port` - Local RADIUS service port number.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].

@@ -141,6 +141,7 @@ The following arguments are supported:
 * `auto_isl` - Enable/disable automatic inter-switch LAG. Valid values: `enable`, `disable`.
 * `language` - GUI display language. Valid values: `browser`, `english`, `simch`, `japanese`, `korean`, `spanish`, `trach`, `french`, `portuguese`, `german`.
 * `radius_coa_port` - RADIUS CoA port number.
+* `radsec_coa_port` - RADSEC CoA port number.
 * `dst` - Enable/disable daylight saving time. Valid values: `enable`, `disable`.
 * `interval` - Dead gateway detection interval.
 * `cfg_save` - Configure configuration saving mode (valid only for changes made in the CLI). Valid values: `automatic`, `manual`, `revert`.

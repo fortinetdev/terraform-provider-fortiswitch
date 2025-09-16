@@ -46,7 +46,6 @@ func resourceUserRadius() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
 				Optional:     true,
-				Sensitive:    true,
 			},
 			"source_ip6": &schema.Schema{
 				Type:     schema.TypeString,
@@ -140,7 +139,66 @@ func resourceUserRadius() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
 				Optional:     true,
-				Sensitive:    true,
+			},
+			"transport_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"radsec_port": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
+			"radsec_oper_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"radsec_tls_min_ver": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"radsec_dtls_min_ver": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"radsec_server_ca_cert": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
+			"radsec_client_cert": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
+			"radsec_cert_validate": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"radsec_cert_cn_dns": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
+			},
+			"radsec_idle_timeout": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(60, 3600),
+				Optional:     true,
+				Computed:     true,
+			},
+			"radsec_connect_timeout": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 5),
+				Optional:     true,
+				Computed:     true,
 			},
 			"acct_server": &schema.Schema{
 				Type:     schema.TypeList,
@@ -156,7 +214,6 @@ func resourceUserRadius() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
 							Optional:     true,
-							Sensitive:    true,
 						},
 						"port": &schema.Schema{
 							Type:     schema.TypeInt,
@@ -357,6 +414,50 @@ func flattenUserRadiusAddrMode(v interface{}, d *schema.ResourceData, pre string
 }
 
 func flattenUserRadiusRadiusCoaSecret(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserRadiusTransportType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserRadiusRadsecPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserRadiusRadsecOperMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserRadiusRadsecTlsMinVer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserRadiusRadsecDtlsMinVer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserRadiusRadsecServerCaCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserRadiusRadsecClientCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserRadiusRadsecCertValidate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserRadiusRadsecCertCnDns(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserRadiusRadsecIdleTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserRadiusRadsecConnectTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -564,6 +665,72 @@ func refreshObjectUserRadius(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
+	if err = d.Set("transport_type", flattenUserRadiusTransportType(o["transport-type"], d, "transport_type", sv)); err != nil {
+		if !fortiAPIPatch(o["transport-type"]) {
+			return fmt.Errorf("Error reading transport_type: %v", err)
+		}
+	}
+
+	if err = d.Set("radsec_port", flattenUserRadiusRadsecPort(o["radsec-port"], d, "radsec_port", sv)); err != nil {
+		if !fortiAPIPatch(o["radsec-port"]) {
+			return fmt.Errorf("Error reading radsec_port: %v", err)
+		}
+	}
+
+	if err = d.Set("radsec_oper_mode", flattenUserRadiusRadsecOperMode(o["radsec-oper-mode"], d, "radsec_oper_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["radsec-oper-mode"]) {
+			return fmt.Errorf("Error reading radsec_oper_mode: %v", err)
+		}
+	}
+
+	if err = d.Set("radsec_tls_min_ver", flattenUserRadiusRadsecTlsMinVer(o["radsec-tls-min-ver"], d, "radsec_tls_min_ver", sv)); err != nil {
+		if !fortiAPIPatch(o["radsec-tls-min-ver"]) {
+			return fmt.Errorf("Error reading radsec_tls_min_ver: %v", err)
+		}
+	}
+
+	if err = d.Set("radsec_dtls_min_ver", flattenUserRadiusRadsecDtlsMinVer(o["radsec-dtls-min-ver"], d, "radsec_dtls_min_ver", sv)); err != nil {
+		if !fortiAPIPatch(o["radsec-dtls-min-ver"]) {
+			return fmt.Errorf("Error reading radsec_dtls_min_ver: %v", err)
+		}
+	}
+
+	if err = d.Set("radsec_server_ca_cert", flattenUserRadiusRadsecServerCaCert(o["radsec-server-ca-cert"], d, "radsec_server_ca_cert", sv)); err != nil {
+		if !fortiAPIPatch(o["radsec-server-ca-cert"]) {
+			return fmt.Errorf("Error reading radsec_server_ca_cert: %v", err)
+		}
+	}
+
+	if err = d.Set("radsec_client_cert", flattenUserRadiusRadsecClientCert(o["radsec-client-cert"], d, "radsec_client_cert", sv)); err != nil {
+		if !fortiAPIPatch(o["radsec-client-cert"]) {
+			return fmt.Errorf("Error reading radsec_client_cert: %v", err)
+		}
+	}
+
+	if err = d.Set("radsec_cert_validate", flattenUserRadiusRadsecCertValidate(o["radsec-cert-validate"], d, "radsec_cert_validate", sv)); err != nil {
+		if !fortiAPIPatch(o["radsec-cert-validate"]) {
+			return fmt.Errorf("Error reading radsec_cert_validate: %v", err)
+		}
+	}
+
+	if err = d.Set("radsec_cert_cn_dns", flattenUserRadiusRadsecCertCnDns(o["radsec-cert-cn-dns"], d, "radsec_cert_cn_dns", sv)); err != nil {
+		if !fortiAPIPatch(o["radsec-cert-cn-dns"]) {
+			return fmt.Errorf("Error reading radsec_cert_cn_dns: %v", err)
+		}
+	}
+
+	if err = d.Set("radsec_idle_timeout", flattenUserRadiusRadsecIdleTimeout(o["radsec-idle-timeout"], d, "radsec_idle_timeout", sv)); err != nil {
+		if !fortiAPIPatch(o["radsec-idle-timeout"]) {
+			return fmt.Errorf("Error reading radsec_idle_timeout: %v", err)
+		}
+	}
+
+	if err = d.Set("radsec_connect_timeout", flattenUserRadiusRadsecConnectTimeout(o["radsec-connect-timeout"], d, "radsec_connect_timeout", sv)); err != nil {
+		if !fortiAPIPatch(o["radsec-connect-timeout"]) {
+			return fmt.Errorf("Error reading radsec_connect_timeout: %v", err)
+		}
+	}
+
 	if isImportTable() {
 		if err = d.Set("acct_server", flattenUserRadiusAcctServer(o["acct-server"], d, "acct_server", sv)); err != nil {
 			if !fortiAPIPatch(o["acct-server"]) {
@@ -672,6 +839,50 @@ func expandUserRadiusAddrMode(d *schema.ResourceData, v interface{}, pre string,
 }
 
 func expandUserRadiusRadiusCoaSecret(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserRadiusTransportType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserRadiusRadsecPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserRadiusRadsecOperMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserRadiusRadsecTlsMinVer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserRadiusRadsecDtlsMinVer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserRadiusRadsecServerCaCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserRadiusRadsecClientCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserRadiusRadsecCertValidate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserRadiusRadsecCertCnDns(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserRadiusRadsecIdleTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserRadiusRadsecConnectTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -951,6 +1162,116 @@ func getObjectUserRadius(d *schema.ResourceData, sv string) (*map[string]interfa
 			return &obj, err
 		} else if t != nil {
 			obj["radius-coa-secret"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("transport_type"); ok {
+
+		t, err := expandUserRadiusTransportType(d, v, "transport_type", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["transport-type"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("radsec_port"); ok {
+
+		t, err := expandUserRadiusRadsecPort(d, v, "radsec_port", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["radsec-port"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("radsec_oper_mode"); ok {
+
+		t, err := expandUserRadiusRadsecOperMode(d, v, "radsec_oper_mode", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["radsec-oper-mode"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("radsec_tls_min_ver"); ok {
+
+		t, err := expandUserRadiusRadsecTlsMinVer(d, v, "radsec_tls_min_ver", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["radsec-tls-min-ver"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("radsec_dtls_min_ver"); ok {
+
+		t, err := expandUserRadiusRadsecDtlsMinVer(d, v, "radsec_dtls_min_ver", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["radsec-dtls-min-ver"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("radsec_server_ca_cert"); ok {
+
+		t, err := expandUserRadiusRadsecServerCaCert(d, v, "radsec_server_ca_cert", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["radsec-server-ca-cert"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("radsec_client_cert"); ok {
+
+		t, err := expandUserRadiusRadsecClientCert(d, v, "radsec_client_cert", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["radsec-client-cert"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("radsec_cert_validate"); ok {
+
+		t, err := expandUserRadiusRadsecCertValidate(d, v, "radsec_cert_validate", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["radsec-cert-validate"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("radsec_cert_cn_dns"); ok {
+
+		t, err := expandUserRadiusRadsecCertCnDns(d, v, "radsec_cert_cn_dns", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["radsec-cert-cn-dns"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("radsec_idle_timeout"); ok {
+
+		t, err := expandUserRadiusRadsecIdleTimeout(d, v, "radsec_idle_timeout", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["radsec-idle-timeout"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("radsec_connect_timeout"); ok {
+
+		t, err := expandUserRadiusRadsecConnectTimeout(d, v, "radsec_connect_timeout", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["radsec-connect-timeout"] = t
 		}
 	}
 

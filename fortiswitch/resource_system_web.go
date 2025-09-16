@@ -43,6 +43,16 @@ func resourceSystemWeb() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"http_https_connection_limit": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
+			"https_ssl_log_level": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"https_pki_required": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -146,6 +156,14 @@ func flattenSystemWebHttpsPort(v interface{}, d *schema.ResourceData, pre string
 	return v
 }
 
+func flattenSystemWebHttpHttpsConnectionLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemWebHttpsSslLogLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemWebHttpsPkiRequired(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -174,6 +192,18 @@ func refreshObjectSystemWeb(d *schema.ResourceData, o map[string]interface{}, sv
 	if err = d.Set("https_port", flattenSystemWebHttpsPort(o["https-port"], d, "https_port", sv)); err != nil {
 		if !fortiAPIPatch(o["https-port"]) {
 			return fmt.Errorf("Error reading https_port: %v", err)
+		}
+	}
+
+	if err = d.Set("http_https_connection_limit", flattenSystemWebHttpHttpsConnectionLimit(o["http-https-connection-limit"], d, "http_https_connection_limit", sv)); err != nil {
+		if !fortiAPIPatch(o["http-https-connection-limit"]) {
+			return fmt.Errorf("Error reading http_https_connection_limit: %v", err)
+		}
+	}
+
+	if err = d.Set("https_ssl_log_level", flattenSystemWebHttpsSslLogLevel(o["https-ssl-log-level"], d, "https_ssl_log_level", sv)); err != nil {
+		if !fortiAPIPatch(o["https-ssl-log-level"]) {
+			return fmt.Errorf("Error reading https_ssl_log_level: %v", err)
 		}
 	}
 
@@ -215,6 +245,14 @@ func expandSystemWebHttpsServerCert(d *schema.ResourceData, v interface{}, pre s
 }
 
 func expandSystemWebHttpsPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemWebHttpHttpsConnectionLimit(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemWebHttpsSslLogLevel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -261,6 +299,34 @@ func getObjectSystemWeb(d *schema.ResourceData, setArgNil bool, sv string) (*map
 				return &obj, err
 			} else if t != nil {
 				obj["https-port"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("http_https_connection_limit"); ok {
+		if setArgNil {
+			obj["http-https-connection-limit"] = nil
+		} else {
+
+			t, err := expandSystemWebHttpHttpsConnectionLimit(d, v, "http_https_connection_limit", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["http-https-connection-limit"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("https_ssl_log_level"); ok {
+		if setArgNil {
+			obj["https-ssl-log-level"] = nil
+		} else {
+
+			t, err := expandSystemWebHttpsSslLogLevel(d, v, "https_ssl_log_level", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["https-ssl-log-level"] = t
 			}
 		}
 	}

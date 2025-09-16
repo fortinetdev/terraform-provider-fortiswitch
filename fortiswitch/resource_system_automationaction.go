@@ -35,7 +35,6 @@ func resourceSystemAutomationAction() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 123),
 				Optional:     true,
-				Sensitive:    true,
 			},
 			"alicloud_account_id": &schema.Schema{
 				Type:         schema.TypeString,
@@ -84,7 +83,6 @@ func resourceSystemAutomationAction() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 123),
 				Optional:     true,
-				Sensitive:    true,
 			},
 			"port": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -216,7 +214,6 @@ func resourceSystemAutomationAction() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 59),
 				Optional:     true,
-				Sensitive:    true,
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,

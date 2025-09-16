@@ -1,4 +1,11 @@
-## 1.1.6 (Unreleased)
+## 1.1.7 (Unreleased)
+
+## 1.1.6 (Sep 10, 2025)
+
+IMPROVEMENTS:
+
+* Support new version 7.6.3 and 7.6.4.
+* Upgrade the Go version and all associated dependencies.
 
 ## 1.1.5 (June 20, 2025)
 

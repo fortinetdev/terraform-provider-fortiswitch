@@ -21,7 +21,7 @@ import (
 
 func resourceRouterPolicy() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceRouterPolicyUpdate,
+		Create: resourceRouterPolicyCreate,
 		Read:   resourceRouterPolicyRead,
 		Update: resourceRouterPolicyUpdate,
 		Delete: resourceRouterPolicyDelete,
@@ -266,7 +266,7 @@ func resourceRouterPolicyUpdate(d *schema.ResourceData, m interface{}) error {
 
 	log.Printf(strconv.Itoa(c.Retries))
 	if o["mkey"] != nil && o["mkey"] != "" {
-		d.SetId(o["mkey"].(string))
+		d.SetId(strconv.Itoa(int(o["mkey"].(float64))))
 	} else {
 		d.SetId("RouterPolicy")
 	}

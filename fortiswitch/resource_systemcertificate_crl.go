@@ -71,7 +71,6 @@ func resourceSystemCertificateCrl() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Sensitive:    true,
 			},
 			"scep_cert": &schema.Schema{
 				Type:         schema.TypeString,

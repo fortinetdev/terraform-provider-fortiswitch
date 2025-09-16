@@ -62,6 +62,7 @@ The `action` block supports:
 * `mirror` - Mirror session name.
 * `count_type` - Count-type(two colors): all, green, yellow. Valid values: `all`, `green`, `yellow`.
 * `outer_vlan_tag` - Outer vlan tag.
+* `remark_cos` - Remark COS value (0 - 7), or unset to disable.
 
 
 ## Attribute Reference

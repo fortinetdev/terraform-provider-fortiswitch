@@ -91,6 +91,7 @@ The following attributes are exported:
 * `auto_isl` - Enable/disable automatic inter-switch LAG.
 * `language` - GUI display language.
 * `radius_coa_port` - RADIUS CoA port number.
+* `radsec_coa_port` - RADSEC CoA port number.
 * `dst` - Enable/disable daylight saving time.
 * `interval` - Dead gateway detection interval.
 * `cfg_save` - Configure configuration saving mode (valid only for changes made in the CLI).

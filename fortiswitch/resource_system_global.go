@@ -342,6 +342,11 @@ func resourceSystemGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"radsec_coa_port": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
 			"dst": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -715,6 +720,10 @@ func flattenSystemGlobalLanguage(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenSystemGlobalRadiusCoaPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalRadsecCoaPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1127,6 +1136,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("radsec_coa_port", flattenSystemGlobalRadsecCoaPort(o["radsec-coa-port"], d, "radsec_coa_port", sv)); err != nil {
+		if !fortiAPIPatch(o["radsec-coa-port"]) {
+			return fmt.Errorf("Error reading radsec_coa_port: %v", err)
+		}
+	}
+
 	if err = d.Set("dst", flattenSystemGlobalDst(o["dst"], d, "dst", sv)); err != nil {
 		if !fortiAPIPatch(o["dst"]) {
 			return fmt.Errorf("Error reading dst: %v", err)
@@ -1447,6 +1462,10 @@ func expandSystemGlobalLanguage(d *schema.ResourceData, v interface{}, pre strin
 }
 
 func expandSystemGlobalRadiusCoaPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalRadsecCoaPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2327,6 +2346,20 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 				return &obj, err
 			} else if t != nil {
 				obj["radius-coa-port"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("radsec_coa_port"); ok {
+		if setArgNil {
+			obj["radsec-coa-port"] = nil
+		} else {
+
+			t, err := expandSystemGlobalRadsecCoaPort(d, v, "radsec_coa_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["radsec-coa-port"] = t
 			}
 		}
 	}

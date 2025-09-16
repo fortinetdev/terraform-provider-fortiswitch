@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_system_vxlan
-Configure VXLAN devices. Applies to FortiSwitch Version `>= 7.2.0`.
+Configure VXLAN devices. Applies to FortiSwitch Version `7.2.0,7.2.1,7.2.2,7.2.3,7.2.4,7.2.5,7.4.0,7.4.1,7.4.2,7.4.3,7.6.0`.
 
 ## Argument Reference
 

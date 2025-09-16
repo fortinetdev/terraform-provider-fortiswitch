@@ -2231,7 +2231,7 @@ func expandRouterIsisLogNeighbourChanges(d *schema.ResourceData, v interface{}, 
 func getObjectRouterIsis(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("default_information_metric6"); ok {
+	if v, ok := d.GetOkExists("default_information_metric6"); ok {
 		if setArgNil {
 			obj["default-information-metric6"] = nil
 		} else {
@@ -2539,7 +2539,7 @@ func getObjectRouterIsis(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		}
 	}
 
-	if v, ok := d.GetOk("default_information_metric"); ok {
+	if v, ok := d.GetOkExists("default_information_metric"); ok {
 		if setArgNil {
 			obj["default-information-metric"] = nil
 		} else {

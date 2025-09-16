@@ -15,6 +15,8 @@ The following arguments are supported:
 
 * `https_server_cert` - Administrative HTTPS server certificate.
 * `https_port` - Administrative access HTTPS port (1 - 65535).
+* `http_https_connection_limit` - Number of connections on HTTP/HTTPS port.(8-256, 0-disabled)
+* `https_ssl_log_level` - Log level severity setting for Web Server logs. Valid values: `emergency`, `alert`, `critical`, `error`, `warning`, `notification `, `information`, `debug`.
 * `https_pki_required` - Enable/disable HTTPS login page when PKI is enabled. Valid values: `enable`, `disable`.
 * `http_port` - Administrative access HTTP port (1 - 65535).
 * `gui_language` - Web display language. Valid values: `browser`, `english`, `simch`, `japanese`, `korean`, `spanish`, `trach`, `french`, `portuguese`, `german`.

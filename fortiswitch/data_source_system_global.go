@@ -260,6 +260,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"radsec_coa_port": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 			"dst": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -575,6 +579,10 @@ func dataSourceFlattenSystemGlobalLanguage(v interface{}, d *schema.ResourceData
 }
 
 func dataSourceFlattenSystemGlobalRadiusCoaPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalRadsecCoaPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -984,6 +992,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("radius_coa_port", dataSourceFlattenSystemGlobalRadiusCoaPort(o["radius-coa-port"], d, "radius_coa_port")); err != nil {
 		if !fortiAPIPatch(o["radius-coa-port"]) {
 			return fmt.Errorf("Error reading radius_coa_port: %v", err)
+		}
+	}
+
+	if err = d.Set("radsec_coa_port", dataSourceFlattenSystemGlobalRadsecCoaPort(o["radsec-coa-port"], d, "radsec_coa_port")); err != nil {
+		if !fortiAPIPatch(o["radsec-coa-port"]) {
+			return fmt.Errorf("Error reading radsec_coa_port: %v", err)
 		}
 	}
 

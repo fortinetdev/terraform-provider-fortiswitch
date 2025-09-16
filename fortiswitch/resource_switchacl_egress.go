@@ -166,6 +166,12 @@ func resourceSwitchAclEgress() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"remark_cos": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 7),
+							Optional:     true,
+							Computed:     true,
+						},
 					},
 				},
 			},
@@ -514,6 +520,12 @@ func flattenSwitchAclEgressAction(v interface{}, d *schema.ResourceData, pre str
 		result["outer_vlan_tag"] = flattenSwitchAclEgressActionOuterVlanTag(i["outer-vlan-tag"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "remark_cos"
+	if _, ok := i["remark-cos"]; ok {
+
+		result["remark_cos"] = flattenSwitchAclEgressActionRemarkCos(i["remark-cos"], d, pre_append, sv)
+	}
+
 	lastresult := []map[string]interface{}{result}
 	return lastresult
 }
@@ -550,6 +562,13 @@ func flattenSwitchAclEgressActionCountType(v interface{}, d *schema.ResourceData
 }
 
 func flattenSwitchAclEgressActionOuterVlanTag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchAclEgressActionRemarkCos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == "" || v == "none" || reflect.DeepEqual(v, []interface{}{}) {
+		return nil
+	}
 	return v
 }
 
@@ -840,6 +859,11 @@ func expandSwitchAclEgressAction(d *schema.ResourceData, v interface{}, pre stri
 
 		result["outer-vlan-tag"], _ = expandSwitchAclEgressActionOuterVlanTag(d, i["outer_vlan_tag"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "remark_cos"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["remark-cos"], _ = expandSwitchAclEgressActionRemarkCos(d, i["remark_cos"], pre_append, sv)
+	}
 
 	return result, nil
 }
@@ -873,6 +897,10 @@ func expandSwitchAclEgressActionCountType(d *schema.ResourceData, v interface{},
 }
 
 func expandSwitchAclEgressActionOuterVlanTag(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchAclEgressActionRemarkCos(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

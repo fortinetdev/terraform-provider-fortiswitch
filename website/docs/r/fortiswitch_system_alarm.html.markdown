@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_system_alarm
-Alarm configuration.
+Alarm configuration. Applies to FortiSwitch Version `<= 7.6.2`.
 
 ## Example Usage
 

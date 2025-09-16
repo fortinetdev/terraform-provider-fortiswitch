@@ -387,6 +387,11 @@ func resourceSystemDebug() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"access_vlan": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -742,6 +747,10 @@ func flattenSystemDebugDelayclid(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenSystemDebugRviDaemon(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemDebugAccessVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1174,6 +1183,12 @@ func refreshObjectSystemDebug(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
+	if err = d.Set("access_vlan", flattenSystemDebugAccessVlan(o["access-vlan"], d, "access_vlan", sv)); err != nil {
+		if !fortiAPIPatch(o["access-vlan"]) {
+			return fmt.Errorf("Error reading access_vlan: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -1464,6 +1479,10 @@ func expandSystemDebugDelayclid(d *schema.ResourceData, v interface{}, pre strin
 }
 
 func expandSystemDebugRviDaemon(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemDebugAccessVlan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2460,6 +2479,20 @@ func getObjectSystemDebug(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				return &obj, err
 			} else if t != nil {
 				obj["rvi-daemon"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("access_vlan"); ok {
+		if setArgNil {
+			obj["access-vlan"] = nil
+		} else {
+
+			t, err := expandSystemDebugAccessVlan(d, v, "access_vlan", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["access-vlan"] = t
 			}
 		}
 	}

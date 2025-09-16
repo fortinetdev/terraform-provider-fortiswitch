@@ -84,6 +84,7 @@ The following arguments are supported:
 * `apache` - Apache.
 * `delayclid` - Delay CLI daemon.
 * `rvi_daemon` - Multicast Snooping debug.
+* `access_vlan` - Access VLAN debug.
 
 
 ## Attribute Reference
