@@ -153,10 +153,22 @@ func flattenSystemWebHttpsServerCert(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenSystemWebHttpsPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemWebHttpHttpsConnectionLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -169,6 +181,12 @@ func flattenSystemWebHttpsPkiRequired(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSystemWebHttpPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

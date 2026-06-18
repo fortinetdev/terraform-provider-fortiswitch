@@ -46,6 +46,7 @@ func resourceSystemAutomationTrigger() *schema.Resource {
 			},
 			"fields": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -209,6 +210,12 @@ func flattenSystemAutomationTriggerName(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenSystemAutomationTriggerTriggerMinute(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -264,6 +271,12 @@ func flattenSystemAutomationTriggerFields(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSystemAutomationTriggerFieldsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -280,6 +293,12 @@ func flattenSystemAutomationTriggerLogid(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenSystemAutomationTriggerTriggerHour(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -300,6 +319,12 @@ func flattenSystemAutomationTriggerTriggerWeekday(v interface{}, d *schema.Resou
 }
 
 func flattenSystemAutomationTriggerTriggerDay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

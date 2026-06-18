@@ -71,6 +71,7 @@ func resourceSystemCertificateCrl() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
+				Computed:     true,
 			},
 			"scep_cert": &schema.Schema{
 				Type:         schema.TypeString,
@@ -203,6 +204,12 @@ func flattenSystemCertificateCrlLdapServer(v interface{}, d *schema.ResourceData
 }
 
 func flattenSystemCertificateCrlUpdateInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

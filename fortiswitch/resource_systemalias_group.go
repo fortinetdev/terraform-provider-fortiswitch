@@ -33,6 +33,7 @@ func resourceSystemAliasGroup() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"commands": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{

@@ -61,6 +61,7 @@ The `rule` block supports:
 * `match_metric` - Match metric for redistribute routes.
 * `id` - Rule id.
 * `match_flags` - Match-flags.
+* `set_ip6_nexthop_prefer_global` - BGP prefer global IPv6 nexthop. Valid values: `enable`, `disable`.
 * `match_ip_address` - Match ip address permitted by access-list or prefix-list.
 * `set_origin` - Set BGP origin code. Valid values: `none`, `egp`, `igp`, `incomplete`.
 * `set_extcommunity_soo` - Set Site-of-Origin extended community. The structure of `set_extcommunity_soo` block is documented below.

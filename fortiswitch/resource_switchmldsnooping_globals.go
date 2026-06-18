@@ -136,22 +136,52 @@ func resourceSwitchMldSnoopingGlobalsRead(d *schema.ResourceData, m interface{})
 }
 
 func flattenSwitchMldSnoopingGlobalsQueryInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchMldSnoopingGlobalsProxyReportInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchMldSnoopingGlobalsQueryMaxResponseTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchMldSnoopingGlobalsLeaveResponseTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchMldSnoopingGlobalsAgingTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

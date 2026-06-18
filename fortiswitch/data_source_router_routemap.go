@@ -73,6 +73,10 @@ func dataSourceRouterRouteMap() *schema.Resource {
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
+						"set_ip6_nexthop_prefer_global": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"match_ip_address": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
@@ -315,6 +319,11 @@ func dataSourceFlattenRouterRouteMapRule(v interface{}, d *schema.ResourceData, 
 			tmp["match_flags"] = dataSourceFlattenRouterRouteMapRuleMatchFlags(i["match-flags"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_ip6_nexthop_prefer_global"
+		if _, ok := i["set-ip6-nexthop-prefer-global"]; ok {
+			tmp["set_ip6_nexthop_prefer_global"] = dataSourceFlattenRouterRouteMapRuleSetIp6NexthopPreferGlobal(i["set-ip6-nexthop-prefer-global"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_ip_address"
 		if _, ok := i["match-ip-address"]; ok {
 			tmp["match_ip_address"] = dataSourceFlattenRouterRouteMapRuleMatchIpAddress(i["match-ip-address"], d, pre_append)
@@ -513,6 +522,10 @@ func dataSourceFlattenRouterRouteMapRuleId(v interface{}, d *schema.ResourceData
 }
 
 func dataSourceFlattenRouterRouteMapRuleMatchFlags(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterRouteMapRuleSetIp6NexthopPreferGlobal(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

@@ -165,6 +165,12 @@ func flattenSystemSnifferProfileSwitchInterface(v interface{}, d *schema.Resourc
 }
 
 func flattenSystemSnifferProfileMaxPktCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -181,6 +187,12 @@ func flattenSystemSnifferProfileProfileName(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSystemSnifferProfileMaxPktLen(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

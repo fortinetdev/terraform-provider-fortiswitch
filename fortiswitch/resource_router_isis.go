@@ -49,6 +49,7 @@ func resourceRouterIsis() *schema.Resource {
 			},
 			"summary_address": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -126,6 +127,7 @@ func resourceRouterIsis() *schema.Resource {
 			},
 			"net": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -139,6 +141,7 @@ func resourceRouterIsis() *schema.Resource {
 			},
 			"summary_address6": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -192,6 +195,7 @@ func resourceRouterIsis() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 59),
 				Optional:     true,
+				Computed:     true,
 			},
 			"default_information_metric": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -206,6 +210,7 @@ func resourceRouterIsis() *schema.Resource {
 			},
 			"interface": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -213,6 +218,7 @@ func resourceRouterIsis() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 59),
 							Optional:     true,
+							Computed:     true,
 						},
 						"priority_l2": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -363,9 +369,11 @@ func resourceRouterIsis() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 59),
 				Optional:     true,
+				Computed:     true,
 			},
 			"redistribute": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -426,6 +434,7 @@ func resourceRouterIsis() *schema.Resource {
 			},
 			"redistribute6": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -544,6 +553,12 @@ func resourceRouterIsisRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenRouterIsisDefaultInformationMetric6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -618,6 +633,12 @@ func flattenRouterIsisSummaryAddressPrefix(v interface{}, d *schema.ResourceData
 }
 
 func flattenRouterIsisSummaryAddressId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -634,10 +655,22 @@ func flattenRouterIsisRedistribute6L1(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenRouterIsisLspRefreshInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterIsisMaxLspLifetime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -768,6 +801,12 @@ func flattenRouterIsisSummaryAddress6Prefix6(v interface{}, d *schema.ResourceDa
 }
 
 func flattenRouterIsisSummaryAddress6Id(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -776,10 +815,22 @@ func flattenRouterIsisAuthModeDomain(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenRouterIsisLspGenIntervalL1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterIsisLspGenIntervalL2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -796,6 +847,12 @@ func flattenRouterIsisAuthPasswordArea(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenRouterIsisDefaultInformationMetric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -979,18 +1036,42 @@ func flattenRouterIsisInterfaceAuthPasswordHello(v interface{}, d *schema.Resour
 }
 
 func flattenRouterIsisInterfacePriorityL2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterIsisInterfacePriorityL1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterIsisInterfaceHelloMultiplierL2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterIsisInterfaceHelloMultiplierL1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1015,10 +1096,22 @@ func flattenRouterIsisInterfaceBfd6(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenRouterIsisInterfaceWideMetricL1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterIsisInterfaceWideMetricL2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1027,10 +1120,22 @@ func flattenRouterIsisInterfaceStatus(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenRouterIsisInterfaceMetricL1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterIsisInterfaceMetricL2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1047,14 +1152,32 @@ func flattenRouterIsisInterfaceAuthKeychainHello(v interface{}, d *schema.Resour
 }
 
 func flattenRouterIsisInterfaceHelloIntervalL2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterIsisInterfaceCsnpIntervalL2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterIsisInterfaceCsnpIntervalL1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1063,6 +1186,12 @@ func flattenRouterIsisInterfaceHelloPadding(v interface{}, d *schema.ResourceDat
 }
 
 func flattenRouterIsisInterfaceHelloIntervalL1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1071,10 +1200,22 @@ func flattenRouterIsisAuthKeychainDomain(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenRouterIsisSpfIntervalExpL2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterIsisSpfIntervalExpL1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1164,6 +1305,12 @@ func flattenRouterIsisRedistributeLevel(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenRouterIsisRedistributeMetric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1259,6 +1406,12 @@ func flattenRouterIsisRedistribute6Status(v interface{}, d *schema.ResourceData,
 }
 
 func flattenRouterIsisRedistribute6Metric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

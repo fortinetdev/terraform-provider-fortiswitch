@@ -23,7 +23,6 @@ func resourceSystemObjectTag() *schema.Resource {
 	return &schema.Resource{
 		Create: resourceSystemObjectTagCreate,
 		Read:   resourceSystemObjectTagRead,
-		Update: resourceSystemObjectTagUpdate,
 		Delete: resourceSystemObjectTagDelete,
 
 		Importer: &schema.ResourceImporter{
@@ -34,6 +33,7 @@ func resourceSystemObjectTag() *schema.Resource {
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
+				ForceNew:     true,
 				Required:     true,
 			},
 		},
@@ -55,31 +55,6 @@ func resourceSystemObjectTagCreate(d *schema.ResourceData, m interface{}) error 
 		return fmt.Errorf("Error creating SystemObjectTag resource: %v", err)
 	}
 
-	if o["mkey"] != nil && o["mkey"] != "" {
-		d.SetId(o["mkey"].(string))
-	} else {
-		d.SetId("SystemObjectTag")
-	}
-
-	return resourceSystemObjectTagRead(d, m)
-}
-
-func resourceSystemObjectTagUpdate(d *schema.ResourceData, m interface{}) error {
-	mkey := d.Id()
-	c := m.(*FortiClient).Client
-	c.Retries = 1
-
-	obj, err := getObjectSystemObjectTag(d, c.Fv)
-	if err != nil {
-		return fmt.Errorf("Error updating SystemObjectTag resource while getting object: %v", err)
-	}
-
-	o, err := c.UpdateSystemObjectTag(obj, mkey)
-	if err != nil {
-		return fmt.Errorf("Error updating SystemObjectTag resource: %v", err)
-	}
-
-	log.Printf(strconv.Itoa(c.Retries))
 	if o["mkey"] != nil && o["mkey"] != "" {
 		d.SetId(o["mkey"].(string))
 	} else {

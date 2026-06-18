@@ -88,6 +88,7 @@ func resourceSwitchLldpProfile() *schema.Resource {
 			},
 			"custom_tlvs": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -130,6 +131,7 @@ func resourceSwitchLldpProfile() *schema.Resource {
 			},
 			"med_location_service": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -165,6 +167,7 @@ func resourceSwitchLldpProfile() *schema.Resource {
 			},
 			"med_network_policy": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -344,6 +347,12 @@ func flattenSwitchLldpProfileAutoIslAuth(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenSwitchLldpProfileAutoIslReceiveTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -352,6 +361,12 @@ func flattenSwitchLldpProfileAutoIslAuthMacsecProfile(v interface{}, d *schema.R
 }
 
 func flattenSwitchLldpProfileAutoIslPortGroup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -413,6 +428,12 @@ func flattenSwitchLldpProfileCustomTlvs(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenSwitchLldpProfileCustomTlvsSubtype(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -433,6 +454,12 @@ func flattenSwitchLldpProfileAutoIslAuthUser(v interface{}, d *schema.ResourceDa
 }
 
 func flattenSwitchLldpProfileAutoIslAuthReauth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -585,14 +612,32 @@ func flattenSwitchLldpProfileMedNetworkPolicyName(v interface{}, d *schema.Resou
 }
 
 func flattenSwitchLldpProfileMedNetworkPolicyVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchLldpProfileMedNetworkPolicyDscp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchLldpProfileMedNetworkPolicyPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -605,6 +650,12 @@ func flattenSwitchLldpProfileAutoIslAuthIdentity(v interface{}, d *schema.Resour
 }
 
 func flattenSwitchLldpProfileAutoIslHelloTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

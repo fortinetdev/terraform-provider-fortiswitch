@@ -33,6 +33,7 @@ func resourceRouterBgp() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"confederation_peers": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -52,6 +53,7 @@ func resourceRouterBgp() *schema.Resource {
 			},
 			"aggregate_address6": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -100,6 +102,7 @@ func resourceRouterBgp() *schema.Resource {
 			},
 			"admin_distance": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -144,6 +147,7 @@ func resourceRouterBgp() *schema.Resource {
 			},
 			"network": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -178,6 +182,7 @@ func resourceRouterBgp() *schema.Resource {
 			},
 			"aggregate_address": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -261,6 +266,7 @@ func resourceRouterBgp() *schema.Resource {
 			},
 			"network6": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -305,6 +311,7 @@ func resourceRouterBgp() *schema.Resource {
 			},
 			"redistribute": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -355,6 +362,7 @@ func resourceRouterBgp() *schema.Resource {
 			},
 			"redistribute6": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -385,6 +393,7 @@ func resourceRouterBgp() *schema.Resource {
 			},
 			"neighbor": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -814,6 +823,22 @@ func resourceRouterBgp() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"local_as": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 11),
+							Optional:     true,
+							Computed:     true,
+						},
+						"local_as_no_prepend": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"local_as_replace": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"maximum_prefix_threshold6": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
@@ -835,6 +860,7 @@ func resourceRouterBgp() *schema.Resource {
 			},
 			"neighbor_group": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -1122,6 +1148,7 @@ func resourceRouterBgp() *schema.Resource {
 						},
 						"interface": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -1193,6 +1220,22 @@ func resourceRouterBgp() *schema.Resource {
 							ValidateFunc: validation.StringLenBetween(0, 11),
 							Optional:     true,
 							Computed:     true,
+						},
+						"local_as": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 11),
+							Optional:     true,
+							Computed:     true,
+						},
+						"local_as_no_prepend": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"local_as_replace": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 						"route_map_in": &schema.Schema{
 							Type:         schema.TypeString,
@@ -1294,6 +1337,7 @@ func resourceRouterBgp() *schema.Resource {
 			},
 			"admin_distance6": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -1449,6 +1493,12 @@ func flattenRouterBgpConfederationPeersPeer(v interface{}, d *schema.ResourceDat
 }
 
 func flattenRouterBgpDistanceInternal(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1508,6 +1558,12 @@ func flattenRouterBgpAggregateAddress6SummaryOnly(v interface{}, d *schema.Resou
 }
 
 func flattenRouterBgpAggregateAddress6Id(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1516,6 +1572,12 @@ func flattenRouterBgpAggregateAddress6Prefix6(v interface{}, d *schema.ResourceD
 }
 
 func flattenRouterBgpDampeningSuppress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1524,14 +1586,32 @@ func flattenRouterBgpBestpathCmpConfedAspath(v interface{}, d *schema.ResourceDa
 }
 
 func flattenRouterBgpKeepaliveTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterBgpAs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterBgpDampeningReachabilityHalfLife(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1593,6 +1673,12 @@ func flattenRouterBgpAdminDistance(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenRouterBgpAdminDistanceDistance(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1612,6 +1698,12 @@ func flattenRouterBgpAdminDistanceRouteList(v interface{}, d *schema.ResourceDat
 }
 
 func flattenRouterBgpAdminDistanceId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1620,6 +1712,12 @@ func flattenRouterBgpEbgpRequiresPolicy(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenRouterBgpDistanceExternal(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1704,6 +1802,12 @@ func flattenRouterBgpNetworkRouteMap(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenRouterBgpNetworkId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1784,6 +1888,12 @@ func flattenRouterBgpAggregateAddressPrefix(v interface{}, d *schema.ResourceDat
 }
 
 func flattenRouterBgpAggregateAddressId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1792,6 +1902,12 @@ func flattenRouterBgpAggregateAddressSummaryOnly(v interface{}, d *schema.Resour
 }
 
 func flattenRouterBgpDistanceLocal(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1800,6 +1916,12 @@ func flattenRouterBgpBestpathMedConfed(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenRouterBgpDefaultLocalPreference(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1812,6 +1934,12 @@ func flattenRouterBgpBestpathAspathMultipathRelax(v interface{}, d *schema.Resou
 }
 
 func flattenRouterBgpGracefulStalepathTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1824,6 +1952,12 @@ func flattenRouterBgpClusterId(v interface{}, d *schema.ResourceData, pre string
 }
 
 func flattenRouterBgpScanTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1832,6 +1966,12 @@ func flattenRouterBgpBestpathMedMissingAsWorst(v interface{}, d *schema.Resource
 }
 
 func flattenRouterBgpHoldtimeTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1891,6 +2031,12 @@ func flattenRouterBgpNetwork6RouteMap(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenRouterBgpNetwork6Id(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1899,6 +2045,12 @@ func flattenRouterBgpNetwork6Prefix6(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenRouterBgpDampeningReuse(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1907,6 +2059,12 @@ func flattenRouterBgpAlwaysCompareMed(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenRouterBgpMaximumPathsEbgp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1982,6 +2140,12 @@ func flattenRouterBgpClientToClientReflection(v interface{}, d *schema.ResourceD
 }
 
 func flattenRouterBgpDampeningMaxSuppressTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1994,6 +2158,12 @@ func flattenRouterBgpFastExternalFailover(v interface{}, d *schema.ResourceData,
 }
 
 func flattenRouterBgpMaximumPathsIbgp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -2568,6 +2738,24 @@ func flattenRouterBgpNeighbor(v interface{}, d *schema.ResourceData, pre string,
 			tmp["remote_as"] = flattenRouterBgpNeighborRemoteAs(i["remote-as"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "local_as"
+		if _, ok := i["local-as"]; ok {
+
+			tmp["local_as"] = flattenRouterBgpNeighborLocalAs(i["local-as"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "local_as_no_prepend"
+		if _, ok := i["local-as-no-prepend"]; ok {
+
+			tmp["local_as_no_prepend"] = flattenRouterBgpNeighborLocalAsNoPrepend(i["local-as-no-prepend"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "local_as_replace"
+		if _, ok := i["local-as-replace"]; ok {
+
+			tmp["local_as_replace"] = flattenRouterBgpNeighborLocalAsReplace(i["local-as-replace"], d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_threshold6"
 		if _, ok := i["maximum-prefix-threshold6"]; ok {
 
@@ -2608,6 +2796,12 @@ func flattenRouterBgpNeighborFilterListOut6(v interface{}, d *schema.ResourceDat
 }
 
 func flattenRouterBgpNeighborWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -2624,6 +2818,12 @@ func flattenRouterBgpNeighborFilterListIn6(v interface{}, d *schema.ResourceData
 }
 
 func flattenRouterBgpNeighborEbgpMultihopTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -2680,6 +2880,12 @@ func flattenRouterBgpNeighborEbgpEnforceMultihop(v interface{}, d *schema.Resour
 }
 
 func flattenRouterBgpNeighborAdvertisementInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -2724,6 +2930,12 @@ func flattenRouterBgpNeighborDontCapabilityNegotiate(v interface{}, d *schema.Re
 }
 
 func flattenRouterBgpNeighborConnectTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -2736,10 +2948,22 @@ func flattenRouterBgpNeighborAttributeUnchangedEvpn(v interface{}, d *schema.Res
 }
 
 func flattenRouterBgpNeighborAllowasIn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterBgpNeighborMaximumPrefix6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -2748,6 +2972,12 @@ func flattenRouterBgpNeighborRouteServerClient(v interface{}, d *schema.Resource
 }
 
 func flattenRouterBgpNeighborMaximumPrefixThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -2764,6 +2994,12 @@ func flattenRouterBgpNeighborSoftReconfigurationEvpn(v interface{}, d *schema.Re
 }
 
 func flattenRouterBgpNeighborKeepAliveTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -2812,6 +3048,12 @@ func flattenRouterBgpNeighborAllowasInEnable6(v interface{}, d *schema.ResourceD
 }
 
 func flattenRouterBgpNeighborAllowasIn6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -2836,6 +3078,12 @@ func flattenRouterBgpNeighborPassword(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenRouterBgpNeighborHoldtimeTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -2852,6 +3100,12 @@ func flattenRouterBgpNeighborFilterListIn(v interface{}, d *schema.ResourceData,
 }
 
 func flattenRouterBgpNeighborMaximumPrefix(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -2868,6 +3122,12 @@ func flattenRouterBgpNeighborAllowasInEnableEvpn(v interface{}, d *schema.Resour
 }
 
 func flattenRouterBgpNeighborEbgpTtlSecurityHops(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -2912,10 +3172,34 @@ func flattenRouterBgpNeighborDistributeListIn(v interface{}, d *schema.ResourceD
 }
 
 func flattenRouterBgpNeighborRemoteAs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
+	return v
+}
+
+func flattenRouterBgpNeighborLocalAs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterBgpNeighborLocalAsNoPrepend(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterBgpNeighborLocalAsReplace(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenRouterBgpNeighborMaximumPrefixThreshold6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -3347,6 +3631,24 @@ func flattenRouterBgpNeighborGroup(v interface{}, d *schema.ResourceData, pre st
 			tmp["remote_as"] = flattenRouterBgpNeighborGroupRemoteAs(i["remote-as"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "local_as"
+		if _, ok := i["local-as"]; ok {
+
+			tmp["local_as"] = flattenRouterBgpNeighborGroupLocalAs(i["local-as"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "local_as_no_prepend"
+		if _, ok := i["local-as-no-prepend"]; ok {
+
+			tmp["local_as_no_prepend"] = flattenRouterBgpNeighborGroupLocalAsNoPrepend(i["local-as-no-prepend"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "local_as_replace"
+		if _, ok := i["local-as-replace"]; ok {
+
+			tmp["local_as_replace"] = flattenRouterBgpNeighborGroupLocalAsReplace(i["local-as-replace"], d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_in"
 		if _, ok := i["route-map-in"]; ok {
 
@@ -3457,6 +3759,12 @@ func flattenRouterBgpNeighborGroupName(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenRouterBgpNeighborGroupAdvertisementInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -3477,10 +3785,22 @@ func flattenRouterBgpNeighborGroupEnforceFirstAs(v interface{}, d *schema.Resour
 }
 
 func flattenRouterBgpNeighborGroupAllowasIn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterBgpNeighborGroupAllowasIn6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -3645,10 +3965,22 @@ func flattenRouterBgpNeighborGroupDistributeListOut6(v interface{}, d *schema.Re
 }
 
 func flattenRouterBgpNeighborGroupEbgpMultihopTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterBgpNeighborGroupEbgpTtlSecurityHops(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -3712,18 +4044,42 @@ func flattenRouterBgpNeighborGroupInterfaceInterfaceName(v interface{}, d *schem
 }
 
 func flattenRouterBgpNeighborGroupMaximumPrefix(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterBgpNeighborGroupMaximumPrefix6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterBgpNeighborGroupMaximumPrefixThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterBgpNeighborGroupMaximumPrefixThreshold6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -3752,6 +4108,18 @@ func flattenRouterBgpNeighborGroupPrefixListOut6(v interface{}, d *schema.Resour
 }
 
 func flattenRouterBgpNeighborGroupRemoteAs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterBgpNeighborGroupLocalAs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterBgpNeighborGroupLocalAsNoPrepend(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterBgpNeighborGroupLocalAsReplace(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3788,14 +4156,32 @@ func flattenRouterBgpNeighborGroupSendCommunity6(v interface{}, d *schema.Resour
 }
 
 func flattenRouterBgpNeighborGroupKeepAliveTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterBgpNeighborGroupHoldtimeTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterBgpNeighborGroupConnectTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -3812,6 +4198,12 @@ func flattenRouterBgpNeighborGroupUpdateSource(v interface{}, d *schema.Resource
 }
 
 func flattenRouterBgpNeighborGroupWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -3885,10 +4277,22 @@ func flattenRouterBgpAdminDistance6NeighbourPrefix6(v interface{}, d *schema.Res
 }
 
 func flattenRouterBgpAdminDistance6Distance(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterBgpAdminDistance6Id(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -3897,6 +4301,12 @@ func flattenRouterBgpAdminDistance6Route6List(v interface{}, d *schema.ResourceD
 }
 
 func flattenRouterBgpConfederationIdentifier(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -5330,6 +5740,24 @@ func expandRouterBgpNeighbor(d *schema.ResourceData, v interface{}, pre string, 
 			tmp["remote-as"], _ = expandRouterBgpNeighborRemoteAs(d, i["remote_as"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "local_as"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["local-as"], _ = expandRouterBgpNeighborLocalAs(d, i["local_as"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "local_as_no_prepend"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["local-as-no-prepend"], _ = expandRouterBgpNeighborLocalAsNoPrepend(d, i["local_as_no_prepend"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "local_as_replace"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["local-as-replace"], _ = expandRouterBgpNeighborLocalAsReplace(d, i["local_as_replace"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_threshold6"
 		if _, ok := d.GetOk(pre_append); ok {
 
@@ -5673,6 +6101,18 @@ func expandRouterBgpNeighborDistributeListIn(d *schema.ResourceData, v interface
 }
 
 func expandRouterBgpNeighborRemoteAs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterBgpNeighborLocalAs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterBgpNeighborLocalAsNoPrepend(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterBgpNeighborLocalAsReplace(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -6100,6 +6540,24 @@ func expandRouterBgpNeighborGroup(d *schema.ResourceData, v interface{}, pre str
 			tmp["remote-as"], _ = expandRouterBgpNeighborGroupRemoteAs(d, i["remote_as"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "local_as"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["local-as"], _ = expandRouterBgpNeighborGroupLocalAs(d, i["local_as"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "local_as_no_prepend"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["local-as-no-prepend"], _ = expandRouterBgpNeighborGroupLocalAsNoPrepend(d, i["local_as_no_prepend"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "local_as_replace"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["local-as-replace"], _ = expandRouterBgpNeighborGroupLocalAsReplace(d, i["local_as_replace"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_in"
 		if _, ok := d.GetOk(pre_append); ok {
 
@@ -6493,6 +6951,18 @@ func expandRouterBgpNeighborGroupPrefixListOut6(d *schema.ResourceData, v interf
 }
 
 func expandRouterBgpNeighborGroupRemoteAs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterBgpNeighborGroupLocalAs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterBgpNeighborGroupLocalAsNoPrepend(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterBgpNeighborGroupLocalAsReplace(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

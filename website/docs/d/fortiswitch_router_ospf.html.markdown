@@ -39,6 +39,7 @@ The following attributes are exported:
 * `spf_timers` - SPF calculation frequency.
 * `distance_inter_area` - Administrative inter-area route distance.
 * `abr_type` - Area border router type.
+* `auto_cost_ref_bandwidth` - Reference bandwidth in terms of megabits per second.
 * `interface` - OSPF interface configuration. The structure of `interface` block is documented below.
 * `vrf` - Enable OSPF on VRF. The structure of `vrf` block is documented below.
 
@@ -134,6 +135,7 @@ The `interface` block contains:
 * `ttl` - TTL.
 * `md5_keys` - OSPF md5 key configuration. Applicable only when authentication field is set to md5. The structure of `md5_keys` block is documented below.
 * `mtu_ignore` - Disable MTU mismatch detection on this interface.
+* `network_type` - Network type.
 
 The `md5_keys` block contains:
 

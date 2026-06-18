@@ -43,6 +43,12 @@ func resourceSystemPtpInterfacePolicy() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"bmc_selection": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 2),
+				Optional:     true,
+				Computed:     true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -150,10 +156,32 @@ func resourceSystemPtpInterfacePolicyRead(d *schema.ResourceData, m interface{})
 }
 
 func flattenSystemPtpInterfacePolicyVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemPtpInterfacePolicyVlanPri(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
+	return v
+}
+
+func flattenSystemPtpInterfacePolicyBmcSelection(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -177,6 +205,12 @@ func refreshObjectSystemPtpInterfacePolicy(d *schema.ResourceData, o map[string]
 	if err = d.Set("vlan_pri", flattenSystemPtpInterfacePolicyVlanPri(o["vlan-pri"], d, "vlan_pri", sv)); err != nil {
 		if !fortiAPIPatch(o["vlan-pri"]) {
 			return fmt.Errorf("Error reading vlan_pri: %v", err)
+		}
+	}
+
+	if err = d.Set("bmc_selection", flattenSystemPtpInterfacePolicyBmcSelection(o["bmc-selection"], d, "bmc_selection", sv)); err != nil {
+		if !fortiAPIPatch(o["bmc-selection"]) {
+			return fmt.Errorf("Error reading bmc_selection: %v", err)
 		}
 	}
 
@@ -209,6 +243,10 @@ func expandSystemPtpInterfacePolicyVlanPri(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
+func expandSystemPtpInterfacePolicyBmcSelection(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemPtpInterfacePolicyName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -237,6 +275,16 @@ func getObjectSystemPtpInterfacePolicy(d *schema.ResourceData, sv string) (*map[
 			return &obj, err
 		} else if t != nil {
 			obj["vlan-pri"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("bmc_selection"); ok {
+
+		t, err := expandSystemPtpInterfacePolicyBmcSelection(d, v, "bmc_selection", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["bmc-selection"] = t
 		}
 	}
 

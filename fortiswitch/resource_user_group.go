@@ -51,6 +51,7 @@ func resourceUserGroup() *schema.Resource {
 			},
 			"member": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -71,6 +72,7 @@ func resourceUserGroup() *schema.Resource {
 			},
 			"match": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -201,6 +203,12 @@ func flattenUserGroupName(v interface{}, d *schema.ResourceData, pre string, sv 
 }
 
 func flattenUserGroupAuthtimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -311,6 +319,12 @@ func flattenUserGroupMatchGroupName(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenUserGroupMatchId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

@@ -458,6 +458,22 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"local_as": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 11),
+				Optional:     true,
+				Computed:     true,
+			},
+			"local_as_no_prepend": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"local_as_replace": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"maximum_prefix_threshold6": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -580,6 +596,12 @@ func flattenRouterbgpNeighborFilterListOut6(v interface{}, d *schema.ResourceDat
 }
 
 func flattenRouterbgpNeighborWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -596,6 +618,12 @@ func flattenRouterbgpNeighborFilterListIn6(v interface{}, d *schema.ResourceData
 }
 
 func flattenRouterbgpNeighborEbgpMultihopTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -652,6 +680,12 @@ func flattenRouterbgpNeighborEbgpEnforceMultihop(v interface{}, d *schema.Resour
 }
 
 func flattenRouterbgpNeighborAdvertisementInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -696,6 +730,12 @@ func flattenRouterbgpNeighborDontCapabilityNegotiate(v interface{}, d *schema.Re
 }
 
 func flattenRouterbgpNeighborConnectTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -708,10 +748,22 @@ func flattenRouterbgpNeighborAttributeUnchangedEvpn(v interface{}, d *schema.Res
 }
 
 func flattenRouterbgpNeighborAllowasIn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterbgpNeighborMaximumPrefix6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -720,6 +772,12 @@ func flattenRouterbgpNeighborRouteServerClient(v interface{}, d *schema.Resource
 }
 
 func flattenRouterbgpNeighborMaximumPrefixThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -736,6 +794,12 @@ func flattenRouterbgpNeighborSoftReconfigurationEvpn(v interface{}, d *schema.Re
 }
 
 func flattenRouterbgpNeighborKeepAliveTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -784,6 +848,12 @@ func flattenRouterbgpNeighborAllowasInEnable6(v interface{}, d *schema.ResourceD
 }
 
 func flattenRouterbgpNeighborAllowasIn6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -808,6 +878,12 @@ func flattenRouterbgpNeighborPassword(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenRouterbgpNeighborHoldtimeTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -824,6 +900,12 @@ func flattenRouterbgpNeighborFilterListIn(v interface{}, d *schema.ResourceData,
 }
 
 func flattenRouterbgpNeighborMaximumPrefix(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -840,6 +922,12 @@ func flattenRouterbgpNeighborAllowasInEnableEvpn(v interface{}, d *schema.Resour
 }
 
 func flattenRouterbgpNeighborEbgpTtlSecurityHops(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -884,10 +972,34 @@ func flattenRouterbgpNeighborDistributeListIn(v interface{}, d *schema.ResourceD
 }
 
 func flattenRouterbgpNeighborRemoteAs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
+	return v
+}
+
+func flattenRouterbgpNeighborLocalAs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterbgpNeighborLocalAsNoPrepend(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterbgpNeighborLocalAsReplace(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenRouterbgpNeighborMaximumPrefixThreshold6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1382,6 +1494,24 @@ func refreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
+	if err = d.Set("local_as", flattenRouterbgpNeighborLocalAs(o["local-as"], d, "local_as", sv)); err != nil {
+		if !fortiAPIPatch(o["local-as"]) {
+			return fmt.Errorf("Error reading local_as: %v", err)
+		}
+	}
+
+	if err = d.Set("local_as_no_prepend", flattenRouterbgpNeighborLocalAsNoPrepend(o["local-as-no-prepend"], d, "local_as_no_prepend", sv)); err != nil {
+		if !fortiAPIPatch(o["local-as-no-prepend"]) {
+			return fmt.Errorf("Error reading local_as_no_prepend: %v", err)
+		}
+	}
+
+	if err = d.Set("local_as_replace", flattenRouterbgpNeighborLocalAsReplace(o["local-as-replace"], d, "local_as_replace", sv)); err != nil {
+		if !fortiAPIPatch(o["local-as-replace"]) {
+			return fmt.Errorf("Error reading local_as_replace: %v", err)
+		}
+	}
+
 	if err = d.Set("maximum_prefix_threshold6", flattenRouterbgpNeighborMaximumPrefixThreshold6(o["maximum-prefix-threshold6"], d, "maximum_prefix_threshold6", sv)); err != nil {
 		if !fortiAPIPatch(o["maximum-prefix-threshold6"]) {
 			return fmt.Errorf("Error reading maximum_prefix_threshold6: %v", err)
@@ -1726,6 +1856,18 @@ func expandRouterbgpNeighborDistributeListIn(d *schema.ResourceData, v interface
 }
 
 func expandRouterbgpNeighborRemoteAs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterbgpNeighborLocalAs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterbgpNeighborLocalAsNoPrepend(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterbgpNeighborLocalAsReplace(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2541,6 +2683,36 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 			return &obj, err
 		} else if t != nil {
 			obj["remote-as"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("local_as"); ok {
+
+		t, err := expandRouterbgpNeighborLocalAs(d, v, "local_as", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["local-as"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("local_as_no_prepend"); ok {
+
+		t, err := expandRouterbgpNeighborLocalAsNoPrepend(d, v, "local_as_no_prepend", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["local-as-no-prepend"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("local_as_replace"); ok {
+
+		t, err := expandRouterbgpNeighborLocalAsReplace(d, v, "local_as_replace", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["local-as-replace"] = t
 		}
 	}
 

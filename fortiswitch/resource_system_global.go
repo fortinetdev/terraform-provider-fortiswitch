@@ -106,6 +106,21 @@ func resourceSystemGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"system_time_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"utc_offset_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"utc_offset": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
 			"admin_sport": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
@@ -161,6 +176,11 @@ func resourceSystemGlobal() *schema.Resource {
 			},
 			"tcp6_mss_min": &schema.Schema{
 				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
+			"verify_config": &schema.Schema{
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
@@ -496,6 +516,12 @@ func flattenSystemGlobalIpv6AllForwarding(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSystemGlobalDhcpsDbPerPortLearnLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -508,10 +534,22 @@ func flattenSystemGlobalDhcpCircuitId(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSystemGlobalRemoteauthtimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemGlobalAlertInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -543,7 +581,31 @@ func flattenSystemGlobalTimezone(v interface{}, d *schema.ResourceData, pre stri
 	return v
 }
 
+func flattenSystemGlobalSystemTimeMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalUtcOffsetMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalUtcOffset(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
+	return v
+}
+
 func flattenSystemGlobalAdminSport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -552,6 +614,12 @@ func flattenSystemGlobalImageRotation(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSystemGlobalAdminTelnetPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -584,10 +652,26 @@ func flattenSystemGlobalRevisionBackupOnLogout(v interface{}, d *schema.Resource
 }
 
 func flattenSystemGlobalTcp6MssMin(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
+	return v
+}
+
+func flattenSystemGlobalVerifyConfig(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenSystemGlobalCfgRevertTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -604,10 +688,22 @@ func flattenSystemGlobalAdminPasswordHash(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSystemGlobalDhParams(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemGlobalLdapconntimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -616,6 +712,12 @@ func flattenSystemGlobalResetButton(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenSystemGlobalTcpMssMin(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -628,14 +730,32 @@ func flattenSystemGlobalAdminConcurrent(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenSystemGlobalAdmintimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemGlobalArpTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemGlobalAdminLockoutDuration(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -644,6 +764,12 @@ func flattenSystemGlobalDhcpServerAccessList(v interface{}, d *schema.ResourceDa
 }
 
 func flattenSystemGlobalAdminPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -660,14 +786,32 @@ func flattenSystemGlobalPostLoginBanner(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenSystemGlobalFailtime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemGlobalAdminLockoutThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemGlobalDhcpsDbExp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -684,6 +828,12 @@ func flattenSystemGlobalDhcpSnoopClientReq(v interface{}, d *schema.ResourceData
 }
 
 func flattenSystemGlobalArpInspectionMonitorTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -696,14 +846,32 @@ func flattenSystemGlobalCsrCaAttribute(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenSystemGlobalDelaycliTimeoutCleanup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemGlobalIpv6AcceptDad(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemGlobalAdminSshPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -720,10 +888,22 @@ func flattenSystemGlobalLanguage(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenSystemGlobalRadiusCoaPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemGlobalRadsecCoaPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -732,6 +912,12 @@ func flattenSystemGlobalDst(v interface{}, d *schema.ResourceData, pre string, s
 }
 
 func flattenSystemGlobalInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -768,6 +954,12 @@ func flattenSystemGlobalTftp(v interface{}, d *schema.ResourceData, pre string, 
 }
 
 func flattenSystemGlobalAdminSshGraceTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -776,6 +968,12 @@ func flattenSystemGlobalAdminHttpsPkiRequired(v interface{}, d *schema.ResourceD
 }
 
 func flattenSystemGlobalRadiusPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -866,6 +1064,24 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("system_time_mode", flattenSystemGlobalSystemTimeMode(o["system-time-mode"], d, "system_time_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["system-time-mode"]) {
+			return fmt.Errorf("Error reading system_time_mode: %v", err)
+		}
+	}
+
+	if err = d.Set("utc_offset_mode", flattenSystemGlobalUtcOffsetMode(o["utc-offset-mode"], d, "utc_offset_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["utc-offset-mode"]) {
+			return fmt.Errorf("Error reading utc_offset_mode: %v", err)
+		}
+	}
+
+	if err = d.Set("utc_offset", flattenSystemGlobalUtcOffset(o["utc-offset"], d, "utc_offset", sv)); err != nil {
+		if !fortiAPIPatch(o["utc-offset"]) {
+			return fmt.Errorf("Error reading utc_offset: %v", err)
+		}
+	}
+
 	if err = d.Set("admin_sport", flattenSystemGlobalAdminSport(o["admin-sport"], d, "admin_sport", sv)); err != nil {
 		if !fortiAPIPatch(o["admin-sport"]) {
 			return fmt.Errorf("Error reading admin_sport: %v", err)
@@ -929,6 +1145,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 	if err = d.Set("tcp6_mss_min", flattenSystemGlobalTcp6MssMin(o["tcp6-mss-min"], d, "tcp6_mss_min", sv)); err != nil {
 		if !fortiAPIPatch(o["tcp6-mss-min"]) {
 			return fmt.Errorf("Error reading tcp6_mss_min: %v", err)
+		}
+	}
+
+	if err = d.Set("verify_config", flattenSystemGlobalVerifyConfig(o["verify-config"], d, "verify_config", sv)); err != nil {
+		if !fortiAPIPatch(o["verify-config"]) {
+			return fmt.Errorf("Error reading verify_config: %v", err)
 		}
 	}
 
@@ -1285,6 +1507,18 @@ func expandSystemGlobalTimezone(d *schema.ResourceData, v interface{}, pre strin
 	return v, nil
 }
 
+func expandSystemGlobalSystemTimeMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalUtcOffsetMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalUtcOffset(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemGlobalAdminSport(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1326,6 +1560,10 @@ func expandSystemGlobalRevisionBackupOnLogout(d *schema.ResourceData, v interfac
 }
 
 func expandSystemGlobalTcp6MssMin(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalVerifyConfig(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1720,6 +1958,48 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		}
 	}
 
+	if v, ok := d.GetOk("system_time_mode"); ok {
+		if setArgNil {
+			obj["system-time-mode"] = nil
+		} else {
+
+			t, err := expandSystemGlobalSystemTimeMode(d, v, "system_time_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["system-time-mode"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("utc_offset_mode"); ok {
+		if setArgNil {
+			obj["utc-offset-mode"] = nil
+		} else {
+
+			t, err := expandSystemGlobalUtcOffsetMode(d, v, "utc_offset_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["utc-offset-mode"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("utc_offset"); ok {
+		if setArgNil {
+			obj["utc-offset"] = nil
+		} else {
+
+			t, err := expandSystemGlobalUtcOffset(d, v, "utc_offset", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["utc-offset"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("admin_sport"); ok {
 		if setArgNil {
 			obj["admin-sport"] = nil
@@ -1870,6 +2150,20 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 				return &obj, err
 			} else if t != nil {
 				obj["tcp6-mss-min"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("verify_config"); ok {
+		if setArgNil {
+			obj["verify-config"] = nil
+		} else {
+
+			t, err := expandSystemGlobalVerifyConfig(d, v, "verify_config", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["verify-config"] = t
 			}
 		}
 	}

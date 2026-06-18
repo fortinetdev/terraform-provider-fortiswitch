@@ -15,6 +15,7 @@ The following arguments are supported:
 
 * `vlan` - PTP Vlan (0-4094)
 * `vlan_pri` - PTP Vlan Priority (0-7)
+* `bmc_selection` - Possible roles for the port when in BC mode (0=auto 1=master-only 2=slave-only)
 * `name` - Policy name.
 * `description` - Description.
 

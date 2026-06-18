@@ -33,6 +33,7 @@ func resourceSystemZone() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"interface": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{

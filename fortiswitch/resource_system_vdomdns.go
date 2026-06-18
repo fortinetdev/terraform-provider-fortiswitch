@@ -51,6 +51,11 @@ func resourceSystemVdomDns() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"protocol": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
 			"ip6_primary": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -151,6 +156,16 @@ func flattenSystemVdomDnsIp6Secondary(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
+func flattenSystemVdomDnsProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
+	return v
+}
+
 func flattenSystemVdomDnsIp6Primary(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -183,6 +198,12 @@ func refreshObjectSystemVdomDns(d *schema.ResourceData, o map[string]interface{}
 	if err = d.Set("ip6_secondary", flattenSystemVdomDnsIp6Secondary(o["ip6-secondary"], d, "ip6_secondary", sv)); err != nil {
 		if !fortiAPIPatch(o["ip6-secondary"]) {
 			return fmt.Errorf("Error reading ip6_secondary: %v", err)
+		}
+	}
+
+	if err = d.Set("protocol", flattenSystemVdomDnsProtocol(o["protocol"], d, "protocol", sv)); err != nil {
+		if !fortiAPIPatch(o["protocol"]) {
+			return fmt.Errorf("Error reading protocol: %v", err)
 		}
 	}
 
@@ -220,6 +241,10 @@ func expandSystemVdomDnsPrimary(d *schema.ResourceData, v interface{}, pre strin
 }
 
 func expandSystemVdomDnsIp6Secondary(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemVdomDnsProtocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -286,6 +311,20 @@ func getObjectSystemVdomDns(d *schema.ResourceData, setArgNil bool, sv string) (
 				return &obj, err
 			} else if t != nil {
 				obj["ip6-secondary"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("protocol"); ok {
+		if setArgNil {
+			obj["protocol"] = nil
+		} else {
+
+			t, err := expandSystemVdomDnsProtocol(d, v, "protocol", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["protocol"] = t
 			}
 		}
 	}

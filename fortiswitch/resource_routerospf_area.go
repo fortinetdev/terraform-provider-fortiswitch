@@ -38,6 +38,7 @@ func resourceRouterospfArea() *schema.Resource {
 			},
 			"virtual_link": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -79,6 +80,7 @@ func resourceRouterospfArea() *schema.Resource {
 						},
 						"md5_keys": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -91,6 +93,7 @@ func resourceRouterospfArea() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 17),
 										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
@@ -99,6 +102,7 @@ func resourceRouterospfArea() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 8),
 							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -115,6 +119,7 @@ func resourceRouterospfArea() *schema.Resource {
 			},
 			"range": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -148,6 +153,7 @@ func resourceRouterospfArea() *schema.Resource {
 			},
 			"filter_list": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -376,10 +382,22 @@ func flattenRouterospfAreaVirtualLink(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenRouterospfAreaVirtualLinkDeadInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterospfAreaVirtualLinkHelloInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -388,10 +406,22 @@ func flattenRouterospfAreaVirtualLinkName(v interface{}, d *schema.ResourceData,
 }
 
 func flattenRouterospfAreaVirtualLinkTransmitDelay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterospfAreaVirtualLinkRetransmitInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -449,6 +479,12 @@ func flattenRouterospfAreaVirtualLinkMd5Keys(v interface{}, d *schema.ResourceDa
 }
 
 func flattenRouterospfAreaVirtualLinkMd5KeysId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -558,6 +594,12 @@ func flattenRouterospfAreaRangeSubstituteStatus(v interface{}, d *schema.Resourc
 }
 
 func flattenRouterospfAreaRangeId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -625,10 +667,22 @@ func flattenRouterospfAreaFilterListList(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenRouterospfAreaFilterListId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterospfAreaDefaultCost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

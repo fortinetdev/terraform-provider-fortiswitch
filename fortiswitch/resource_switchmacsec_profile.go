@@ -89,6 +89,7 @@ func resourceSwitchMacsecProfile() *schema.Resource {
 			},
 			"traffic_policy": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -122,6 +123,7 @@ func resourceSwitchMacsecProfile() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			// Skipped duplicate: cipher_suite (original: cipher_suite)
 			"macsec_validate": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -146,6 +148,7 @@ func resourceSwitchMacsecProfile() *schema.Resource {
 			},
 			"mka_psk": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -305,6 +308,12 @@ func flattenSwitchMacsecProfileEapTlsIdentity(v interface{}, d *schema.ResourceD
 }
 
 func flattenSwitchMacsecProfileReplayWindow(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -414,10 +423,22 @@ func flattenSwitchMacsecProfileMacsecValidate(v interface{}, d *schema.ResourceD
 }
 
 func flattenSwitchMacsecProfileMkaPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchMacsecProfileMkaSakRekeyTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -994,16 +1015,6 @@ func getObjectSwitchMacsecProfile(d *schema.ResourceData, sv string) (*map[strin
 			return &obj, err
 		} else if t != nil {
 			obj["eap-tls-radius-server"] = t
-		}
-	}
-
-	if v, ok := d.GetOk("cipher_suite"); ok {
-
-		t, err := expandSwitchMacsecProfileCipher_Suite(d, v, "cipher_suite", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["cipher_suite"] = t
 		}
 	}
 

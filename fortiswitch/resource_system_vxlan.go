@@ -33,6 +33,7 @@ func resourceSystemVxlan() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"remote_ip": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -232,6 +233,12 @@ func flattenSystemVxlanName(v interface{}, d *schema.ResourceData, pre string, s
 }
 
 func flattenSystemVxlanMulticastTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -240,6 +247,12 @@ func flattenSystemVxlanTaggedVlans(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenSystemVxlanVni(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -248,6 +261,12 @@ func flattenSystemVxlanIpVersion(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenSystemVxlanVlanid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

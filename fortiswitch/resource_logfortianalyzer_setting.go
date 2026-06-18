@@ -142,6 +142,7 @@ func resourceLogFortianalyzerSetting() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
 				Sensitive:    true,
+				Computed:     true,
 			},
 			"upload_time": &schema.Schema{
 				Type:     schema.TypeString,
@@ -235,6 +236,12 @@ func flattenLogFortianalyzerSettingUploadOption(v interface{}, d *schema.Resourc
 }
 
 func flattenLogFortianalyzerSettingBufferMaxSend(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -283,6 +290,12 @@ func flattenLogFortianalyzerSettingFdpInterface(v interface{}, d *schema.Resourc
 }
 
 func flattenLogFortianalyzerSetting__Change_Ip(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -291,6 +304,12 @@ func flattenLogFortianalyzerSettingLocalid(v interface{}, d *schema.ResourceData
 }
 
 func flattenLogFortianalyzerSettingMaxBufferSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -299,6 +318,12 @@ func flattenLogFortianalyzerSettingServer(v interface{}, d *schema.ResourceData,
 }
 
 func flattenLogFortianalyzerSettingConnTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

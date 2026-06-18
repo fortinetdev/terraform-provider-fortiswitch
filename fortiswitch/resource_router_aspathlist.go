@@ -40,6 +40,7 @@ func resourceRouterAspathList() *schema.Resource {
 			},
 			"rule": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -224,6 +225,12 @@ func flattenRouterAspathListRuleRegexp(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenRouterAspathListRuleId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

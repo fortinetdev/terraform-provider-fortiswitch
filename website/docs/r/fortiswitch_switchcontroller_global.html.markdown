@@ -27,6 +27,9 @@ The following arguments are supported:
 * `mgmt_mode` - FortiLink management mode. Valid values: `capwap`, `https`.
 * `source_ip` - Source IPv4 for communication to FGT.
 * `source_ip6` - Source IPv6 for communication to FGT.
+* `sase_mode` - FortiSwitchSASE mode.
+* `sase_turbo` - FortiSwitchSASE mode.
+* `turbo_ip` - Resolved SASE turbo ip.
 * `tunnel_mode` - Compatible/strict tunnel mode. Valid values: `compatible`, `strict`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 

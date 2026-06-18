@@ -146,6 +146,7 @@ func resourceSwitchTrunk() *schema.Resource {
 			},
 			"members": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -304,6 +305,12 @@ func resourceSwitchTrunkRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenSwitchTrunkHbSrcUdpPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -316,10 +323,22 @@ func flattenSwitchTrunkHbSrcIp(v interface{}, d *schema.ResourceData, pre string
 }
 
 func flattenSwitchTrunkMinBundle(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchTrunkHbDstUdpPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -336,14 +355,32 @@ func flattenSwitchTrunkMclagMacAddress(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenSwitchTrunkIslFortilink(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchTrunkMaxMissHeartbeats(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchTrunkRestricted(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -364,6 +401,12 @@ func flattenSwitchTrunkMclag(v interface{}, d *schema.ResourceData, pre string, 
 }
 
 func flattenSwitchTrunkTrunkId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -380,6 +423,12 @@ func flattenSwitchTrunkBundle(v interface{}, d *schema.ResourceData, pre string,
 }
 
 func flattenSwitchTrunkMaxBundle(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -388,6 +437,12 @@ func flattenSwitchTrunkMclagIcl(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenSwitchTrunkHbInVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -439,10 +494,22 @@ func flattenSwitchTrunkHbDstIp(v interface{}, d *schema.ResourceData, pre string
 }
 
 func flattenSwitchTrunkHbOutVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchTrunkFortilink(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -451,6 +518,12 @@ func flattenSwitchTrunkName(v interface{}, d *schema.ResourceData, pre string, s
 }
 
 func flattenSwitchTrunkAutoIsl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -467,6 +540,12 @@ func flattenSwitchTrunkStaticIsl(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenSwitchTrunkPortExtensionTrigger(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

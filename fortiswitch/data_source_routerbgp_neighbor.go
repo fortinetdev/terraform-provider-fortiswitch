@@ -344,6 +344,18 @@ func dataSourceRouterbgpNeighbor() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"local_as": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"local_as_no_prepend": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"local_as_replace": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"maximum_prefix_threshold6": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -712,6 +724,18 @@ func dataSourceFlattenRouterbgpNeighborDistributeListIn(v interface{}, d *schema
 }
 
 func dataSourceFlattenRouterbgpNeighborRemoteAs(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterbgpNeighborLocalAs(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterbgpNeighborLocalAsNoPrepend(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterbgpNeighborLocalAsReplace(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1207,6 +1231,24 @@ func dataSourceRefreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[stri
 	if err = d.Set("remote_as", dataSourceFlattenRouterbgpNeighborRemoteAs(o["remote-as"], d, "remote_as")); err != nil {
 		if !fortiAPIPatch(o["remote-as"]) {
 			return fmt.Errorf("Error reading remote_as: %v", err)
+		}
+	}
+
+	if err = d.Set("local_as", dataSourceFlattenRouterbgpNeighborLocalAs(o["local-as"], d, "local_as")); err != nil {
+		if !fortiAPIPatch(o["local-as"]) {
+			return fmt.Errorf("Error reading local_as: %v", err)
+		}
+	}
+
+	if err = d.Set("local_as_no_prepend", dataSourceFlattenRouterbgpNeighborLocalAsNoPrepend(o["local-as-no-prepend"], d, "local_as_no_prepend")); err != nil {
+		if !fortiAPIPatch(o["local-as-no-prepend"]) {
+			return fmt.Errorf("Error reading local_as_no_prepend: %v", err)
+		}
+	}
+
+	if err = d.Set("local_as_replace", dataSourceFlattenRouterbgpNeighborLocalAsReplace(o["local-as-replace"], d, "local_as_replace")); err != nil {
+		if !fortiAPIPatch(o["local-as-replace"]) {
+			return fmt.Errorf("Error reading local_as_replace: %v", err)
 		}
 	}
 

@@ -147,6 +147,12 @@ func flattenSystemAutoupdateTunnelingPassword(v interface{}, d *schema.ResourceD
 }
 
 func flattenSystemAutoupdateTunnelingPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

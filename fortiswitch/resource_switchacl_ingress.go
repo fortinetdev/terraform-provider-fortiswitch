@@ -12,7 +12,6 @@ package fortiswitch
 import (
 	"fmt"
 	"log"
-	"reflect"
 	"strconv"
 	"strings"
 
@@ -50,6 +49,7 @@ func resourceSwitchAclIngress() *schema.Resource {
 			},
 			"schedule": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -64,6 +64,7 @@ func resourceSwitchAclIngress() *schema.Resource {
 			},
 			"ingress_interface": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -78,6 +79,7 @@ func resourceSwitchAclIngress() *schema.Resource {
 			},
 			"classifier": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -153,6 +155,7 @@ func resourceSwitchAclIngress() *schema.Resource {
 			},
 			"action": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -175,6 +178,7 @@ func resourceSwitchAclIngress() *schema.Resource {
 						},
 						"redirect_physical_port": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -201,6 +205,7 @@ func resourceSwitchAclIngress() *schema.Resource {
 						},
 						"egress_mask": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -246,10 +251,10 @@ func resourceSwitchAclIngress() *schema.Resource {
 							Computed: true,
 						},
 						"cpu_cos_queue": &schema.Schema{
-							Type: schema.TypeString,
-							//ValidateFunc: validation.IntBetween(17, 25),
-							Optional: true,
-							Computed: true,
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(17, 25),
+							Optional:     true,
+							Computed:     true,
 						},
 						"outer_vlan_tag": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -322,13 +327,6 @@ func resourceSwitchAclIngressUpdate(d *schema.ResourceData, m interface{}) error
 	log.Printf(strconv.Itoa(c.Retries))
 	if o["mkey"] != nil && o["mkey"] != "" {
 		d.SetId(fmt.Sprintf("%v", o["mkey"]))
-	} else {
-		d.SetId("SwitchAclIngress")
-	}
-
-	log.Printf(strconv.Itoa(c.Retries))
-	if o["mkey"] != nil && o["mkey"] != "" {
-		d.SetId(o["mkey"].(string))
 	} else {
 		d.SetId("SwitchAclIngress")
 	}
@@ -564,7 +562,10 @@ func flattenSwitchAclIngressClassifierDstMac(v interface{}, d *schema.ResourceDa
 }
 
 func flattenSwitchAclIngressClassifierCos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	if v == "" || v == "none" || reflect.DeepEqual(v, []interface{}{}) {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
 		return nil
 	}
 	return v
@@ -594,10 +595,12 @@ func flattenSwitchAclIngressClassifierSrcMac(v interface{}, d *schema.ResourceDa
 }
 
 func flattenSwitchAclIngressClassifierDscp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	if v == "" || v == "none" || reflect.DeepEqual(v, []interface{}{}) {
+	if v == nil || v == "" {
 		return nil
 	}
-
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -606,10 +609,22 @@ func flattenSwitchAclIngressClassifierDstIp6Prefix(v interface{}, d *schema.Reso
 }
 
 func flattenSwitchAclIngressClassifierEtherType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchAclIngressClassifierVlanId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -787,19 +802,23 @@ func flattenSwitchAclIngressActionRedirectPhysicalPortMemberName(v interface{}, 
 }
 
 func flattenSwitchAclIngressActionCosQueue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	if v == "" || v == "none" || reflect.DeepEqual(v, []interface{}{}) {
+	if v == nil || v == "" {
 		return nil
 	}
-
-	return v
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
+	return convintflist2i(v)
 }
 
 func flattenSwitchAclIngressActionRemarkDscp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	if v == "" || v == "none" || reflect.DeepEqual(v, []interface{}{}) {
+	if v == nil || v == "" {
 		return nil
 	}
-
-	return v
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
+	return convintflist2i(v)
 }
 
 func flattenSwitchAclIngressActionEgressMask(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -854,15 +873,23 @@ func flattenSwitchAclIngressActionRedirectBcastNoCpu(v interface{}, d *schema.Re
 }
 
 func flattenSwitchAclIngressActionPolicer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchAclIngressActionRemarkCos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	if v == "" || v == "none" || reflect.DeepEqual(v, []interface{}{}) {
+	if v == nil || v == "" {
 		return nil
 	}
-
-	return v
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
+	return convintflist2i(v)
 }
 
 func flattenSwitchAclIngressActionMirror(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -874,18 +901,42 @@ func flattenSwitchAclIngressActionCountType(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSwitchAclIngressActionCpuCosQueue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
+	return convintflist2i(v)
 }
 
 func flattenSwitchAclIngressActionOuterVlanTag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchAclIngressGroup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchAclIngressId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

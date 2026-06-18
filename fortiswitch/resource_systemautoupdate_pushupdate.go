@@ -135,6 +135,12 @@ func flattenSystemAutoupdatePushUpdateOverride(v interface{}, d *schema.Resource
 }
 
 func flattenSystemAutoupdatePushUpdatePort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

@@ -44,7 +44,7 @@ The following arguments are supported:
 * `private_vlan_type` - Private VLAN type.
 * `mld_snooping_querier` - Enable/disable MLD snooping querier for the VLAN interface. Valid values: `enable`, `disable`.
 * `igmp_snooping_fast_leave` - Enable/disable IGMP snooping fast leave. Valid values: `enable`, `disable`.
-* `dhcp_snooping` - Enable/Disable dhcp snooping on this vlan. Valid values: `disable`, `enable`.
+* `dhcp_snooping` - Enable/Disable dhcp snooping on this vlan.
 * `lan_segment_type` - LAN segment type.
 * `igmp_snooping_static_group` - IGMP static groups. The structure of `igmp_snooping_static_group` block is documented below.
 * `dhcp_snooping_verify_mac` - Enable/Disable verify source mac. Valid values: `disable`, `enable`.

@@ -60,6 +60,7 @@ resource "fortiswitch_router_ospf6" "name" {
 
 The following arguments are supported:
 
+* `auto_cost_ref_bandwidth` - the reference bandwidth in terms of Mbits per second (1..4294967)
 * `redistribute` - Redistribute configuration. The structure of `redistribute` block is documented below.
 * `router_id` - A.B.C.D, in IPv4 address format.
 * `spf_timers` - SPF calculation frequency.
@@ -109,6 +110,7 @@ The `interface` block supports:
 * `cost` - The cost of the interface.
 * `passive` - Enable/disable passive interface. Valid values: `enable`, `disable`.
 * `priority` - Router priority.
+* `network_type` - Network type. Valid values: `broadcast`, `point-to-point`, `point-to-multipoint`.
 
 
 ## Attribute Reference

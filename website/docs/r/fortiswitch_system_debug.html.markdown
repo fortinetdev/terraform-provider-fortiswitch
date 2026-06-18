@@ -46,6 +46,7 @@ The following arguments are supported:
 * `nwmcfgd` - Network monitor daemon responsible for handling configuration.
 * `nwmonitord` - Network monitor daemon responsible for packet handling and parsing.
 * `portspeedd` - Port speed daemon.
+* `srcguardd` - Source guard daemon responsible for source guard violation.
 * `l3` - L3 debug.
 * `mcast_snooping` - Multicast Snooping debug.
 * `dmid` - DMI daemon debug.
@@ -78,6 +79,8 @@ The following arguments are supported:
 * `statsd` - Stats collection daemon.
 * `flow_export` - Flow-export debug.
 * `erspan_auto_mgr` - ERSPAN-auto mode configuration resolution daemon.
+* `mrpd` - Media Redundancy Protocol (MRP) daemon.
+* `ptp4l` - Precision Time Protocol for Linux (PTP4L) daemon
 * `autod` - Automation Stitches.
 * `email_server` - Email server.
 * `auto_script` - Auto script.

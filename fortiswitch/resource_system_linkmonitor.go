@@ -83,6 +83,7 @@ func resourceSystemLinkMonitor() *schema.Resource {
 			},
 			"server": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -149,6 +150,7 @@ func resourceSystemLinkMonitor() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
 				Sensitive:    true,
+				Computed:     true,
 			},
 			"port": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -269,6 +271,12 @@ func flattenSystemLinkMonitorStatus(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenSystemLinkMonitorTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -289,6 +297,12 @@ func flattenSystemLinkMonitorSourceIp(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSystemLinkMonitorInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -340,6 +354,12 @@ func flattenSystemLinkMonitorServerAddress(v interface{}, d *schema.ResourceData
 }
 
 func flattenSystemLinkMonitorFailtime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -368,6 +388,12 @@ func flattenSystemLinkMonitorSecurityMode(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSystemLinkMonitorPacketSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -380,10 +406,22 @@ func flattenSystemLinkMonitorPassword(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSystemLinkMonitorPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemLinkMonitorRecoverytime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

@@ -25,11 +25,13 @@ resource "fortiswitch_system_dns" "sdns" {
 The following arguments are supported:
 
 * `domain` - Local domain name.
+* `server_ca_cert` - DoT server CA certificate.
 * `dns_cache_ttl` - TTL in DNS cache (60 - 86400).
 * `primary` - IP address for primary DNS server.
 * `dns_cache_limit` - Maximum number of entries in DNS cache.
 * `cache_notfound_responses` - Enable/disable caching of NOTFOUND responses from DNS server. Valid values: `disable`, `enable`.
 * `ip6_secondary` - IPv6 address for secondary DNS server.
+* `protocol` - DNS transport protocols. Valid values: `cleartext`, `dot`.
 * `ip6_primary` - IPv6 address for primary DNS server.
 * `source_ip` - Source IP for DNS queries.
 * `secondary` - IP address for secondary DNS server.

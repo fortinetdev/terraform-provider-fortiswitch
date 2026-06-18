@@ -33,6 +33,7 @@ func resourceRouterPrefixList() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"rule": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -250,6 +251,12 @@ func flattenRouterPrefixListRule(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenRouterPrefixListRuleLe(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -258,10 +265,22 @@ func flattenRouterPrefixListRulePrefix(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenRouterPrefixListRuleGe(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterPrefixListRuleFlags(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -270,6 +289,12 @@ func flattenRouterPrefixListRuleAction(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenRouterPrefixListRuleId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

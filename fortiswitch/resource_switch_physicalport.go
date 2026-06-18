@@ -146,6 +146,7 @@ func resourceSwitchPhysicalPort() *schema.Resource {
 			},
 			"storm_control": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -272,6 +273,16 @@ func resourceSwitchPhysicalPort() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"poe_pre_standard_detection": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"poe_disconnection_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -390,6 +401,12 @@ func flattenSwitchPhysicalPortFortilinkP2P(v interface{}, d *schema.ResourceData
 }
 
 func flattenSwitchPhysicalPortFlapRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -446,10 +463,22 @@ func flattenSwitchPhysicalPortFlapguard(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenSwitchPhysicalPortFlapDuration(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchPhysicalPortEeeTxWakeTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -509,10 +538,22 @@ func flattenSwitchPhysicalPortStormControlUnknownMulticast(v interface{}, d *sch
 }
 
 func flattenSwitchPhysicalPortStormControlRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchPhysicalPortStormControlBurstSizeLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -537,6 +578,12 @@ func flattenSwitchPhysicalPortLldpStatus(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenSwitchPhysicalPortEeeTxIdleTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -549,6 +596,12 @@ func flattenSwitchPhysicalPortLldpProfile(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSwitchPhysicalPortFlapTrig(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -557,6 +610,12 @@ func flattenSwitchPhysicalPortLinkStatus(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenSwitchPhysicalPortFlapTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -569,10 +628,22 @@ func flattenSwitchPhysicalPortPoeMaxPowerMode(v interface{}, d *schema.ResourceD
 }
 
 func flattenSwitchPhysicalPortPortIndex(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchPhysicalPortMaxFrameSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -581,10 +652,24 @@ func flattenSwitchPhysicalPortFlowControl(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSwitchPhysicalPortPauseMeterRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchPhysicalPortPoePortPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchPhysicalPortPoePreStandardDetection(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchPhysicalPortPoeDisconnectionType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -847,6 +932,18 @@ func refreshObjectSwitchPhysicalPort(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
+	if err = d.Set("poe_pre_standard_detection", flattenSwitchPhysicalPortPoePreStandardDetection(o["poe-pre-standard-detection"], d, "poe_pre_standard_detection", sv)); err != nil {
+		if !fortiAPIPatch(o["poe-pre-standard-detection"]) {
+			return fmt.Errorf("Error reading poe_pre_standard_detection: %v", err)
+		}
+	}
+
+	if err = d.Set("poe_disconnection_type", flattenSwitchPhysicalPortPoeDisconnectionType(o["poe-disconnection-type"], d, "poe_disconnection_type", sv)); err != nil {
+		if !fortiAPIPatch(o["poe-disconnection-type"]) {
+			return fmt.Errorf("Error reading poe_disconnection_type: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -1072,6 +1169,14 @@ func expandSwitchPhysicalPortPauseMeterRate(d *schema.ResourceData, v interface{
 }
 
 func expandSwitchPhysicalPortPoePortPriority(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchPhysicalPortPoePreStandardDetection(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchPhysicalPortPoeDisconnectionType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1485,6 +1590,26 @@ func getObjectSwitchPhysicalPort(d *schema.ResourceData, sv string) (*map[string
 			return &obj, err
 		} else if t != nil {
 			obj["poe-port-priority"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("poe_pre_standard_detection"); ok {
+
+		t, err := expandSwitchPhysicalPortPoePreStandardDetection(d, v, "poe_pre_standard_detection", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["poe-pre-standard-detection"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("poe_disconnection_type"); ok {
+
+		t, err := expandSwitchPhysicalPortPoeDisconnectionType(d, v, "poe_disconnection_type", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["poe-disconnection-type"] = t
 		}
 	}
 

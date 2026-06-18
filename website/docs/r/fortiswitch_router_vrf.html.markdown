@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_router_vrf
-VRF configuration.
+VRF configuration. Applies to FortiSwitch Version `<= 7.6.4`.
 
 ## Example Usage
 

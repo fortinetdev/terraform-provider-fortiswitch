@@ -28,6 +28,10 @@ func dataSourceSystemDns() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"server_ca_cert": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"dns_cache_ttl": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -45,6 +49,10 @@ func dataSourceSystemDns() *schema.Resource {
 				Computed: true,
 			},
 			"ip6_secondary": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"protocol": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -94,6 +102,10 @@ func dataSourceFlattenSystemDnsDomain(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
+func dataSourceFlattenSystemDnsServerCaCert(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemDnsDnsCacheTtl(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -111,6 +123,10 @@ func dataSourceFlattenSystemDnsCacheNotfoundResponses(v interface{}, d *schema.R
 }
 
 func dataSourceFlattenSystemDnsIp6Secondary(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemDnsProtocol(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -132,6 +148,12 @@ func dataSourceRefreshObjectSystemDns(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("domain", dataSourceFlattenSystemDnsDomain(o["domain"], d, "domain")); err != nil {
 		if !fortiAPIPatch(o["domain"]) {
 			return fmt.Errorf("Error reading domain: %v", err)
+		}
+	}
+
+	if err = d.Set("server_ca_cert", dataSourceFlattenSystemDnsServerCaCert(o["server-ca-cert"], d, "server_ca_cert")); err != nil {
+		if !fortiAPIPatch(o["server-ca-cert"]) {
+			return fmt.Errorf("Error reading server_ca_cert: %v", err)
 		}
 	}
 
@@ -162,6 +184,12 @@ func dataSourceRefreshObjectSystemDns(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("ip6_secondary", dataSourceFlattenSystemDnsIp6Secondary(o["ip6-secondary"], d, "ip6_secondary")); err != nil {
 		if !fortiAPIPatch(o["ip6-secondary"]) {
 			return fmt.Errorf("Error reading ip6_secondary: %v", err)
+		}
+	}
+
+	if err = d.Set("protocol", dataSourceFlattenSystemDnsProtocol(o["protocol"], d, "protocol")); err != nil {
+		if !fortiAPIPatch(o["protocol"]) {
+			return fmt.Errorf("Error reading protocol: %v", err)
 		}
 	}
 

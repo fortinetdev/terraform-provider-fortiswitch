@@ -170,6 +170,12 @@ func flattenSystemCertificateCaCa(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenSystemCertificateCaAutoUpdateDaysWarning(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -178,6 +184,12 @@ func flattenSystemCertificateCaName(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenSystemCertificateCaAutoUpdateDays(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

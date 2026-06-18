@@ -17,6 +17,7 @@ Use this data source to get information on fortiswitch router ospf6
 
 The following attributes are exported:
 
+* `auto_cost_ref_bandwidth` - the reference bandwidth in terms of Mbits per second (1..4294967)
 * `redistribute` - Redistribute configuration. The structure of `redistribute` block is documented below.
 * `router_id` - A.B.C.D, in IPv4 address format.
 * `spf_timers` - SPF calculation frequency.
@@ -65,4 +66,5 @@ The `interface` block contains:
 * `cost` - The cost of the interface.
 * `passive` - Enable/disable passive interface.
 * `priority` - Router priority.
+* `network_type` - Network type.
 

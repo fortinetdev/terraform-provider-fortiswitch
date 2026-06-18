@@ -165,10 +165,22 @@ func flattenSwitchLldpSettingsManagementAddress(v interface{}, d *schema.Resourc
 }
 
 func flattenSwitchLldpSettingsTxHold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchLldpSettingsTxInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -177,6 +189,12 @@ func flattenSwitchLldpSettingsManagementInterface(v interface{}, d *schema.Resou
 }
 
 func flattenSwitchLldpSettingsFastStartInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

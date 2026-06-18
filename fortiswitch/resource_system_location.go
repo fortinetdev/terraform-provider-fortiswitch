@@ -33,6 +33,7 @@ func resourceSystemLocation() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"address_civic": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -240,6 +241,7 @@ func resourceSystemLocation() *schema.Resource {
 			},
 			"elin_number": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -262,6 +264,7 @@ func resourceSystemLocation() *schema.Resource {
 			},
 			"coordinates": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{

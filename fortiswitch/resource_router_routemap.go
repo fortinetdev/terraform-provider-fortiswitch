@@ -33,6 +33,7 @@ func resourceRouterRouteMap() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"rule": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -43,6 +44,7 @@ func resourceRouterRouteMap() *schema.Resource {
 						},
 						"set_community": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -91,6 +93,11 @@ func resourceRouterRouteMap() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"set_ip6_nexthop_prefer_global": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"match_ip_address": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
@@ -104,6 +111,7 @@ func resourceRouterRouteMap() *schema.Resource {
 						},
 						"set_extcommunity_soo": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -134,6 +142,7 @@ func resourceRouterRouteMap() *schema.Resource {
 						},
 						"set_extcommunity_rt": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -222,6 +231,7 @@ func resourceRouterRouteMap() *schema.Resource {
 						},
 						"set_aspath": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -446,6 +456,12 @@ func flattenRouterRouteMapRule(v interface{}, d *schema.ResourceData, pre string
 			tmp["match_flags"] = flattenRouterRouteMapRuleMatchFlags(i["match-flags"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_ip6_nexthop_prefer_global"
+		if _, ok := i["set-ip6-nexthop-prefer-global"]; ok {
+
+			tmp["set_ip6_nexthop_prefer_global"] = flattenRouterRouteMapRuleSetIp6NexthopPreferGlobal(i["set-ip6-nexthop-prefer-global"], d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_ip_address"
 		if _, ok := i["match-ip-address"]; ok {
 
@@ -653,6 +669,12 @@ func flattenRouterRouteMapRuleSetCommunityCommunity(v interface{}, d *schema.Res
 }
 
 func flattenRouterRouteMapRuleSetMetric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -669,14 +691,36 @@ func flattenRouterRouteMapRuleMatchOrigin(v interface{}, d *schema.ResourceData,
 }
 
 func flattenRouterRouteMapRuleMatchMetric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterRouteMapRuleId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterRouteMapRuleMatchFlags(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
+	return v
+}
+
+func flattenRouterRouteMapRuleSetIp6NexthopPreferGlobal(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -732,6 +776,12 @@ func flattenRouterRouteMapRuleSetExtcommunitySooCommunity(v interface{}, d *sche
 }
 
 func flattenRouterRouteMapRuleSetFlags(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -791,14 +841,32 @@ func flattenRouterRouteMapRuleSetIpNexthop(v interface{}, d *schema.ResourceData
 }
 
 func flattenRouterRouteMapRuleSetTag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterRouteMapRuleSetAggregatorAs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterRouteMapRuleSetWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -831,6 +899,12 @@ func flattenRouterRouteMapRuleSetOriginatorId(v interface{}, d *schema.ResourceD
 }
 
 func flattenRouterRouteMapRuleMatchTag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -894,6 +968,12 @@ func flattenRouterRouteMapRuleSetIp6NexthopLocal(v interface{}, d *schema.Resour
 }
 
 func flattenRouterRouteMapRuleSetLocalPreference(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1023,6 +1103,12 @@ func expandRouterRouteMapRule(d *schema.ResourceData, v interface{}, pre string,
 		if _, ok := d.GetOk(pre_append); ok {
 
 			tmp["match-flags"], _ = expandRouterRouteMapRuleMatchFlags(d, i["match_flags"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_ip6_nexthop_prefer_global"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["set-ip6-nexthop-prefer-global"], _ = expandRouterRouteMapRuleSetIp6NexthopPreferGlobal(d, i["set_ip6_nexthop_prefer_global"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_ip_address"
@@ -1250,6 +1336,10 @@ func expandRouterRouteMapRuleId(d *schema.ResourceData, v interface{}, pre strin
 }
 
 func expandRouterRouteMapRuleMatchFlags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterRouteMapRuleSetIp6NexthopPreferGlobal(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

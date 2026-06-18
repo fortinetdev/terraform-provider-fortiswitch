@@ -43,6 +43,7 @@ func resourceSystemSnmpCommunity() *schema.Resource {
 			},
 			"hosts6": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -108,6 +109,7 @@ func resourceSystemSnmpCommunity() *schema.Resource {
 			},
 			"hosts": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -264,6 +266,12 @@ func flattenSystemSnmpCommunityStatus(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSystemSnmpCommunityTrapV2CLport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -333,6 +341,12 @@ func flattenSystemSnmpCommunityHosts6Interface(v interface{}, d *schema.Resource
 }
 
 func flattenSystemSnmpCommunityHosts6Id(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -345,10 +359,22 @@ func flattenSystemSnmpCommunityName(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenSystemSnmpCommunityQueryV1Port(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemSnmpCommunityQueryV2CPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -357,6 +383,12 @@ func flattenSystemSnmpCommunityQueryV2CStatus(v interface{}, d *schema.ResourceD
 }
 
 func flattenSystemSnmpCommunityTrapV1Rport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -438,6 +470,12 @@ func flattenSystemSnmpCommunityHostsSourceIp(v interface{}, d *schema.ResourceDa
 }
 
 func flattenSystemSnmpCommunityHostsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -450,14 +488,32 @@ func flattenSystemSnmpCommunityEvents(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSystemSnmpCommunityTrapV2CRport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemSnmpCommunityId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemSnmpCommunityTrapV1Lport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

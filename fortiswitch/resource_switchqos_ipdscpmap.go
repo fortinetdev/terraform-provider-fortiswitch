@@ -33,6 +33,7 @@ func resourceSwitchQosIpDscpMap() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"map": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -256,6 +257,12 @@ func flattenSwitchQosIpDscpMapMapDiffserv(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSwitchQosIpDscpMapMapCosQueue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -272,6 +279,12 @@ func flattenSwitchQosIpDscpMapMapEntryName(v interface{}, d *schema.ResourceData
 }
 
 func flattenSwitchQosIpDscpMapMapType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

@@ -36,6 +36,10 @@ func dataSourceSystemInterface() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"ptp_status": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"weight": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -271,6 +275,10 @@ func dataSourceSystemInterface() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"status": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"backup_vmac_fwd": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -564,6 +572,10 @@ func dataSourceFlattenSystemInterfaceGwdetect(v interface{}, d *schema.ResourceD
 }
 
 func dataSourceFlattenSystemInterfaceDhcpClientStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfacePtpStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1028,6 +1040,11 @@ func dataSourceFlattenSystemInterfaceIpv6Vrrp6(v interface{}, d *schema.Resource
 			tmp["status"] = dataSourceFlattenSystemInterfaceIpv6Vrrp6Status(i["status"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "backup_vmac_fwd"
+		if _, ok := i["backup-vmac-fwd"]; ok {
+			tmp["backup_vmac_fwd"] = dataSourceFlattenSystemInterfaceIpv6Vrrp6BackupVmacFwd(i["backup-vmac-fwd"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
 		if _, ok := i["priority"]; ok {
 			tmp["priority"] = dataSourceFlattenSystemInterfaceIpv6Vrrp6Priority(i["priority"], d, pre_append)
@@ -1082,6 +1099,10 @@ func dataSourceFlattenSystemInterfaceIpv6Vrrp6(v interface{}, d *schema.Resource
 }
 
 func dataSourceFlattenSystemInterfaceIpv6Vrrp6Status(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceIpv6Vrrp6BackupVmacFwd(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1490,6 +1511,12 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 	if err = d.Set("dhcp_client_status", dataSourceFlattenSystemInterfaceDhcpClientStatus(o["dhcp-client-status"], d, "dhcp_client_status")); err != nil {
 		if !fortiAPIPatch(o["dhcp-client-status"]) {
 			return fmt.Errorf("Error reading dhcp_client_status: %v", err)
+		}
+	}
+
+	if err = d.Set("ptp_status", dataSourceFlattenSystemInterfacePtpStatus(o["ptp-status"], d, "ptp_status")); err != nil {
+		if !fortiAPIPatch(o["ptp-status"]) {
+			return fmt.Errorf("Error reading ptp_status: %v", err)
 		}
 	}
 

@@ -67,6 +67,7 @@ func resourceSystemDnsDatabase() *schema.Resource {
 			},
 			"dns_entry": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -387,10 +388,22 @@ func flattenSystemDnsDatabaseDnsEntryCanonicalName(v interface{}, d *schema.Reso
 }
 
 func flattenSystemDnsDatabaseDnsEntryPreference(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemDnsDatabaseDnsEntryTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -399,6 +412,12 @@ func flattenSystemDnsDatabaseDnsEntryType(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSystemDnsDatabaseDnsEntryId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -407,6 +426,12 @@ func flattenSystemDnsDatabaseContact(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenSystemDnsDatabaseTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

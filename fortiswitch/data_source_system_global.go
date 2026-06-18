@@ -80,6 +80,18 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"system_time_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"utc_offset_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"utc_offset": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 			"admin_sport": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -122,6 +134,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 			},
 			"tcp6_mss_min": &schema.Schema{
 				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"verify_config": &schema.Schema{
+				Type:     schema.TypeString,
 				Computed: true,
 			},
 			"cfg_revert_timeout": &schema.Schema{
@@ -402,6 +418,18 @@ func dataSourceFlattenSystemGlobalTimezone(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func dataSourceFlattenSystemGlobalSystemTimeMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalUtcOffsetMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalUtcOffset(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemGlobalAdminSport(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -443,6 +471,10 @@ func dataSourceFlattenSystemGlobalRevisionBackupOnLogout(v interface{}, d *schem
 }
 
 func dataSourceFlattenSystemGlobalTcp6MssMin(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalVerifyConfig(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -725,6 +757,24 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("system_time_mode", dataSourceFlattenSystemGlobalSystemTimeMode(o["system-time-mode"], d, "system_time_mode")); err != nil {
+		if !fortiAPIPatch(o["system-time-mode"]) {
+			return fmt.Errorf("Error reading system_time_mode: %v", err)
+		}
+	}
+
+	if err = d.Set("utc_offset_mode", dataSourceFlattenSystemGlobalUtcOffsetMode(o["utc-offset-mode"], d, "utc_offset_mode")); err != nil {
+		if !fortiAPIPatch(o["utc-offset-mode"]) {
+			return fmt.Errorf("Error reading utc_offset_mode: %v", err)
+		}
+	}
+
+	if err = d.Set("utc_offset", dataSourceFlattenSystemGlobalUtcOffset(o["utc-offset"], d, "utc_offset")); err != nil {
+		if !fortiAPIPatch(o["utc-offset"]) {
+			return fmt.Errorf("Error reading utc_offset: %v", err)
+		}
+	}
+
 	if err = d.Set("admin_sport", dataSourceFlattenSystemGlobalAdminSport(o["admin-sport"], d, "admin_sport")); err != nil {
 		if !fortiAPIPatch(o["admin-sport"]) {
 			return fmt.Errorf("Error reading admin_sport: %v", err)
@@ -788,6 +838,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("tcp6_mss_min", dataSourceFlattenSystemGlobalTcp6MssMin(o["tcp6-mss-min"], d, "tcp6_mss_min")); err != nil {
 		if !fortiAPIPatch(o["tcp6-mss-min"]) {
 			return fmt.Errorf("Error reading tcp6_mss_min: %v", err)
+		}
+	}
+
+	if err = d.Set("verify_config", dataSourceFlattenSystemGlobalVerifyConfig(o["verify-config"], d, "verify_config")); err != nil {
+		if !fortiAPIPatch(o["verify-config"]) {
+			return fmt.Errorf("Error reading verify_config: %v", err)
 		}
 	}
 

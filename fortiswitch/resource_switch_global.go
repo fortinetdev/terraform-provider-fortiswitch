@@ -211,6 +211,11 @@ func resourceSwitchGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"auto_stp_cost": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"poe_power_budget": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -273,6 +278,16 @@ func resourceSwitchGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"log_source_guard_violations": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"source_guard_violation_timer": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
 			"mclag_split_brain_detect": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -290,6 +305,7 @@ func resourceSwitchGlobal() *schema.Resource {
 			},
 			"port_security": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -356,6 +372,16 @@ func resourceSwitchGlobal() *schema.Resource {
 						},
 					},
 				},
+			},
+			"reserved_mcast_to_cpu": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"neighbor_discovery_to_cpu": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"flood_unknown_multicast": &schema.Schema{
 				Type:     schema.TypeString,
@@ -442,10 +468,22 @@ func resourceSwitchGlobalRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenSwitchGlobalFortilinkHeartbeatTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchGlobalMclagSplitBrainPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -474,6 +512,12 @@ func flattenSwitchGlobalBpduLearn(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenSwitchGlobalVxlanDport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -482,6 +526,12 @@ func flattenSwitchGlobalMacAddressAlgorithm(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSwitchGlobalVirtualWireTpid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -490,6 +540,12 @@ func flattenSwitchGlobalTrunkHashUnicastSrcPort(v interface{}, d *schema.Resourc
 }
 
 func flattenSwitchGlobalStormControlRateFilter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -502,6 +558,12 @@ func flattenSwitchGlobalAutoFortilinkDiscovery(v interface{}, d *schema.Resource
 }
 
 func flattenSwitchGlobalMaxPathInEcmpGroup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -510,10 +572,22 @@ func flattenSwitchGlobalTrunkHashMode(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSwitchGlobalFortilinkP2PTpid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchGlobalStormControlHighRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -522,14 +596,32 @@ func flattenSwitchGlobalFloodVtp(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenSwitchGlobalMacViolationTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchGlobalMirrorQos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchGlobalMclagPortBase(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -542,6 +634,12 @@ func flattenSwitchGlobalMclagSplitBrainAllPortsDown(v interface{}, d *schema.Res
 }
 
 func flattenSwitchGlobalMacAddress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -550,6 +648,12 @@ func flattenSwitchGlobalMclagStpAware(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSwitchGlobalFortilinkP2PNativeVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -562,22 +666,52 @@ func flattenSwitchGlobalVxlanStpVirtualMac(v interface{}, d *schema.ResourceData
 }
 
 func flattenSwitchGlobalLoopGuardTxInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchGlobalAutoIslPortGroup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchGlobalVxlanPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchGlobalPoeAlarmThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchGlobalPoeGuardBand(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -585,15 +719,37 @@ func flattenSwitchGlobalAutoStpPriority(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func flattenSwitchGlobalAutoStpCost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchGlobalPoePowerBudget(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchGlobalVxlanSport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchGlobalMclagPeerInfoTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -633,6 +789,20 @@ func flattenSwitchGlobalL2MemoryCheck(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
+func flattenSwitchGlobalLogSourceGuardViolations(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchGlobalSourceGuardViolationTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
+	return v
+}
+
 func flattenSwitchGlobalMclagSplitBrainDetect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -642,6 +812,12 @@ func flattenSwitchGlobalFortiTrunkDmac(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenSwitchGlobalMacAgingInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -739,6 +915,12 @@ func flattenSwitchGlobalPortSecurityMabReauth(v interface{}, d *schema.ResourceD
 }
 
 func flattenSwitchGlobalPortSecurityMaxReauthAttempt(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -763,6 +945,12 @@ func flattenSwitchGlobalPortSecurityMacUsernameDelimiter(v interface{}, d *schem
 }
 
 func flattenSwitchGlobalPortSecurityReauthPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -775,6 +963,20 @@ func flattenSwitchGlobalPortSecurityQuarantineVlan(v interface{}, d *schema.Reso
 }
 
 func flattenSwitchGlobalPortSecurityTxPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
+	return v
+}
+
+func flattenSwitchGlobalReservedMcastToCpu(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchGlobalNeighborDiscoveryToCpu(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -783,6 +985,12 @@ func flattenSwitchGlobalFloodUnknownMulticast(v interface{}, d *schema.ResourceD
 }
 
 func flattenSwitchGlobalL2MemoryCheckInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1005,6 +1213,12 @@ func refreshObjectSwitchGlobal(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("auto_stp_cost", flattenSwitchGlobalAutoStpCost(o["auto-stp-cost"], d, "auto_stp_cost", sv)); err != nil {
+		if !fortiAPIPatch(o["auto-stp-cost"]) {
+			return fmt.Errorf("Error reading auto_stp_cost: %v", err)
+		}
+	}
+
 	if err = d.Set("poe_power_budget", flattenSwitchGlobalPoePowerBudget(o["poe-power-budget"], d, "poe_power_budget", sv)); err != nil {
 		if !fortiAPIPatch(o["poe-power-budget"]) {
 			return fmt.Errorf("Error reading poe_power_budget: %v", err)
@@ -1077,6 +1291,18 @@ func refreshObjectSwitchGlobal(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("log_source_guard_violations", flattenSwitchGlobalLogSourceGuardViolations(o["log-source-guard-violations"], d, "log_source_guard_violations", sv)); err != nil {
+		if !fortiAPIPatch(o["log-source-guard-violations"]) {
+			return fmt.Errorf("Error reading log_source_guard_violations: %v", err)
+		}
+	}
+
+	if err = d.Set("source_guard_violation_timer", flattenSwitchGlobalSourceGuardViolationTimer(o["source-guard-violation-timer"], d, "source_guard_violation_timer", sv)); err != nil {
+		if !fortiAPIPatch(o["source-guard-violation-timer"]) {
+			return fmt.Errorf("Error reading source_guard_violation_timer: %v", err)
+		}
+	}
+
 	if err = d.Set("mclag_split_brain_detect", flattenSwitchGlobalMclagSplitBrainDetect(o["mclag-split-brain-detect"], d, "mclag_split_brain_detect", sv)); err != nil {
 		if !fortiAPIPatch(o["mclag-split-brain-detect"]) {
 			return fmt.Errorf("Error reading mclag_split_brain_detect: %v", err)
@@ -1108,6 +1334,18 @@ func refreshObjectSwitchGlobal(d *schema.ResourceData, o map[string]interface{},
 					return fmt.Errorf("Error reading port_security: %v", err)
 				}
 			}
+		}
+	}
+
+	if err = d.Set("reserved_mcast_to_cpu", flattenSwitchGlobalReservedMcastToCpu(o["reserved-mcast-to-cpu"], d, "reserved_mcast_to_cpu", sv)); err != nil {
+		if !fortiAPIPatch(o["reserved-mcast-to-cpu"]) {
+			return fmt.Errorf("Error reading reserved_mcast_to_cpu: %v", err)
+		}
+	}
+
+	if err = d.Set("neighbor_discovery_to_cpu", flattenSwitchGlobalNeighborDiscoveryToCpu(o["neighbor-discovery-to-cpu"], d, "neighbor_discovery_to_cpu", sv)); err != nil {
+		if !fortiAPIPatch(o["neighbor-discovery-to-cpu"]) {
+			return fmt.Errorf("Error reading neighbor_discovery_to_cpu: %v", err)
 		}
 	}
 
@@ -1276,6 +1514,10 @@ func expandSwitchGlobalAutoStpPriority(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
+func expandSwitchGlobalAutoStpCost(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchGlobalPoePowerBudget(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1321,6 +1563,14 @@ func expandSwitchGlobalStormControlMonitor(d *schema.ResourceData, v interface{}
 }
 
 func expandSwitchGlobalL2MemoryCheck(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchGlobalLogSourceGuardViolations(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchGlobalSourceGuardViolationTimer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1503,6 +1753,14 @@ func expandSwitchGlobalPortSecurityQuarantineVlan(d *schema.ResourceData, v inte
 }
 
 func expandSwitchGlobalPortSecurityTxPeriod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchGlobalReservedMcastToCpu(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchGlobalNeighborDiscoveryToCpu(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2021,6 +2279,20 @@ func getObjectSwitchGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		}
 	}
 
+	if v, ok := d.GetOk("auto_stp_cost"); ok {
+		if setArgNil {
+			obj["auto-stp-cost"] = nil
+		} else {
+
+			t, err := expandSwitchGlobalAutoStpCost(d, v, "auto_stp_cost", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auto-stp-cost"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("poe_power_budget"); ok {
 		if setArgNil {
 			obj["poe-power-budget"] = nil
@@ -2189,6 +2461,34 @@ func getObjectSwitchGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		}
 	}
 
+	if v, ok := d.GetOk("log_source_guard_violations"); ok {
+		if setArgNil {
+			obj["log-source-guard-violations"] = nil
+		} else {
+
+			t, err := expandSwitchGlobalLogSourceGuardViolations(d, v, "log_source_guard_violations", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["log-source-guard-violations"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("source_guard_violation_timer"); ok {
+		if setArgNil {
+			obj["source-guard-violation-timer"] = nil
+		} else {
+
+			t, err := expandSwitchGlobalSourceGuardViolationTimer(d, v, "source_guard_violation_timer", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-guard-violation-timer"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("mclag_split_brain_detect"); ok {
 		if setArgNil {
 			obj["mclag-split-brain-detect"] = nil
@@ -2238,6 +2538,34 @@ func getObjectSwitchGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 			return &obj, err
 		} else if t != nil {
 			obj["port-security"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("reserved_mcast_to_cpu"); ok {
+		if setArgNil {
+			obj["reserved-mcast-to-cpu"] = nil
+		} else {
+
+			t, err := expandSwitchGlobalReservedMcastToCpu(d, v, "reserved_mcast_to_cpu", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["reserved-mcast-to-cpu"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("neighbor_discovery_to_cpu"); ok {
+		if setArgNil {
+			obj["neighbor-discovery-to-cpu"] = nil
+		} else {
+
+			t, err := expandSwitchGlobalNeighborDiscoveryToCpu(d, v, "neighbor_discovery_to_cpu", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["neighbor-discovery-to-cpu"] = t
+			}
 		}
 	}
 

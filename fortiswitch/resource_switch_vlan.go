@@ -84,6 +84,7 @@ func resourceSwitchVlan() *schema.Resource {
 			},
 			"dhcp_snooping_static_client": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -114,6 +115,7 @@ func resourceSwitchVlan() *schema.Resource {
 			},
 			"member_by_mac": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -159,6 +161,7 @@ func resourceSwitchVlan() *schema.Resource {
 			},
 			"member_by_ipv6": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -203,6 +206,7 @@ func resourceSwitchVlan() *schema.Resource {
 			},
 			"dhcp_server_access_list": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -232,6 +236,7 @@ func resourceSwitchVlan() *schema.Resource {
 			},
 			"mrouter_ports": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -246,6 +251,7 @@ func resourceSwitchVlan() *schema.Resource {
 			},
 			"mld_snooping_static_group": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -267,6 +273,7 @@ func resourceSwitchVlan() *schema.Resource {
 						},
 						"members": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -325,6 +332,7 @@ func resourceSwitchVlan() *schema.Resource {
 			},
 			"igmp_snooping_static_group": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -346,6 +354,7 @@ func resourceSwitchVlan() *schema.Resource {
 						},
 						"members": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -378,6 +387,7 @@ func resourceSwitchVlan() *schema.Resource {
 			},
 			"member_by_ipv4": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -407,6 +417,7 @@ func resourceSwitchVlan() *schema.Resource {
 			},
 			"member_by_proto": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -566,6 +577,12 @@ func flattenSwitchVlanIgmpSnoopingProxy(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenSwitchVlanPolicer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -574,6 +591,12 @@ func flattenSwitchVlanDhcp6Snooping(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenSwitchVlanLanSegmentPrimaryVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -582,6 +605,12 @@ func flattenSwitchVlanLearning(v interface{}, d *schema.ResourceData, pre string
 }
 
 func flattenSwitchVlanId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -718,6 +747,12 @@ func flattenSwitchVlanMemberByMacMac(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenSwitchVlanMemberByMacId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -730,14 +765,32 @@ func flattenSwitchVlanLanSegment(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenSwitchVlanPrimaryVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchVlanIgmpSnoopingQuerierVersion(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchVlanCosQueue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -797,6 +850,12 @@ func flattenSwitchVlanMemberByIpv6Prefix(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenSwitchVlanMemberByIpv6Id(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -884,6 +943,12 @@ func flattenSwitchVlanDhcpServerAccessListServerIp6(v interface{}, d *schema.Res
 }
 
 func flattenSwitchVlanLearningLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1055,6 +1120,12 @@ func flattenSwitchVlanRspanMode(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenSwitchVlanPrivateVlanType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1071,6 +1142,12 @@ func flattenSwitchVlanDhcpSnooping(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenSwitchVlanLanSegmentType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1191,6 +1268,12 @@ func flattenSwitchVlanDhcpSnoopingVerifyMac(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSwitchVlanIsolatedVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1254,6 +1337,12 @@ func flattenSwitchVlanMemberByIpv4Description(v interface{}, d *schema.ResourceD
 }
 
 func flattenSwitchVlanMemberByIpv4Id(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1330,6 +1419,12 @@ func flattenSwitchVlanMemberByProto(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenSwitchVlanMemberByProtoProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1338,6 +1433,12 @@ func flattenSwitchVlanMemberByProtoFrametypes(v interface{}, d *schema.ResourceD
 }
 
 func flattenSwitchVlanMemberByProtoId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1350,6 +1451,12 @@ func flattenSwitchVlanAccessVlan(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenSwitchVlanAssignmentPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

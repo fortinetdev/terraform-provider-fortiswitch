@@ -71,6 +71,7 @@ func resourceSystemNtp() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 59),
 				Optional:     true,
 				Sensitive:    true,
+				Computed:     true,
 			},
 			"ntpsync": &schema.Schema{
 				Type:     schema.TypeString,
@@ -85,6 +86,7 @@ func resourceSystemNtp() *schema.Resource {
 			},
 			"ntpserver": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -109,6 +111,7 @@ func resourceSystemNtp() *schema.Resource {
 							ValidateFunc: validation.StringLenBetween(0, 59),
 							Optional:     true,
 							Sensitive:    true,
+							Computed:     true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
@@ -130,6 +133,7 @@ func resourceSystemNtp() *schema.Resource {
 			},
 			"interface": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -258,6 +262,12 @@ func flattenSystemNtpNtpsync(v interface{}, d *schema.ResourceData, pre string, 
 }
 
 func flattenSystemNtpSyncinterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -351,14 +361,32 @@ func flattenSystemNtpNtpserverKey(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenSystemNtpNtpserverId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemNtpNtpserverKeyId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemNtpKeyId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

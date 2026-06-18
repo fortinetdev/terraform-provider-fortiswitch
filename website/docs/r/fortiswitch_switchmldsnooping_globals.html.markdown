@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_switchmldsnooping_globals
-Configure mld-snooping on Switch.
+Configure mld-snooping on Switch. Applies to FortiSwitch Version `<= 7.6.4`.
 
 ## Example Usage
 

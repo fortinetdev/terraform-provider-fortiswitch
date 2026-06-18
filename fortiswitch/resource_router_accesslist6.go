@@ -33,6 +33,7 @@ func resourceRouterAccessList6() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"rule": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -248,10 +249,22 @@ func flattenRouterAccessList6RuleExactMatch(v interface{}, d *schema.ResourceDat
 }
 
 func flattenRouterAccessList6RuleFlags(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterAccessList6RuleId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

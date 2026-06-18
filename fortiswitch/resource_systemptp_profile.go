@@ -197,10 +197,22 @@ func resourceSystemPtpProfileRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenSystemPtpProfilePriority1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemPtpProfileDomain(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -225,6 +237,12 @@ func flattenSystemPtpProfileSyncInterval(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenSystemPtpProfilePriority2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -237,6 +255,12 @@ func flattenSystemPtpProfilePtpProfile(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenSystemPtpProfileAnnounceTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

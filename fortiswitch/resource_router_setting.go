@@ -33,6 +33,7 @@ func resourceRouterSetting() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"filter_list": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -200,6 +201,12 @@ func flattenRouterSettingFilterListProtocol(v interface{}, d *schema.ResourceDat
 }
 
 func flattenRouterSettingFilterListId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

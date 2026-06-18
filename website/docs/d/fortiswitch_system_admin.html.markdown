@@ -63,6 +63,7 @@ The following attributes are exported:
 * `vdom` - Virtual domain name.
 * `remote_auth` - Enable/disable remote authentication.
 * `name` - Adminstrative user name.
+* `gui_mfa_tokens` - GUI Multi-factor Authentication Tokens. The structure of `gui_mfa_tokens` block is documented below.
 * `password_expire` - Password expire time.
 * `remote_group` - Remote authentication group name.
 * `wildcard` - Enable/disable wildcard RADIUS authentication.
@@ -70,4 +71,11 @@ The following attributes are exported:
 * `ssh_public_key3` - SSH public key3.
 * `ssh_public_key2` - SSH public key2.
 * `peer_auth` - Enable/disable peer authentication.
+
+The `gui_mfa_tokens` block contains:
+
+* `id` - GUI multi-factor authentication id
+* `description` - Token description.
+* `domain` - FQDN of the FortiSwitch.
+* `token` - Public key.
 

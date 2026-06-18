@@ -61,6 +61,7 @@ The following arguments are supported:
 * `spf_timers` - SPF calculation frequency.
 * `distance_inter_area` - Administrative inter-area route distance.
 * `abr_type` - Area border router type. Valid values: `cisco`, `ibm`, `shortcut`, `standard`.
+* `auto_cost_ref_bandwidth` - Reference bandwidth in terms of megabits per second.
 * `interface` - OSPF interface configuration. The structure of `interface` block is documented below.
 * `vrf` - Enable OSPF on VRF. The structure of `vrf` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
@@ -157,6 +158,7 @@ The `interface` block supports:
 * `ttl` - TTL.
 * `md5_keys` - OSPF md5 key configuration. Applicable only when authentication field is set to md5. The structure of `md5_keys` block is documented below.
 * `mtu_ignore` - Disable MTU mismatch detection on this interface. Valid values: `enable`, `disable`.
+* `network_type` - Network type. Valid values: `broadcast`, `point-to-point`, `point-to-multipoint`.
 
 The `md5_keys` block supports:
 

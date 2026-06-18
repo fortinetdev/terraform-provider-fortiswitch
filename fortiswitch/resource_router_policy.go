@@ -33,6 +33,7 @@ func resourceRouterPolicy() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"interface": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -53,11 +54,13 @@ func resourceRouterPolicy() *schema.Resource {
 			},
 			"nexthop_group": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"nexthop": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -91,11 +94,13 @@ func resourceRouterPolicy() *schema.Resource {
 			},
 			"pbr_map": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"rule": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -472,6 +477,12 @@ func flattenRouterPolicyNexthopGroupNexthopNexthopIp(v interface{}, d *schema.Re
 }
 
 func flattenRouterPolicyNexthopGroupNexthopId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -634,6 +645,12 @@ func flattenRouterPolicyPbrMapRuleNexthopIp(v interface{}, d *schema.ResourceDat
 }
 
 func flattenRouterPolicyPbrMapRuleSeqNum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -665,10 +682,22 @@ func flattenRouterPolicyOutputDevice(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenRouterPolicyProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterPolicyEndPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -684,6 +713,12 @@ func flattenRouterPolicyDst(v interface{}, d *schema.ResourceData, pre string, s
 }
 
 func flattenRouterPolicySeqNum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -704,6 +739,12 @@ func flattenRouterPolicyGateway(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenRouterPolicyStartPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

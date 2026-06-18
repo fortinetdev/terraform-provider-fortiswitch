@@ -62,6 +62,7 @@ func resourceSwitchControllerGlobal() *schema.Resource {
 			},
 			"ac_list": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -122,6 +123,23 @@ func resourceSwitchControllerGlobal() *schema.Resource {
 				Computed: true,
 			},
 			"source_ip6": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"sase_mode": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 1),
+				Optional:     true,
+				Computed:     true,
+			},
+			"sase_turbo": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+				Computed:     true,
+			},
+			"turbo_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -215,18 +233,42 @@ func flattenSwitchControllerGlobalName(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenSwitchControllerGlobalAcDataPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchControllerGlobalEchoInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchControllerGlobalAcDhcpOptionCode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchControllerGlobalMaxDiscoveries(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -290,6 +332,12 @@ func flattenSwitchControllerGlobalAcListIpv4Address(v interface{}, d *schema.Res
 }
 
 func flattenSwitchControllerGlobalAcListId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -302,10 +350,22 @@ func flattenSwitchControllerGlobalAcDiscoveryMcAddr(v interface{}, d *schema.Res
 }
 
 func flattenSwitchControllerGlobalAcPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchControllerGlobalMaxRetransmit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -322,6 +382,24 @@ func flattenSwitchControllerGlobalSourceIp(v interface{}, d *schema.ResourceData
 }
 
 func flattenSwitchControllerGlobalSourceIp6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerGlobalSaseMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
+	return v
+}
+
+func flattenSwitchControllerGlobalSaseTurbo(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerGlobalTurboIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -423,6 +501,24 @@ func refreshObjectSwitchControllerGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("source_ip6", flattenSwitchControllerGlobalSourceIp6(o["source-ip6"], d, "source_ip6", sv)); err != nil {
 		if !fortiAPIPatch(o["source-ip6"]) {
 			return fmt.Errorf("Error reading source_ip6: %v", err)
+		}
+	}
+
+	if err = d.Set("sase_mode", flattenSwitchControllerGlobalSaseMode(o["sase-mode"], d, "sase_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["sase-mode"]) {
+			return fmt.Errorf("Error reading sase_mode: %v", err)
+		}
+	}
+
+	if err = d.Set("sase_turbo", flattenSwitchControllerGlobalSaseTurbo(o["sase-turbo"], d, "sase_turbo", sv)); err != nil {
+		if !fortiAPIPatch(o["sase-turbo"]) {
+			return fmt.Errorf("Error reading sase_turbo: %v", err)
+		}
+	}
+
+	if err = d.Set("turbo_ip", flattenSwitchControllerGlobalTurboIp(o["turbo-ip"], d, "turbo_ip", sv)); err != nil {
+		if !fortiAPIPatch(o["turbo-ip"]) {
+			return fmt.Errorf("Error reading turbo_ip: %v", err)
 		}
 	}
 
@@ -542,6 +638,18 @@ func expandSwitchControllerGlobalSourceIp(d *schema.ResourceData, v interface{},
 }
 
 func expandSwitchControllerGlobalSourceIp6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerGlobalSaseMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerGlobalSaseTurbo(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerGlobalTurboIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -744,6 +852,48 @@ func getObjectSwitchControllerGlobal(d *schema.ResourceData, setArgNil bool, sv 
 				return &obj, err
 			} else if t != nil {
 				obj["source-ip6"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOkExists("sase_mode"); ok {
+		if setArgNil {
+			obj["sase-mode"] = nil
+		} else {
+
+			t, err := expandSwitchControllerGlobalSaseMode(d, v, "sase_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sase-mode"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("sase_turbo"); ok {
+		if setArgNil {
+			obj["sase-turbo"] = nil
+		} else {
+
+			t, err := expandSwitchControllerGlobalSaseTurbo(d, v, "sase_turbo", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sase-turbo"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("turbo_ip"); ok {
+		if setArgNil {
+			obj["turbo-ip"] = nil
+		} else {
+
+			t, err := expandSwitchControllerGlobalTurboIp(d, v, "turbo_ip", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["turbo-ip"] = t
 			}
 		}
 	}

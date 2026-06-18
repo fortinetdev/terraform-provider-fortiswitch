@@ -28,6 +28,7 @@ The following arguments are supported:
 * `cost` - The cost of the interface.
 * `passive` - Enable/disable passive interface. Valid values: `enable`, `disable`.
 * `priority` - Router priority.
+* `network_type` - Network type. Valid values: `broadcast`, `point-to-point`, `point-to-multipoint`.
 
 
 ## Attribute Reference

@@ -44,6 +44,7 @@ func resourceUserSetting() *schema.Resource {
 			},
 			"auth_ports": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -188,6 +189,12 @@ func flattenUserSettingAuthMultiGroup(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenUserSettingAuthTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -247,10 +254,22 @@ func flattenUserSettingAuthPortsType(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenUserSettingAuthPortsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenUserSettingAuthPortsPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -263,10 +282,22 @@ func flattenUserSettingAuthHttpBasic(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenUserSettingAuthInvalidMax(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenUserSettingAuthBlackoutTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

@@ -95,7 +95,6 @@ func Provider() *schema.Provider {
 		},
 
 		DataSourcesMap: map[string]*schema.Resource{
-			"fortiswitch_json_generic_api":                 dataSourceJSONGenericAPI(),
 			"fortiswitch_router_accesslist":                dataSourceRouterAccessList(),
 			"fortiswitch_router_accesslist6":               dataSourceRouterAccessList6(),
 			"fortiswitch_router_aspathlist":                dataSourceRouterAspathList(),
@@ -191,7 +190,6 @@ func Provider() *schema.Provider {
 		},
 
 		ResourcesMap: map[string]*schema.Resource{
-			"fortiswitch_json_generic_api":                 resourceJSONGenericAPI(),
 			"fortiswitch_alertemail_setting":               resourceAlertemailSetting(),
 			"fortiswitch_gui_console":                      resourceGuiConsole(),
 			"fortiswitch_log_customfield":                  resourceLogCustomField(),
@@ -246,6 +244,7 @@ func Provider() *schema.Provider {
 			"fortiswitch_switch_autoislportgroup":          resourceSwitchAutoIslPortGroup(),
 			"fortiswitch_switch_autonetwork":               resourceSwitchAutoNetwork(),
 			"fortiswitch_switch_domain":                    resourceSwitchDomain(),
+			"fortiswitch_switch_ipsourceguard":             resourceSwitchIpSourceGuard(),
 			"fortiswitch_switch_global":                    resourceSwitchGlobal(),
 			"fortiswitch_switch_interface":                 resourceSwitchInterface(),
 			"fortiswitch_switch_ipmacbinding":              resourceSwitchIpMacBinding(),

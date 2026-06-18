@@ -189,6 +189,7 @@ func resourceSystemAdmin() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 204),
 				Optional:     true,
+				Computed:     true,
 			},
 			"vdom": &schema.Schema{
 				Type:         schema.TypeString,
@@ -207,6 +208,39 @@ func resourceSystemAdmin() *schema.Resource {
 				ForceNew:     true,
 				Optional:     true,
 				Computed:     true,
+			},
+			"gui_mfa_tokens": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 65535),
+							Optional:     true,
+							Computed:     true,
+						},
+						"description": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 255),
+							Optional:     true,
+							Computed:     true,
+						},
+						"domain": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 255),
+							Optional:     true,
+							Computed:     true,
+						},
+						"token": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 1023),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
 			},
 			"password_expire": &schema.Schema{
 				Type:     schema.TypeString,
@@ -243,6 +277,11 @@ func resourceSystemAdmin() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
 			},
 		},
 	}
@@ -346,6 +385,12 @@ func flattenSystemAdminIp6Trusthost3(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenSystemAdminIsAdmin(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -421,6 +466,12 @@ func flattenSystemAdminTrusthost10(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenSystemAdminHidden(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -540,6 +591,85 @@ func flattenSystemAdminRemoteAuth(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenSystemAdminName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAdminGuiMfaTokens(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := i["id"]; ok {
+
+			tmp["id"] = flattenSystemAdminGuiMfaTokensId(i["id"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
+		if _, ok := i["description"]; ok {
+
+			tmp["description"] = flattenSystemAdminGuiMfaTokensDescription(i["description"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain"
+		if _, ok := i["domain"]; ok {
+
+			tmp["domain"] = flattenSystemAdminGuiMfaTokensDomain(i["domain"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "token"
+		if _, ok := i["token"]; ok {
+
+			tmp["token"] = flattenSystemAdminGuiMfaTokensToken(i["token"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "id", d)
+	return result
+}
+
+func flattenSystemAdminGuiMfaTokensId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
+	return v
+}
+
+func flattenSystemAdminGuiMfaTokensDescription(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAdminGuiMfaTokensDomain(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAdminGuiMfaTokensToken(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -778,6 +908,22 @@ func refreshObjectSystemAdmin(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
+	if isImportTable() {
+		if err = d.Set("gui_mfa_tokens", flattenSystemAdminGuiMfaTokens(o["gui-mfa-tokens"], d, "gui_mfa_tokens", sv)); err != nil {
+			if !fortiAPIPatch(o["gui-mfa-tokens"]) {
+				return fmt.Errorf("Error reading gui_mfa_tokens: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("gui_mfa_tokens"); ok {
+			if err = d.Set("gui_mfa_tokens", flattenSystemAdminGuiMfaTokens(o["gui-mfa-tokens"], d, "gui_mfa_tokens", sv)); err != nil {
+				if !fortiAPIPatch(o["gui-mfa-tokens"]) {
+					return fmt.Errorf("Error reading gui_mfa_tokens: %v", err)
+				}
+			}
+		}
+	}
+
 	if err = d.Set("password_expire", flattenSystemAdminPasswordExpire(o["password-expire"], d, "password_expire", sv)); err != nil {
 		if !fortiAPIPatch(o["password-expire"]) {
 			return fmt.Errorf("Error reading password_expire: %v", err)
@@ -962,6 +1108,68 @@ func expandSystemAdminRemoteAuth(d *schema.ResourceData, v interface{}, pre stri
 }
 
 func expandSystemAdminName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAdminGuiMfaTokens(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["id"], _ = expandSystemAdminGuiMfaTokensId(d, i["id"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["description"], _ = expandSystemAdminGuiMfaTokensDescription(d, i["description"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["domain"], _ = expandSystemAdminGuiMfaTokensDomain(d, i["domain"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "token"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["token"], _ = expandSystemAdminGuiMfaTokensToken(d, i["token"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemAdminGuiMfaTokensId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAdminGuiMfaTokensDescription(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAdminGuiMfaTokensDomain(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAdminGuiMfaTokensToken(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1333,6 +1541,16 @@ func getObjectSystemAdmin(d *schema.ResourceData, sv string) (*map[string]interf
 			return &obj, err
 		} else if t != nil {
 			obj["name"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("gui_mfa_tokens"); ok || d.HasChange("gui_mfa_tokens") {
+
+		t, err := expandSystemAdminGuiMfaTokens(d, v, "gui_mfa_tokens", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["gui-mfa-tokens"] = t
 		}
 	}
 

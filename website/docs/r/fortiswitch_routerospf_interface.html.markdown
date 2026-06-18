@@ -33,6 +33,7 @@ The following arguments are supported:
 * `ttl` - TTL.
 * `md5_keys` - OSPF md5 key configuration. Applicable only when authentication field is set to md5. The structure of `md5_keys` block is documented below.
 * `mtu_ignore` - Disable MTU mismatch detection on this interface. Valid values: `enable`, `disable`.
+* `network_type` - Network type. Valid values: `broadcast`, `point-to-point`, `point-to-multipoint`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 
 The `md5_keys` block supports:

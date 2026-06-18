@@ -61,6 +61,7 @@ func resourceSystemAliasCommand() *schema.Resource {
 			},
 			"table_ids_allowed": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -75,6 +76,7 @@ func resourceSystemAliasCommand() *schema.Resource {
 			},
 			"script_arguments": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -102,6 +104,7 @@ func resourceSystemAliasCommand() *schema.Resource {
 						},
 						"allowed_values": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -157,6 +160,7 @@ func resourceSystemAliasCommand() *schema.Resource {
 			},
 			"read_only_attributes": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -433,6 +437,12 @@ func flattenSystemAliasCommandScriptArgumentsHelp(v interface{}, d *schema.Resou
 }
 
 func flattenSystemAliasCommandScriptArgumentsRangeDelay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -496,6 +506,12 @@ func flattenSystemAliasCommandScriptArgumentsType(v interface{}, d *schema.Resou
 }
 
 func flattenSystemAliasCommandScriptArgumentsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

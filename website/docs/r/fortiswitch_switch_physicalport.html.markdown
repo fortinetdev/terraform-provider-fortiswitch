@@ -53,7 +53,9 @@ The following arguments are supported:
 * `max_frame_size` - Maximum frame size.
 * `flow_control` - Configure flow control pause frames. Valid values: `disable`, `tx`, `rx`, `both`.
 * `pause_meter_rate` - Configure ingress metering rate. In kbits. 0 = disabled.
-* `poe_port_priority` - Configure port priority Valid values: `low-priority`, `high-priority`, `critical-priority`.
+* `poe_port_priority` - Configure port priority
+* `poe_pre_standard_detection` - poe: disable or enable poe-pre-standard-detection Valid values: `enable`, `disable`.
+* `poe_disconnection_type` - poe: select disconnection type Valid values: `AC`, `DC`, `DC-delay`.
 
 The `storm_control` block supports:
 

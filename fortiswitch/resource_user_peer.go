@@ -82,11 +82,13 @@ func resourceUserPeer() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
 				Sensitive:    true,
+				Computed:     true,
 			},
 			"ldap_password": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
+				Computed:     true,
 			},
 			"ldap_mode": &schema.Schema{
 				Type:     schema.TypeString,

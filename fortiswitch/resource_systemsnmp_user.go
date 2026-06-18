@@ -57,11 +57,13 @@ func resourceSystemSnmpUser() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Computed:     true,
 			},
 			"priv_pwd": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Computed:     true,
 			},
 			"security_level": &schema.Schema{
 				Type:     schema.TypeString,
@@ -189,6 +191,12 @@ func flattenSystemSnmpUserName(v interface{}, d *schema.ResourceData, pre string
 }
 
 func flattenSystemSnmpUserQueryPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

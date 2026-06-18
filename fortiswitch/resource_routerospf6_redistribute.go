@@ -161,6 +161,12 @@ func flattenRouterospf6RedistributeMetricType(v interface{}, d *schema.ResourceD
 }
 
 func flattenRouterospf6RedistributeMetric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -257,7 +263,7 @@ func getObjectRouterospf6Redistribute(d *schema.ResourceData, sv string) (*map[s
 		}
 	}
 
-	if v, ok := d.GetOk("metric"); ok {
+	if v, ok := d.GetOkExists("metric"); ok {
 
 		t, err := expandRouterospf6RedistributeMetric(d, v, "metric", sv)
 		if err != nil {

@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_switch_ipmacbinding
-Ip-mac-binding table.
+Ip-mac-binding table. Applies to FortiSwitch Version `<= 7.6.4`.
 
 ## Argument Reference
 

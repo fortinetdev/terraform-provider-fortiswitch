@@ -31,8 +31,15 @@ func resourceRouterOspf6() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"auto_cost_ref_bandwidth": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 4294967),
+				Optional:     true,
+				Computed:     true,
+			},
 			"redistribute": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -78,6 +85,7 @@ func resourceRouterOspf6() *schema.Resource {
 			},
 			"area": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -88,6 +96,7 @@ func resourceRouterOspf6() *schema.Resource {
 						},
 						"filter_list": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -112,6 +121,7 @@ func resourceRouterOspf6() *schema.Resource {
 						},
 						"range": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -153,6 +163,7 @@ func resourceRouterOspf6() *schema.Resource {
 			},
 			"interface": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -209,6 +220,11 @@ func resourceRouterOspf6() *schema.Resource {
 						},
 						"priority": &schema.Schema{
 							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
+						},
+						"network_type": &schema.Schema{
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -294,6 +310,16 @@ func resourceRouterOspf6Read(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
+func flattenRouterOspf6AutoCostRefBandwidth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
+	return v
+}
+
 func flattenRouterOspf6Redistribute(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -366,6 +392,12 @@ func flattenRouterOspf6RedistributeMetricType(v interface{}, d *schema.ResourceD
 }
 
 func flattenRouterOspf6RedistributeMetric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -512,6 +544,12 @@ func flattenRouterOspf6AreaFilterListList(v interface{}, d *schema.ResourceData,
 }
 
 func flattenRouterOspf6AreaFilterListId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -571,6 +609,12 @@ func flattenRouterOspf6AreaRangeAdvertise(v interface{}, d *schema.ResourceData,
 }
 
 func flattenRouterOspf6AreaRangeId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -680,6 +724,12 @@ func flattenRouterOspf6Interface(v interface{}, d *schema.ResourceData, pre stri
 			tmp["priority"] = flattenRouterOspf6InterfacePriority(i["priority"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "network_type"
+		if _, ok := i["network-type"]; ok {
+
+			tmp["network_type"] = flattenRouterOspf6InterfaceNetworkType(i["network-type"], d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -694,10 +744,22 @@ func flattenRouterOspf6InterfaceStatus(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenRouterOspf6InterfaceDeadInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterOspf6InterfaceHelloInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -714,14 +776,32 @@ func flattenRouterOspf6InterfaceAreaId(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenRouterOspf6InterfaceTransmitDelay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterOspf6InterfaceRetransmitInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterOspf6InterfaceCost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -730,11 +810,27 @@ func flattenRouterOspf6InterfacePassive(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenRouterOspf6InterfacePriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
+	return v
+}
+
+func flattenRouterOspf6InterfaceNetworkType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func refreshObjectRouterOspf6(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+
+	if err = d.Set("auto_cost_ref_bandwidth", flattenRouterOspf6AutoCostRefBandwidth(o["auto-cost-ref-bandwidth"], d, "auto_cost_ref_bandwidth", sv)); err != nil {
+		if !fortiAPIPatch(o["auto-cost-ref-bandwidth"]) {
+			return fmt.Errorf("Error reading auto_cost_ref_bandwidth: %v", err)
+		}
+	}
 
 	if isImportTable() {
 		if err = d.Set("redistribute", flattenRouterOspf6Redistribute(o["redistribute"], d, "redistribute", sv)); err != nil {
@@ -809,6 +905,10 @@ func flattenRouterOspf6FortiTestDebug(d *schema.ResourceData, fswdebugsn int, fs
 	log.Printf(strconv.Itoa(fswdebugsn))
 	e := validation.IntBetween(fswdebugbeg, fswdebugend)
 	log.Printf("ER List: %v, %v", strings.Split("FortiSwitch Ver", " "), e)
+}
+
+func expandRouterOspf6AutoCostRefBandwidth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
 }
 
 func expandRouterOspf6Redistribute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -1147,6 +1247,12 @@ func expandRouterOspf6Interface(d *schema.ResourceData, v interface{}, pre strin
 			tmp["priority"], _ = expandRouterOspf6InterfacePriority(d, i["priority"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "network_type"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["network-type"], _ = expandRouterOspf6InterfaceNetworkType(d, i["network_type"], pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -1199,8 +1305,26 @@ func expandRouterOspf6InterfacePriority(d *schema.ResourceData, v interface{}, p
 	return v, nil
 }
 
+func expandRouterOspf6InterfaceNetworkType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectRouterOspf6(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+
+	if v, ok := d.GetOk("auto_cost_ref_bandwidth"); ok {
+		if setArgNil {
+			obj["auto-cost-ref-bandwidth"] = nil
+		} else {
+
+			t, err := expandRouterOspf6AutoCostRefBandwidth(d, v, "auto_cost_ref_bandwidth", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auto-cost-ref-bandwidth"] = t
+			}
+		}
+	}
 
 	if v, ok := d.GetOk("redistribute"); ok || d.HasChange("redistribute") {
 		if setArgNil {

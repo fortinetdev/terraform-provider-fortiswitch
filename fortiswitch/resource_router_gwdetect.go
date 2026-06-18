@@ -71,6 +71,7 @@ func resourceRouterGwdetect() *schema.Resource {
 			},
 			"server": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -182,6 +183,12 @@ func resourceRouterGwdetectRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenRouterGwdetectStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -194,10 +201,22 @@ func flattenRouterGwdetectSourceIp(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenRouterGwdetectInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterGwdetectFailtime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -206,6 +225,12 @@ func flattenRouterGwdetectInterface(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenRouterGwdetectHaPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

@@ -160,6 +160,30 @@ func dataSourceSystemAdmin() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"gui_mfa_tokens": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"domain": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"token": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"password_expire": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -433,6 +457,69 @@ func dataSourceFlattenSystemAdminName(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
+func dataSourceFlattenSystemAdminGuiMfaTokens(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := i["id"]; ok {
+			tmp["id"] = dataSourceFlattenSystemAdminGuiMfaTokensId(i["id"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
+		if _, ok := i["description"]; ok {
+			tmp["description"] = dataSourceFlattenSystemAdminGuiMfaTokensDescription(i["description"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain"
+		if _, ok := i["domain"]; ok {
+			tmp["domain"] = dataSourceFlattenSystemAdminGuiMfaTokensDomain(i["domain"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "token"
+		if _, ok := i["token"]; ok {
+			tmp["token"] = dataSourceFlattenSystemAdminGuiMfaTokensToken(i["token"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemAdminGuiMfaTokensId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAdminGuiMfaTokensDescription(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAdminGuiMfaTokensDomain(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAdminGuiMfaTokensToken(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemAdminPasswordExpire(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -665,6 +752,12 @@ func dataSourceRefreshObjectSystemAdmin(d *schema.ResourceData, o map[string]int
 	if err = d.Set("name", dataSourceFlattenSystemAdminName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
+		}
+	}
+
+	if err = d.Set("gui_mfa_tokens", dataSourceFlattenSystemAdminGuiMfaTokens(o["gui-mfa-tokens"], d, "gui_mfa_tokens")); err != nil {
+		if !fortiAPIPatch(o["gui-mfa-tokens"]) {
+			return fmt.Errorf("Error reading gui_mfa_tokens: %v", err)
 		}
 	}
 

@@ -25,6 +25,7 @@ The following arguments are supported:
 * `source_ip` - Source IP for communications to DNS server.
 * `primary` - Vdom primary dns ip.
 * `ip6_secondary` - Vdom IPv6 seondary dns ip.
+* `protocol` - Vdom dns protocol.
 * `ip6_primary` - Vdom IPv6 primary dns ip.
 * `secondary` - Vdom secondary dns ip.
 

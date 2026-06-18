@@ -59,6 +59,7 @@ The following arguments are supported:
 * `vdom` - Virtual domain name.
 * `remote_auth` - Enable/disable remote authentication. Valid values: `enable`, `disable`.
 * `name` - Adminstrative user name.
+* `gui_mfa_tokens` - GUI Multi-factor Authentication Tokens. The structure of `gui_mfa_tokens` block is documented below.
 * `password_expire` - Password expire time.
 * `remote_group` - Remote authentication group name.
 * `wildcard` - Enable/disable wildcard RADIUS authentication. Valid values: `enable`, `disable`.
@@ -66,6 +67,14 @@ The following arguments are supported:
 * `ssh_public_key3` - SSH public key3.
 * `ssh_public_key2` - SSH public key2.
 * `peer_auth` - Enable/disable peer authentication. Valid values: `enable`, `disable`.
+* `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
+
+The `gui_mfa_tokens` block supports:
+
+* `id` - GUI multi-factor authentication id
+* `description` - Token description.
+* `domain` - FQDN of the FortiSwitch.
+* `token` - Public key.
 
 
 ## Attribute Reference

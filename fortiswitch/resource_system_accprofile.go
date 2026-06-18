@@ -95,6 +95,7 @@ func resourceSystemAccprofile() *schema.Resource {
 			},
 			"alias_commands": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{

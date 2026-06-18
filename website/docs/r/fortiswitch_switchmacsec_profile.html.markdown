@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_switchmacsec_profile
-MACsec configuration profiles.
+MACsec configuration profiles. Applies to FortiSwitch Version `<= 7.6.4`.
 
 ## Example Usage
 

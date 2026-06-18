@@ -24,6 +24,10 @@ func dataSourceRouterOspf6() *schema.Resource {
 		Read: dataSourceRouterOspf6Read,
 		Schema: map[string]*schema.Schema{
 
+			"auto_cost_ref_bandwidth": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 			"redistribute": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -173,6 +177,10 @@ func dataSourceRouterOspf6() *schema.Resource {
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
+						"network_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -204,6 +212,10 @@ func dataSourceRouterOspf6Read(d *schema.ResourceData, m interface{}) error {
 	d.SetId(mkey)
 
 	return nil
+}
+
+func dataSourceFlattenRouterOspf6AutoCostRefBandwidth(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
 }
 
 func dataSourceFlattenRouterOspf6Redistribute(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
@@ -536,6 +548,11 @@ func dataSourceFlattenRouterOspf6Interface(v interface{}, d *schema.ResourceData
 			tmp["priority"] = dataSourceFlattenRouterOspf6InterfacePriority(i["priority"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "network_type"
+		if _, ok := i["network-type"]; ok {
+			tmp["network_type"] = dataSourceFlattenRouterOspf6InterfaceNetworkType(i["network-type"], d, pre_append)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -588,8 +605,18 @@ func dataSourceFlattenRouterOspf6InterfacePriority(v interface{}, d *schema.Reso
 	return v
 }
 
+func dataSourceFlattenRouterOspf6InterfaceNetworkType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectRouterOspf6(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
+
+	if err = d.Set("auto_cost_ref_bandwidth", dataSourceFlattenRouterOspf6AutoCostRefBandwidth(o["auto-cost-ref-bandwidth"], d, "auto_cost_ref_bandwidth")); err != nil {
+		if !fortiAPIPatch(o["auto-cost-ref-bandwidth"]) {
+			return fmt.Errorf("Error reading auto_cost_ref_bandwidth: %v", err)
+		}
+	}
 
 	if err = d.Set("redistribute", dataSourceFlattenRouterOspf6Redistribute(o["redistribute"], d, "redistribute")); err != nil {
 		if !fortiAPIPatch(o["redistribute"]) {

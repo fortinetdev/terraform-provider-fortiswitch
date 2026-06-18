@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_switch_phymode
-PHY configuration.
+PHY configuration. Applies to FortiSwitch Version `<= 7.6.4`.
 
 ## Argument Reference
 

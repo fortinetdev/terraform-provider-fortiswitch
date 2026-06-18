@@ -107,6 +107,7 @@ func resourceLogDiskSetting() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
+				Computed:     true,
 			},
 			"upload_ssl_conn": &schema.Schema{
 				Type:     schema.TypeString,
@@ -254,6 +255,12 @@ func flattenLogDiskSettingUploadip(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenLogDiskSettingUploadtime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -266,6 +273,12 @@ func flattenLogDiskSettingRollSchedule(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenLogDiskSettingReportQuota(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -274,6 +287,12 @@ func flattenLogDiskSettingRollTime(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenLogDiskSettingMaxLogFileSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -290,6 +309,12 @@ func flattenLogDiskSettingStatus(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenLogDiskSettingDriveStandbyTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -298,6 +323,12 @@ func flattenLogDiskSettingUploadFormat(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenLogDiskSettingFullFinalWarningThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -314,6 +345,12 @@ func flattenLogDiskSettingUploadDeleteFiles(v interface{}, d *schema.ResourceDat
 }
 
 func flattenLogDiskSettingLogQuota(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -322,10 +359,22 @@ func flattenLogDiskSettingUploaddir(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenLogDiskSettingFullFirstWarningThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenLogDiskSettingUploadport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -350,6 +399,12 @@ func flattenLogDiskSettingRollDay(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenLogDiskSettingFullSecondWarningThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

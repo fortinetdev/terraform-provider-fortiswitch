@@ -48,6 +48,7 @@ func resourceUserLocal() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
 				Sensitive:    true,
+				Computed:     true,
 			},
 			"ldap_server": &schema.Schema{
 				Type:         schema.TypeString,

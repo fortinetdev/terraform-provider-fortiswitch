@@ -37,6 +37,12 @@ func resourceSystemDns() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"server_ca_cert": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 127),
+				Optional:     true,
+				Computed:     true,
+			},
 			"dns_cache_ttl": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(60, 86400),
@@ -59,6 +65,11 @@ func resourceSystemDns() *schema.Resource {
 				Computed: true,
 			},
 			"ip6_secondary": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"protocol": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -156,7 +167,17 @@ func flattenSystemDnsDomain(v interface{}, d *schema.ResourceData, pre string, s
 	return v
 }
 
+func flattenSystemDnsServerCaCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemDnsDnsCacheTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -165,6 +186,12 @@ func flattenSystemDnsPrimary(v interface{}, d *schema.ResourceData, pre string, 
 }
 
 func flattenSystemDnsDnsCacheLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -173,6 +200,10 @@ func flattenSystemDnsCacheNotfoundResponses(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSystemDnsIp6Secondary(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemDnsProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -194,6 +225,12 @@ func refreshObjectSystemDns(d *schema.ResourceData, o map[string]interface{}, sv
 	if err = d.Set("domain", flattenSystemDnsDomain(o["domain"], d, "domain", sv)); err != nil {
 		if !fortiAPIPatch(o["domain"]) {
 			return fmt.Errorf("Error reading domain: %v", err)
+		}
+	}
+
+	if err = d.Set("server_ca_cert", flattenSystemDnsServerCaCert(o["server-ca-cert"], d, "server_ca_cert", sv)); err != nil {
+		if !fortiAPIPatch(o["server-ca-cert"]) {
+			return fmt.Errorf("Error reading server_ca_cert: %v", err)
 		}
 	}
 
@@ -224,6 +261,12 @@ func refreshObjectSystemDns(d *schema.ResourceData, o map[string]interface{}, sv
 	if err = d.Set("ip6_secondary", flattenSystemDnsIp6Secondary(o["ip6-secondary"], d, "ip6_secondary", sv)); err != nil {
 		if !fortiAPIPatch(o["ip6-secondary"]) {
 			return fmt.Errorf("Error reading ip6_secondary: %v", err)
+		}
+	}
+
+	if err = d.Set("protocol", flattenSystemDnsProtocol(o["protocol"], d, "protocol", sv)); err != nil {
+		if !fortiAPIPatch(o["protocol"]) {
+			return fmt.Errorf("Error reading protocol: %v", err)
 		}
 	}
 
@@ -258,6 +301,10 @@ func expandSystemDnsDomain(d *schema.ResourceData, v interface{}, pre string, sv
 	return v, nil
 }
 
+func expandSystemDnsServerCaCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemDnsDnsCacheTtl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -275,6 +322,10 @@ func expandSystemDnsCacheNotfoundResponses(d *schema.ResourceData, v interface{}
 }
 
 func expandSystemDnsIp6Secondary(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemDnsProtocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -303,6 +354,20 @@ func getObjectSystemDns(d *schema.ResourceData, setArgNil bool, sv string) (*map
 				return &obj, err
 			} else if t != nil {
 				obj["domain"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("server_ca_cert"); ok {
+		if setArgNil {
+			obj["server-ca-cert"] = nil
+		} else {
+
+			t, err := expandSystemDnsServerCaCert(d, v, "server_ca_cert", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["server-ca-cert"] = t
 			}
 		}
 	}
@@ -373,6 +438,20 @@ func getObjectSystemDns(d *schema.ResourceData, setArgNil bool, sv string) (*map
 				return &obj, err
 			} else if t != nil {
 				obj["ip6-secondary"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("protocol"); ok {
+		if setArgNil {
+			obj["protocol"] = nil
+		} else {
+
+			t, err := expandSystemDnsProtocol(d, v, "protocol", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["protocol"] = t
 			}
 		}
 	}

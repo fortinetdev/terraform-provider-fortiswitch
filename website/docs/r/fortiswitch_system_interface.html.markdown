@@ -34,6 +34,7 @@ The following arguments are supported:
 * `defaultgw` - Enable/disable default gateway. Valid values: `enable`, `disable`.
 * `gwdetect` - Enable/disable gateway detection. Valid values: `enable`, `disable`.
 * `dhcp_client_status` - DHCP client connection status. Valid values: `initial`, `stopped`, `connected`, `rebooting`, `selecting`, `requesting`, `binding`, `renewing`, `rebinding`.
+* `ptp_status` - Interface PTP status. Valid values: `disable`, `enable`.
 * `weight` - Default weight for static routes if route has no weight configured (0 - 255).
 * `ip` - Interface IPv4 address.
 * `vrrp_virtual_mac` - enable to use virtual MAC for VRRP Valid values: `enable`, `disable`.
@@ -43,7 +44,7 @@ The following arguments are supported:
 * `src_check_allow_default` - Enable/disable.When src ip lookup hits default route,enable means allow pkt else drop. Valid values: `enable`, `disable`.
 * `dhcp_relay_ip` - DHCP relay IP address.
 * `forward_domain` - TP mode forward domain.
-* `speed` - Speed (copper mode port only). Valid values: `auto`, `10full`, `10half`, `100full`, `100half`, `1000full`, `1000half`, `1000auto`.
+* `speed` - Speed (copper mode port only).
 * `vlanforward` - Enable/disable VLAN forwarding. Valid values: `enable`, `disable`.
 * `priority` - Priority of learned routes.
 * `bfd` - Bidirectional Forwarding Detection (BFD). Valid values: `global`, `enable`, `disable`.
@@ -134,6 +135,7 @@ The `ipv6` block supports:
 The `vrrp6` block supports:
 
 * `status` - Enable/disable VRRP. Valid values: `enable`, `disable`.
+* `backup_vmac_fwd` - Enable/disable backup-vmac-fwd. Valid values: `enable`, `disable`.
 * `priority` - Priority of the virtual router (1 - 255).
 * `vrip6` - IPv6 address of the virtual router.
 * `adv_interval` - Advertisement interval (1 - 255 seconds).

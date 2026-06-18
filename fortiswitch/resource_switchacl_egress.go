@@ -12,7 +12,6 @@ package fortiswitch
 import (
 	"fmt"
 	"log"
-	"reflect"
 	"strconv"
 	"strings"
 
@@ -50,6 +49,7 @@ func resourceSwitchAclEgress() *schema.Resource {
 			},
 			"schedule": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -64,6 +64,7 @@ func resourceSwitchAclEgress() *schema.Resource {
 			},
 			"classifier": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -119,6 +120,7 @@ func resourceSwitchAclEgress() *schema.Resource {
 			},
 			"action": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -290,6 +292,12 @@ func flattenSwitchAclEgressStatus(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenSwitchAclEgressGroup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -412,7 +420,10 @@ func flattenSwitchAclEgressClassifierDstMac(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSwitchAclEgressClassifierCos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	if v == "" || v == "none" || reflect.DeepEqual(v, []interface{}{}) {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
 		return nil
 	}
 	return v
@@ -438,17 +449,32 @@ func flattenSwitchAclEgressClassifierSrcMac(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSwitchAclEgressClassifierDscp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	if v == "" || v == "none" || reflect.DeepEqual(v, []interface{}{}) {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
 		return nil
 	}
 	return v
 }
 
 func flattenSwitchAclEgressClassifierEtherType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchAclEgressClassifierVlanId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -539,7 +565,10 @@ func flattenSwitchAclEgressActionRedirect(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSwitchAclEgressActionRemarkDscp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	if v == "" || v == "none" || reflect.DeepEqual(v, []interface{}{}) {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
 		return nil
 	}
 	return v
@@ -550,6 +579,12 @@ func flattenSwitchAclEgressActionDrop(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSwitchAclEgressActionPolicer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -562,11 +597,20 @@ func flattenSwitchAclEgressActionCountType(v interface{}, d *schema.ResourceData
 }
 
 func flattenSwitchAclEgressActionOuterVlanTag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchAclEgressActionRemarkCos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	if v == "" || v == "none" || reflect.DeepEqual(v, []interface{}{}) {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
 		return nil
 	}
 	return v
@@ -577,6 +621,12 @@ func flattenSwitchAclEgressInterface(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenSwitchAclEgressId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

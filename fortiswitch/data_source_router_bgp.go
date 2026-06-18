@@ -637,6 +637,18 @@ func dataSourceRouterBgp() *schema.Resource {
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
+						"local_as": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"local_as_no_prepend": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"local_as_replace": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"maximum_prefix_threshold6": &schema.Schema{
 							Type:     schema.TypeInt,
 							Computed: true,
@@ -926,6 +938,18 @@ func dataSourceRouterBgp() *schema.Resource {
 							Computed: true,
 						},
 						"remote_as": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"local_as": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"local_as_no_prepend": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"local_as_replace": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -2063,6 +2087,21 @@ func dataSourceFlattenRouterBgpNeighbor(v interface{}, d *schema.ResourceData, p
 			tmp["remote_as"] = dataSourceFlattenRouterBgpNeighborRemoteAs(i["remote-as"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "local_as"
+		if _, ok := i["local-as"]; ok {
+			tmp["local_as"] = dataSourceFlattenRouterBgpNeighborLocalAs(i["local-as"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "local_as_no_prepend"
+		if _, ok := i["local-as-no-prepend"]; ok {
+			tmp["local_as_no_prepend"] = dataSourceFlattenRouterBgpNeighborLocalAsNoPrepend(i["local-as-no-prepend"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "local_as_replace"
+		if _, ok := i["local-as-replace"]; ok {
+			tmp["local_as_replace"] = dataSourceFlattenRouterBgpNeighborLocalAsReplace(i["local-as-replace"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_threshold6"
 		if _, ok := i["maximum-prefix-threshold6"]; ok {
 			tmp["maximum_prefix_threshold6"] = dataSourceFlattenRouterBgpNeighborMaximumPrefixThreshold6(i["maximum-prefix-threshold6"], d, pre_append)
@@ -2403,6 +2442,18 @@ func dataSourceFlattenRouterBgpNeighborDistributeListIn(v interface{}, d *schema
 }
 
 func dataSourceFlattenRouterBgpNeighborRemoteAs(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborLocalAs(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborLocalAsNoPrepend(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborLocalAsReplace(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -2765,6 +2816,21 @@ func dataSourceFlattenRouterBgpNeighborGroup(v interface{}, d *schema.ResourceDa
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_as"
 		if _, ok := i["remote-as"]; ok {
 			tmp["remote_as"] = dataSourceFlattenRouterBgpNeighborGroupRemoteAs(i["remote-as"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "local_as"
+		if _, ok := i["local-as"]; ok {
+			tmp["local_as"] = dataSourceFlattenRouterBgpNeighborGroupLocalAs(i["local-as"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "local_as_no_prepend"
+		if _, ok := i["local-as-no-prepend"]; ok {
+			tmp["local_as_no_prepend"] = dataSourceFlattenRouterBgpNeighborGroupLocalAsNoPrepend(i["local-as-no-prepend"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "local_as_replace"
+		if _, ok := i["local-as-replace"]; ok {
+			tmp["local_as_replace"] = dataSourceFlattenRouterBgpNeighborGroupLocalAsReplace(i["local-as-replace"], d, pre_append)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_in"
@@ -3148,6 +3214,18 @@ func dataSourceFlattenRouterBgpNeighborGroupPrefixListOut6(v interface{}, d *sch
 }
 
 func dataSourceFlattenRouterBgpNeighborGroupRemoteAs(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupLocalAs(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupLocalAsNoPrepend(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupLocalAsReplace(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

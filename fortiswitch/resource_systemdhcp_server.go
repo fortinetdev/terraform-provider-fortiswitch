@@ -44,6 +44,7 @@ func resourceSystemDhcpServer() *schema.Resource {
 			},
 			"exclude_range": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -125,6 +126,7 @@ func resourceSystemDhcpServer() *schema.Resource {
 			},
 			"ip_range": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -163,6 +165,7 @@ func resourceSystemDhcpServer() *schema.Resource {
 			},
 			"reserved_address": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -270,6 +273,7 @@ func resourceSystemDhcpServer() *schema.Resource {
 			},
 			"options": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -305,6 +309,7 @@ func resourceSystemDhcpServer() *schema.Resource {
 			},
 			"vci_string": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -334,6 +339,7 @@ func resourceSystemDhcpServer() *schema.Resource {
 			},
 			"tftp_server": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -454,6 +460,12 @@ func flattenSystemDhcpServerDomain(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenSystemDhcpServerLeaseTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -509,6 +521,12 @@ func flattenSystemDhcpServerExcludeRange(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenSystemDhcpServerExcludeRangeId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -525,6 +543,12 @@ func flattenSystemDhcpServerServerType(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenSystemDhcpServerConflictedIpTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -537,6 +561,12 @@ func flattenSystemDhcpServerTimezone(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenSystemDhcpServerId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -616,6 +646,12 @@ func flattenSystemDhcpServerIpRange(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenSystemDhcpServerIpRangeId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -765,6 +801,12 @@ func flattenSystemDhcpServerReservedAddressType(v interface{}, d *schema.Resourc
 }
 
 func flattenSystemDhcpServerReservedAddressId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -876,6 +918,12 @@ func flattenSystemDhcpServerOptionsIp(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSystemDhcpServerOptionsCode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -884,6 +932,12 @@ func flattenSystemDhcpServerOptionsType(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenSystemDhcpServerOptionsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

@@ -79,6 +79,7 @@ func resourceSystemEmailServer() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
 				Sensitive:    true,
+				Computed:     true,
 			},
 			"port": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -202,6 +203,12 @@ func flattenSystemEmailServerPassword(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSystemEmailServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

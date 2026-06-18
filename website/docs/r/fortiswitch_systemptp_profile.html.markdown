@@ -21,10 +21,10 @@ The following arguments are supported:
 * `pdelay_req_interval` - PDelay Request interval. Valid values: `0.25sec`, `0.5sec`, `1sec`, `2sec`, `4sec`.
 * `sync_interval` - Sync interval. Valid values: `0.25sec`, `0.5sec`, `1sec`, `2sec`, `4sec`.
 * `priority2` - PTP priority2 (0-255)
-* `mode` - Select PTP mode. Valid values: `transparent-e2e`.
+* `mode` - Select PTP mode.
 * `ptp_profile` - Select PTP profile.
 * `announce_timeout` - PTP Announce timeout (2-10)
-* `transport` - Select PTP transport. Valid values: `l2-mcast`.
+* `transport` - Select PTP transport.
 * `description` - Description.
 
 

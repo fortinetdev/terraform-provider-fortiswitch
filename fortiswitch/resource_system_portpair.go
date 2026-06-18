@@ -33,6 +33,7 @@ func resourceSystemPortPair() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"member": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{

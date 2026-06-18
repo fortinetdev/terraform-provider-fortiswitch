@@ -33,6 +33,7 @@ func resourceRouterOspf() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"summary_address": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -56,6 +57,7 @@ func resourceRouterOspf() *schema.Resource {
 			},
 			"area": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -66,6 +68,7 @@ func resourceRouterOspf() *schema.Resource {
 						},
 						"virtual_link": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -107,6 +110,7 @@ func resourceRouterOspf() *schema.Resource {
 									},
 									"md5_keys": &schema.Schema{
 										Type:     schema.TypeList,
+										Computed: true,
 										Optional: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -119,6 +123,7 @@ func resourceRouterOspf() *schema.Resource {
 													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 17),
 													Optional:     true,
+													Computed:     true,
 												},
 											},
 										},
@@ -127,6 +132,7 @@ func resourceRouterOspf() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 8),
 										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
@@ -143,6 +149,7 @@ func resourceRouterOspf() *schema.Resource {
 						},
 						"range": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -176,6 +183,7 @@ func resourceRouterOspf() *schema.Resource {
 						},
 						"filter_list": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -228,6 +236,7 @@ func resourceRouterOspf() *schema.Resource {
 			},
 			"network": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -286,6 +295,7 @@ func resourceRouterOspf() *schema.Resource {
 			},
 			"passive_interface": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -300,6 +310,7 @@ func resourceRouterOspf() *schema.Resource {
 			},
 			"distribute_list": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -329,6 +340,7 @@ func resourceRouterOspf() *schema.Resource {
 			},
 			"redistribute": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -398,8 +410,15 @@ func resourceRouterOspf() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"auto_cost_ref_bandwidth": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 4294967),
+				Optional:     true,
+				Computed:     true,
+			},
 			"interface": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -412,6 +431,7 @@ func resourceRouterOspf() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 8),
 							Optional:     true,
+							Computed:     true,
 						},
 						"name": &schema.Schema{
 							Type:         schema.TypeString,
@@ -477,6 +497,7 @@ func resourceRouterOspf() *schema.Resource {
 						},
 						"md5_keys": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -489,6 +510,7 @@ func resourceRouterOspf() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 17),
 										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
@@ -498,16 +520,23 @@ func resourceRouterOspf() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"network_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 					},
 				},
 			},
 			"vrf": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"summary_address": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -531,6 +560,7 @@ func resourceRouterOspf() *schema.Resource {
 						},
 						"area": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -541,6 +571,7 @@ func resourceRouterOspf() *schema.Resource {
 									},
 									"virtual_link": &schema.Schema{
 										Type:     schema.TypeList,
+										Computed: true,
 										Optional: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -584,6 +615,7 @@ func resourceRouterOspf() *schema.Resource {
 													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 8),
 													Optional:     true,
+													Computed:     true,
 												},
 											},
 										},
@@ -600,6 +632,7 @@ func resourceRouterOspf() *schema.Resource {
 									},
 									"range": &schema.Schema{
 										Type:     schema.TypeList,
+										Computed: true,
 										Optional: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -633,6 +666,7 @@ func resourceRouterOspf() *schema.Resource {
 									},
 									"filter_list": &schema.Schema{
 										Type:     schema.TypeList,
+										Computed: true,
 										Optional: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -685,6 +719,7 @@ func resourceRouterOspf() *schema.Resource {
 						},
 						"network": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -743,6 +778,7 @@ func resourceRouterOspf() *schema.Resource {
 						},
 						"passive_interface": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -757,6 +793,7 @@ func resourceRouterOspf() *schema.Resource {
 						},
 						"distribute_list": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -786,6 +823,7 @@ func resourceRouterOspf() *schema.Resource {
 						},
 						"redistribute": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -857,6 +895,7 @@ func resourceRouterOspf() *schema.Resource {
 						},
 						"interface": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -869,6 +908,7 @@ func resourceRouterOspf() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 8),
 										Optional:     true,
+										Computed:     true,
 									},
 									"name": &schema.Schema{
 										Type:         schema.TypeString,
@@ -929,6 +969,7 @@ func resourceRouterOspf() *schema.Resource {
 									},
 									"md5_keys": &schema.Schema{
 										Type:     schema.TypeList,
+										Computed: true,
 										Optional: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -941,6 +982,7 @@ func resourceRouterOspf() *schema.Resource {
 													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 17),
 													Optional:     true,
+													Computed:     true,
 												},
 											},
 										},
@@ -1098,10 +1140,22 @@ func flattenRouterOspfSummaryAddressPrefix(v interface{}, d *schema.ResourceData
 }
 
 func flattenRouterOspfSummaryAddressTag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterOspfSummaryAddressId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1284,10 +1338,22 @@ func flattenRouterOspfAreaVirtualLink(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenRouterOspfAreaVirtualLinkDeadInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterOspfAreaVirtualLinkHelloInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1296,10 +1362,22 @@ func flattenRouterOspfAreaVirtualLinkName(v interface{}, d *schema.ResourceData,
 }
 
 func flattenRouterOspfAreaVirtualLinkTransmitDelay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterOspfAreaVirtualLinkRetransmitInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1357,6 +1435,12 @@ func flattenRouterOspfAreaVirtualLinkMd5Keys(v interface{}, d *schema.ResourceDa
 }
 
 func flattenRouterOspfAreaVirtualLinkMd5KeysId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1466,6 +1550,12 @@ func flattenRouterOspfAreaRangeSubstituteStatus(v interface{}, d *schema.Resourc
 }
 
 func flattenRouterOspfAreaRangeId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1533,10 +1623,22 @@ func flattenRouterOspfAreaFilterListList(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenRouterOspfAreaFilterListId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterOspfAreaDefaultCost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1549,10 +1651,22 @@ func flattenRouterOspfAreaId(v interface{}, d *schema.ResourceData, pre string, 
 }
 
 func flattenRouterOspfDistanceIntraArea(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterOspfDistanceExternal(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1619,6 +1733,12 @@ func flattenRouterOspfNetworkPrefix(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenRouterOspfNetworkId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1635,6 +1755,12 @@ func flattenRouterOspfDefaultInformationMetricType(v interface{}, d *schema.Reso
 }
 
 func flattenRouterOspfDatabaseOverflowTimeToRecover(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1647,6 +1773,12 @@ func flattenRouterOspfRfc1583Compatible(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenRouterOspfDefaultInformationMetric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1757,10 +1889,22 @@ func flattenRouterOspfDistributeListProtocol(v interface{}, d *schema.ResourceDa
 }
 
 func flattenRouterOspfDistributeListId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterOspfDistance(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1846,6 +1990,12 @@ func flattenRouterOspfRedistributeMetricType(v interface{}, d *schema.ResourceDa
 }
 
 func flattenRouterOspfRedistributeTag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1854,6 +2004,12 @@ func flattenRouterOspfRedistributeRoutemap(v interface{}, d *schema.ResourceData
 }
 
 func flattenRouterOspfRedistributeMetric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1862,6 +2018,12 @@ func flattenRouterOspfDatabaseOverflow(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenRouterOspfDatabaseOverflowMaxExternalLsa(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1874,10 +2036,26 @@ func flattenRouterOspfSpfTimers(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenRouterOspfDistanceInterArea(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterOspfAbrType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterOspfAutoCostRefBandwidth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -2001,6 +2179,12 @@ func flattenRouterOspfInterface(v interface{}, d *schema.ResourceData, pre strin
 			tmp["mtu_ignore"] = flattenRouterOspfInterfaceMtuIgnore(i["mtu-ignore"], d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "network_type"
+		if _, ok := i["network-type"]; ok {
+
+			tmp["network_type"] = flattenRouterOspfInterfaceNetworkType(i["network-type"], d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -2011,6 +2195,12 @@ func flattenRouterOspfInterface(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenRouterOspfInterfacePriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -2023,10 +2213,22 @@ func flattenRouterOspfInterfaceName(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenRouterOspfInterfaceDeadInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterOspfInterfaceHelloMultiplier(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -2035,18 +2237,42 @@ func flattenRouterOspfInterfaceBfd(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenRouterOspfInterfaceTransmitDelay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterOspfInterfaceUcastTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterOspfInterfaceMtu(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterOspfInterfaceRetransmitInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -2055,14 +2281,32 @@ func flattenRouterOspfInterfaceAuthentication(v interface{}, d *schema.ResourceD
 }
 
 func flattenRouterOspfInterfaceCost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterOspfInterfaceHelloInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterOspfInterfaceTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -2112,6 +2356,12 @@ func flattenRouterOspfInterfaceMd5Keys(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenRouterOspfInterfaceMd5KeysId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -2120,6 +2370,10 @@ func flattenRouterOspfInterfaceMd5KeysKey(v interface{}, d *schema.ResourceData,
 }
 
 func flattenRouterOspfInterfaceMtuIgnore(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterOspfInterfaceNetworkType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2357,10 +2611,22 @@ func flattenRouterOspfVrfSummaryAddressPrefix(v interface{}, d *schema.ResourceD
 }
 
 func flattenRouterOspfVrfSummaryAddressTag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterOspfVrfSummaryAddressId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -2537,10 +2803,22 @@ func flattenRouterOspfVrfAreaVirtualLink(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenRouterOspfVrfAreaVirtualLinkDeadInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterOspfVrfAreaVirtualLinkHelloInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -2549,10 +2827,22 @@ func flattenRouterOspfVrfAreaVirtualLinkName(v interface{}, d *schema.ResourceDa
 }
 
 func flattenRouterOspfVrfAreaVirtualLinkTransmitDelay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterOspfVrfAreaVirtualLinkRetransmitInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -2666,6 +2956,12 @@ func flattenRouterOspfVrfAreaRangeSubstituteStatus(v interface{}, d *schema.Reso
 }
 
 func flattenRouterOspfVrfAreaRangeId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -2733,10 +3029,22 @@ func flattenRouterOspfVrfAreaFilterListList(v interface{}, d *schema.ResourceDat
 }
 
 func flattenRouterOspfVrfAreaFilterListId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterOspfVrfAreaDefaultCost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -2749,10 +3057,22 @@ func flattenRouterOspfVrfAreaId(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenRouterOspfVrfDistanceIntraArea(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterOspfVrfDistanceExternal(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -2819,6 +3139,12 @@ func flattenRouterOspfVrfNetworkPrefix(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenRouterOspfVrfNetworkId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -2835,6 +3161,12 @@ func flattenRouterOspfVrfDefaultInformationMetricType(v interface{}, d *schema.R
 }
 
 func flattenRouterOspfVrfDatabaseOverflowTimeToRecover(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -2847,6 +3179,12 @@ func flattenRouterOspfVrfRfc1583Compatible(v interface{}, d *schema.ResourceData
 }
 
 func flattenRouterOspfVrfDefaultInformationMetric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -2957,10 +3295,22 @@ func flattenRouterOspfVrfDistributeListProtocol(v interface{}, d *schema.Resourc
 }
 
 func flattenRouterOspfVrfDistributeListId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterOspfVrfDistance(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -3046,6 +3396,12 @@ func flattenRouterOspfVrfRedistributeMetricType(v interface{}, d *schema.Resourc
 }
 
 func flattenRouterOspfVrfRedistributeTag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -3054,6 +3410,12 @@ func flattenRouterOspfVrfRedistributeRoutemap(v interface{}, d *schema.ResourceD
 }
 
 func flattenRouterOspfVrfRedistributeMetric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -3062,6 +3424,12 @@ func flattenRouterOspfVrfDatabaseOverflow(v interface{}, d *schema.ResourceData,
 }
 
 func flattenRouterOspfVrfDatabaseOverflowMaxExternalLsa(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -3074,6 +3442,12 @@ func flattenRouterOspfVrfSpfTimers(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenRouterOspfVrfDistanceInterArea(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -3205,6 +3579,12 @@ func flattenRouterOspfVrfInterface(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenRouterOspfVrfInterfacePriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -3217,26 +3597,62 @@ func flattenRouterOspfVrfInterfaceName(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenRouterOspfVrfInterfaceDeadInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterOspfVrfInterfaceHelloMultiplier(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterOspfVrfInterfaceTransmitDelay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterOspfVrfInterfaceUcastTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterOspfVrfInterfaceMtu(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterOspfVrfInterfaceRetransmitInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -3245,14 +3661,32 @@ func flattenRouterOspfVrfInterfaceAuthentication(v interface{}, d *schema.Resour
 }
 
 func flattenRouterOspfVrfInterfaceCost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterOspfVrfInterfaceHelloInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterOspfVrfInterfaceTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -3302,6 +3736,12 @@ func flattenRouterOspfVrfInterfaceMd5Keys(v interface{}, d *schema.ResourceData,
 }
 
 func flattenRouterOspfVrfInterfaceMd5KeysId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -3505,6 +3945,12 @@ func refreshObjectRouterOspf(d *schema.ResourceData, o map[string]interface{}, s
 	if err = d.Set("abr_type", flattenRouterOspfAbrType(o["abr-type"], d, "abr_type", sv)); err != nil {
 		if !fortiAPIPatch(o["abr-type"]) {
 			return fmt.Errorf("Error reading abr_type: %v", err)
+		}
+	}
+
+	if err = d.Set("auto_cost_ref_bandwidth", flattenRouterOspfAutoCostRefBandwidth(o["auto-cost-ref-bandwidth"], d, "auto_cost_ref_bandwidth", sv)); err != nil {
+		if !fortiAPIPatch(o["auto-cost-ref-bandwidth"]) {
+			return fmt.Errorf("Error reading auto_cost_ref_bandwidth: %v", err)
 		}
 	}
 
@@ -4285,6 +4731,10 @@ func expandRouterOspfAbrType(d *schema.ResourceData, v interface{}, pre string, 
 	return v, nil
 }
 
+func expandRouterOspfAutoCostRefBandwidth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandRouterOspfInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	result := make([]map[string]interface{}, 0, len(l))
@@ -4397,6 +4847,12 @@ func expandRouterOspfInterface(d *schema.ResourceData, v interface{}, pre string
 			tmp["mtu-ignore"], _ = expandRouterOspfInterfaceMtuIgnore(d, i["mtu_ignore"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "network_type"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["network-type"], _ = expandRouterOspfInterfaceNetworkType(d, i["network_type"], pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -4504,6 +4960,10 @@ func expandRouterOspfInterfaceMd5KeysKey(d *schema.ResourceData, v interface{}, 
 }
 
 func expandRouterOspfInterfaceMtuIgnore(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterOspfInterfaceNetworkType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -5862,6 +6322,20 @@ func getObjectRouterOspf(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				return &obj, err
 			} else if t != nil {
 				obj["abr-type"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("auto_cost_ref_bandwidth"); ok {
+		if setArgNil {
+			obj["auto-cost-ref-bandwidth"] = nil
+		} else {
+
+			t, err := expandRouterOspfAutoCostRefBandwidth(d, v, "auto_cost_ref_bandwidth", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auto-cost-ref-bandwidth"] = t
 			}
 		}
 	}

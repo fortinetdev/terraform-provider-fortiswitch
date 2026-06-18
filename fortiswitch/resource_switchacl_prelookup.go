@@ -12,7 +12,6 @@ package fortiswitch
 import (
 	"fmt"
 	"log"
-	"reflect"
 	"strconv"
 	"strings"
 
@@ -50,6 +49,7 @@ func resourceSwitchAclPrelookup() *schema.Resource {
 			},
 			"schedule": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -64,6 +64,7 @@ func resourceSwitchAclPrelookup() *schema.Resource {
 			},
 			"classifier": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -119,6 +120,7 @@ func resourceSwitchAclPrelookup() *schema.Resource {
 			},
 			"action": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -195,7 +197,7 @@ func resourceSwitchAclPrelookupCreate(d *schema.ResourceData, m interface{}) err
 	}
 
 	if o["mkey"] != nil && o["mkey"] != "" {
-		d.SetId(strconv.Itoa(int(o["mkey"].(float64))))
+		d.SetId(fmt.Sprintf("%v", o["mkey"]))
 	} else {
 		d.SetId("SwitchAclPrelookup")
 	}
@@ -273,6 +275,12 @@ func flattenSwitchAclPrelookupStatus(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenSwitchAclPrelookupGroup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -395,7 +403,10 @@ func flattenSwitchAclPrelookupClassifierDstMac(v interface{}, d *schema.Resource
 }
 
 func flattenSwitchAclPrelookupClassifierCos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	if v == "" || v == "none" || reflect.DeepEqual(v, []interface{}{}) {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
 		return nil
 	}
 	return v
@@ -421,17 +432,32 @@ func flattenSwitchAclPrelookupClassifierSrcMac(v interface{}, d *schema.Resource
 }
 
 func flattenSwitchAclPrelookupClassifierDscp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	if v == "" || v == "none" || reflect.DeepEqual(v, []interface{}{}) {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
 		return nil
 	}
 	return v
 }
 
 func flattenSwitchAclPrelookupClassifierEtherType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchAclPrelookupClassifierVlanId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -494,7 +520,10 @@ func flattenSwitchAclPrelookupActionCount(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSwitchAclPrelookupActionRemarkCos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	if v == "" || v == "none" || reflect.DeepEqual(v, []interface{}{}) {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
 		return nil
 	}
 	return v
@@ -505,11 +534,20 @@ func flattenSwitchAclPrelookupActionDrop(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenSwitchAclPrelookupActionOuterVlanTag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchAclPrelookupActionCosQueue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	if v == "" || v == "none" || reflect.DeepEqual(v, []interface{}{}) {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
 		return nil
 	}
 	return v
@@ -524,6 +562,12 @@ func flattenSwitchAclPrelookupInterface(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenSwitchAclPrelookupId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

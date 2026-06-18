@@ -186,6 +186,7 @@ func resourceSystemFortiguard() *schema.Resource {
 			},
 			"srv_ovrd_list": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -287,6 +288,12 @@ func resourceSystemFortiguardRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenSystemFortiguardWebfilterLicense(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -295,14 +302,32 @@ func flattenSystemFortiguardWebfilterCache(v interface{}, d *schema.ResourceData
 }
 
 func flattenSystemFortiguardAvqueryLicense(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemFortiguardAntispamCacheMpercent(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemFortiguardWebfilterTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -311,10 +336,22 @@ func flattenSystemFortiguardAntispamCache(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSystemFortiguardWebfilterExpiration(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemFortiguardLoadBalanceServers(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -331,6 +368,12 @@ func flattenSystemFortiguardWebfilterForceOff(v interface{}, d *schema.ResourceD
 }
 
 func flattenSystemFortiguardAvqueryTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -339,6 +382,12 @@ func flattenSystemFortiguardClientOverrideStatus(v interface{}, d *schema.Resour
 }
 
 func flattenSystemFortiguardAntispamScoreThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -347,14 +396,32 @@ func flattenSystemFortiguardAvqueryCache(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenSystemFortiguardAvqueryCacheMpercent(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemFortiguardAvqueryCacheTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemFortiguardAvqueryExpiration(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -363,6 +430,12 @@ func flattenSystemFortiguardHostname(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenSystemFortiguardAntispamLicense(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -371,6 +444,12 @@ func flattenSystemFortiguardPort(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenSystemFortiguardAntispamCacheTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -387,6 +466,12 @@ func flattenSystemFortiguardSrvOvrd(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenSystemFortiguardWebfilterCacheTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -395,10 +480,22 @@ func flattenSystemFortiguardServiceAccountId(v interface{}, d *schema.ResourceDa
 }
 
 func flattenSystemFortiguardAntispamExpiration(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemFortiguardAntispamTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

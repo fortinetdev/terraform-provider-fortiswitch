@@ -68,6 +68,7 @@ func resourceSystemFortianalyzer() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
 				Sensitive:    true,
+				Computed:     true,
 			},
 			"mgmt_name": &schema.Schema{
 				Type:         schema.TypeString,
@@ -170,6 +171,12 @@ func flattenSystemFortianalyzerStatus(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSystemFortianalyzer__Change_Ip(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -186,6 +193,12 @@ func flattenSystemFortianalyzerFdpDevice(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenSystemFortianalyzerConnTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

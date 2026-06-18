@@ -76,7 +76,7 @@ func resourceSystemSnmpSysinfo() *schema.Resource {
 			},
 			"location": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -169,6 +169,12 @@ func flattenSystemSnmpSysinfoStatus(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenSystemSnmpSysinfoTrapTempAlarmThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -181,14 +187,32 @@ func flattenSystemSnmpSysinfoContactInfo(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenSystemSnmpSysinfoTrapHighCpuThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemSnmpSysinfoTrapLogFullThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemSnmpSysinfoTrapLowMemoryThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -201,6 +225,12 @@ func flattenSystemSnmpSysinfoLocation(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSystemSnmpSysinfoTrapTempWarningThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

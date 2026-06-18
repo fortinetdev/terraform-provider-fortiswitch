@@ -33,11 +33,13 @@ func resourceSwitchAcl8021X() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"access_list_entry": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"action": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
@@ -67,6 +69,7 @@ func resourceSwitchAcl8021X() *schema.Resource {
 						},
 						"classifier": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
@@ -332,10 +335,22 @@ func flattenSwitchAcl8021XAccessListEntryActionDrop(v interface{}, d *schema.Res
 }
 
 func flattenSwitchAcl8021XAccessListEntryGroup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchAcl8021XAccessListEntryId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -418,10 +433,22 @@ func flattenSwitchAcl8021XAccessListEntryClassifierSrcMac(v interface{}, d *sche
 }
 
 func flattenSwitchAcl8021XAccessListEntryClassifierEtherType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchAcl8021XAccessListEntryClassifierVlanId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -445,6 +472,12 @@ func flattenSwitchAcl8021XFilterId(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenSwitchAcl8021XId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

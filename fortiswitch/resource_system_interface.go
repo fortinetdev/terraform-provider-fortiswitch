@@ -51,6 +51,11 @@ func resourceSystemInterface() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ptp_status": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"weight": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
@@ -151,6 +156,7 @@ func resourceSystemInterface() *schema.Resource {
 			},
 			"vrrp": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -223,9 +229,10 @@ func resourceSystemInterface() *schema.Resource {
 				},
 			},
 			"allowaccess": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:             schema.TypeString,
+				DiffSuppressFunc: fortiStringSetDiffSuppress,
+				Optional:         true,
+				Computed:         true,
 			},
 			"dhcp_client_identifier": &schema.Schema{
 				Type:         schema.TypeString,
@@ -337,14 +344,16 @@ func resourceSystemInterface() *schema.Resource {
 			},
 			"ipv6": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"ip6_allowaccess": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Type:             schema.TypeString,
+							DiffSuppressFunc: fortiStringSetDiffSuppress,
+							Optional:         true,
+							Computed:         true,
 						},
 						"ip6_retrans_time": &schema.Schema{
 							Type:     schema.TypeInt,
@@ -353,10 +362,16 @@ func resourceSystemInterface() *schema.Resource {
 						},
 						"vrrp6": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"status": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+									"backup_vmac_fwd": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
@@ -436,6 +451,7 @@ func resourceSystemInterface() *schema.Resource {
 						},
 						"ip6_prefix_list": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -502,6 +518,7 @@ func resourceSystemInterface() *schema.Resource {
 						},
 						"ip6_extra_addr": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -607,6 +624,7 @@ func resourceSystemInterface() *schema.Resource {
 			},
 			"secondaryip": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -631,9 +649,10 @@ func resourceSystemInterface() *schema.Resource {
 							Computed: true,
 						},
 						"allowaccess": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Type:             schema.TypeString,
+							DiffSuppressFunc: fortiStringSetDiffSuppress,
+							Optional:         true,
+							Computed:         true,
 						},
 						"ping_serv_status": &schema.Schema{
 							Type:     schema.TypeInt,
@@ -656,6 +675,7 @@ func resourceSystemInterface() *schema.Resource {
 			},
 			"switch_members": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -792,7 +812,17 @@ func flattenSystemInterfaceDhcpClientStatus(v interface{}, d *schema.ResourceDat
 	return v
 }
 
+func flattenSystemInterfacePtpStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemInterfaceWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -812,10 +842,22 @@ func flattenSystemInterfaceVrrpVirtualMac(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSystemInterfaceBfdDetectMult(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemInterfaceBfdRequiredMinRx(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -836,6 +878,12 @@ func flattenSystemInterfaceDhcpRelayIp(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenSystemInterfaceForwardDomain(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -848,6 +896,12 @@ func flattenSystemInterfaceVlanforward(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenSystemInterfacePriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -860,6 +914,12 @@ func flattenSystemInterfaceMacaddr(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenSystemInterfaceBfdDesiredMinTx(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -868,6 +928,12 @@ func flattenSystemInterfaceSwitch(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenSystemInterfaceVlanid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -989,14 +1055,32 @@ func flattenSystemInterfaceVrrpStatus(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSystemInterfaceVrrpPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemInterfaceVrrpAdvInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemInterfaceVrrpStartTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1005,10 +1089,22 @@ func flattenSystemInterfaceVrrpBackupVmacFwd(v interface{}, d *schema.ResourceDa
 }
 
 func flattenSystemInterfaceVrrpVrid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemInterfaceVrrpVrgrp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1041,6 +1137,12 @@ func flattenSystemInterfaceDhcpClientIdentifier(v interface{}, d *schema.Resourc
 }
 
 func flattenSystemInterfacePingServStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1049,6 +1151,12 @@ func flattenSystemInterfaceType(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenSystemInterfaceSnmpIndex(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1081,6 +1189,12 @@ func flattenSystemInterfaceVrf(v interface{}, d *schema.ResourceData, pre string
 }
 
 func flattenSystemInterfaceDhcp_Expire(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1101,6 +1215,12 @@ func flattenSystemInterfaceDhcpRelayService(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSystemInterfaceDistance(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1266,6 +1386,12 @@ func flattenSystemInterfaceIpv6Ip6Allowaccess(v interface{}, d *schema.ResourceD
 }
 
 func flattenSystemInterfaceIpv6Ip6RetransTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1297,6 +1423,12 @@ func flattenSystemInterfaceIpv6Vrrp6(v interface{}, d *schema.ResourceData, pre 
 		if _, ok := i["status"]; ok {
 
 			tmp["status"] = flattenSystemInterfaceIpv6Vrrp6Status(i["status"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "backup_vmac_fwd"
+		if _, ok := i["backup-vmac-fwd"]; ok {
+
+			tmp["backup_vmac_fwd"] = flattenSystemInterfaceIpv6Vrrp6BackupVmacFwd(i["backup-vmac-fwd"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
@@ -1366,7 +1498,17 @@ func flattenSystemInterfaceIpv6Vrrp6Status(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenSystemInterfaceIpv6Vrrp6BackupVmacFwd(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemInterfaceIpv6Vrrp6Priority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1375,18 +1517,42 @@ func flattenSystemInterfaceIpv6Vrrp6Vrip6(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSystemInterfaceIpv6Vrrp6AdvInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemInterfaceIpv6Vrrp6StartTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemInterfaceIpv6Vrrp6Vrid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemInterfaceIpv6Vrrp6Vrgrp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1482,6 +1648,12 @@ func flattenSystemInterfaceIpv6Ip6PrefixList(v interface{}, d *schema.ResourceDa
 }
 
 func flattenSystemInterfaceIpv6Ip6PrefixListValidLifeTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1498,10 +1670,22 @@ func flattenSystemInterfaceIpv6Ip6PrefixListOnlinkFlag(v interface{}, d *schema.
 }
 
 func flattenSystemInterfaceIpv6Ip6PrefixListPreferredLifeTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemInterfaceIpv6Ip6LinkMtu(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1510,6 +1694,12 @@ func flattenSystemInterfaceIpv6Ip6ManageFlag(v interface{}, d *schema.ResourceDa
 }
 
 func flattenSystemInterfaceIpv6Ip6MinInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1518,10 +1708,22 @@ func flattenSystemInterfaceIpv6Ip6Mode(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenSystemInterfaceIpv6Ip6HopLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemInterfaceIpv6Ip6ReachableTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1569,10 +1771,22 @@ func flattenSystemInterfaceIpv6Ip6ExtraAddrPrefix(v interface{}, d *schema.Resou
 }
 
 func flattenSystemInterfaceIpv6Ip6DefaultLife(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemInterfaceIpv6Ip6MaxInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1605,6 +1819,12 @@ func flattenSystemInterfaceMtuOverride(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenSystemInterfaceMtu(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1633,6 +1853,12 @@ func flattenSystemInterfaceMode(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenSystemInterfaceHaPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1738,14 +1964,32 @@ func flattenSystemInterfaceSecondaryipAllowaccess(v interface{}, d *schema.Resou
 }
 
 func flattenSystemInterfaceSecondaryipPingServStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemInterfaceSecondaryipHaPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemInterfaceSecondaryipId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1810,6 +2054,12 @@ func refreshObjectSystemInterface(d *schema.ResourceData, o map[string]interface
 	if err = d.Set("dhcp_client_status", flattenSystemInterfaceDhcpClientStatus(o["dhcp-client-status"], d, "dhcp_client_status", sv)); err != nil {
 		if !fortiAPIPatch(o["dhcp-client-status"]) {
 			return fmt.Errorf("Error reading dhcp_client_status: %v", err)
+		}
+	}
+
+	if err = d.Set("ptp_status", flattenSystemInterfacePtpStatus(o["ptp-status"], d, "ptp_status", sv)); err != nil {
+		if !fortiAPIPatch(o["ptp-status"]) {
+			return fmt.Errorf("Error reading ptp_status: %v", err)
 		}
 	}
 
@@ -2195,6 +2445,10 @@ func expandSystemInterfaceGwdetect(d *schema.ResourceData, v interface{}, pre st
 }
 
 func expandSystemInterfaceDhcpClientStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfacePtpStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2658,6 +2912,12 @@ func expandSystemInterfaceIpv6Vrrp6(d *schema.ResourceData, v interface{}, pre s
 			tmp["status"], _ = expandSystemInterfaceIpv6Vrrp6Status(d, i["status"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "backup_vmac_fwd"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["backup-vmac-fwd"], _ = expandSystemInterfaceIpv6Vrrp6BackupVmacFwd(d, i["backup_vmac_fwd"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
 		if _, ok := d.GetOk(pre_append); ok {
 
@@ -2721,6 +2981,10 @@ func expandSystemInterfaceIpv6Vrrp6(d *schema.ResourceData, v interface{}, pre s
 }
 
 func expandSystemInterfaceIpv6Vrrp6Status(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceIpv6Vrrp6BackupVmacFwd(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3136,6 +3400,16 @@ func getObjectSystemInterface(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["dhcp-client-status"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ptp_status"); ok {
+
+		t, err := expandSystemInterfacePtpStatus(d, v, "ptp_status", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ptp-status"] = t
 		}
 	}
 

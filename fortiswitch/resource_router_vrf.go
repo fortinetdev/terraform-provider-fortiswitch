@@ -137,6 +137,12 @@ func resourceRouterVrfRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenRouterVrfVrfid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

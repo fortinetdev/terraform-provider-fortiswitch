@@ -36,6 +36,23 @@ func fortiStringValue(t interface{}) string {
 	}
 }
 
+func fortiStringSetDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
+	oldValues := strings.Fields(old)
+	newValues := strings.Fields(new)
+	if len(oldValues) != len(newValues) {
+		return false
+	}
+
+	sort.Strings(oldValues)
+	sort.Strings(newValues)
+	for i := range oldValues {
+		if oldValues[i] != newValues[i] {
+			return false
+		}
+	}
+	return true
+}
+
 func fortiIntValue(t interface{}) int {
 	if v, ok := t.(float64); ok {
 		return int(v)
@@ -149,9 +166,12 @@ func convintflist2i(v interface{}) interface{} {
 	} else if t, ok := v.(string); ok {
 		if t == "" {
 			return 0
-		} else if iVal, _ := strconv.Atoi(t); ok {
+		} else if iVal, err := strconv.Atoi(t); err == nil {
 			return iVal
 		}
+		// FortiSwitch API may return "disabled" or other non-integer strings
+		// for integer fields that are unset/disabled. Return 0 as fallback.
+		return 0
 	}
 	return v
 }

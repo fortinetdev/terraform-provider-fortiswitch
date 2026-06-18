@@ -33,6 +33,7 @@ func resourceRouterMulticastFlow() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"flows": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -236,6 +237,12 @@ func flattenRouterMulticastFlowFlowsSourceAddr(v interface{}, d *schema.Resource
 }
 
 func flattenRouterMulticastFlowFlowsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

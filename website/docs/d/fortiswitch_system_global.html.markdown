@@ -42,6 +42,9 @@ The following attributes are exported:
 * `asset_tag` - Asset tag.
 * `ip_conflict_ignore_default` - Enable/disable IP conflict detection for default IP address.
 * `timezone` - Time zone.
+* `system_time_mode` - Set system time mode.
+* `utc_offset_mode` - From source or override.
+* `utc_offset` - Set utc-offset in seconds [-100 - 100] (number of seconds to subtracted from the time source to get UTC).
 * `admin_sport` - Administrative access HTTPS port (1 - 65535).
 * `image_rotation` - Enable/disable image upgrade partition rotation.
 * `admin_telnet_port` - Administrative access TELNET port (1 - 65535).
@@ -53,6 +56,7 @@ The following attributes are exported:
 * `hostname` - FortiSwitch hostname.
 * `revision_backup_on_logout` - Enable/disable automatic revision backup upon logout.
 * `tcp6_mss_min` - Minimum allowed TCP MSS value in bytes.
+* `verify_config` - CMDB configuration file verification level.
 * `cfg_revert_timeout` - Time-out for reverting to the last saved configuration (10 - 2147483647).
 * `admin_ssh_v1` - Enable/disable SSH v1 compatibility.
 * `allow_subnet_overlap` - Enable/disable subnet overlap.

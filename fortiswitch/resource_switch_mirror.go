@@ -75,6 +75,7 @@ func resourceSwitchMirror() *schema.Resource {
 			},
 			"src_egress": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -116,6 +117,7 @@ func resourceSwitchMirror() *schema.Resource {
 			},
 			"src_ingress": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -268,6 +270,12 @@ func flattenSwitchMirrorEncapVlan(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenSwitchMirrorEncapIpv4Tos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -280,6 +288,12 @@ func flattenSwitchMirrorSwitchingPacket(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenSwitchMirrorEncapVlanPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -288,6 +302,12 @@ func flattenSwitchMirrorDst(v interface{}, d *schema.ResourceData, pre string, s
 }
 
 func flattenSwitchMirrorEncapGreProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -335,14 +355,32 @@ func flattenSwitchMirrorSrcEgressName(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSwitchMirrorEncapIpv4Ttl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchMirrorEncapVlanId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchMirrorEncapVlanTpid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -414,6 +452,12 @@ func flattenSwitchMirrorEncapIpv4Src(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenSwitchMirrorEncapVlanCfi(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

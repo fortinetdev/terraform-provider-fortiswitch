@@ -198,6 +198,12 @@ func flattenSwitchAclServiceCustomComment(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSwitchAclServiceCustomProtocolNumber(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -210,10 +216,22 @@ func flattenSwitchAclServiceCustomName(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenSwitchAclServiceCustomColor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchAclServiceCustomIcmptype(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -238,6 +256,12 @@ func flattenSwitchAclServiceCustomUdpPortrange(v interface{}, d *schema.Resource
 }
 
 func flattenSwitchAclServiceCustomIcmpcode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

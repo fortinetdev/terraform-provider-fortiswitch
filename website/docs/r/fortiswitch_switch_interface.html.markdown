@@ -69,6 +69,7 @@ The following arguments are supported:
 * `packet_sampler` - Enable/disable packet sampling. Valid values: `enabled`, `disabled`.
 * `loop_guard_timeout` - Loop guard disabling protection (min).
 * `rpvst_port` - Enable/disable interface to inter-op with pvst Valid values: `enabled`, `disabled`.
+* `ip_source_guard` - Enable/disable source-guard on this interaface. Valid values: `enable`, `disable`.
 * `ip_mac_binding` - Enable/disable ip-mac-binding on this interaface. Valid values: `global`, `enable`, `disable`.
 * `mld_snooping_flood_reports` - Enable/disable flooding of MLD reports to this interface. Valid values: `enable`, `disable`.
 * `sflow_counter_interval` - SFlow sampler counter polling interval (0:disable - 255).
@@ -144,7 +145,7 @@ The `port_security` block supports:
 * `macsec_profile` - macsec port profile.
 * `allow_mac_move_to` - Enable/disable allow mac move mode to this port. Valid values: `disable`, `enable`.
 * `auth_fail_vlanid` - Set auth_fail vlanid.
-* `port_security_mode` - Security mode. Valid values: `none`, `802.1X`, `802.1X-mac-based`, `macsec`.
+* `port_security_mode` - Security mode.
 * `authserver_timeout_tagged` - Set authserver_timeout tagged vlan mode. Valid values: `disable`, `lldp-voice`, `static`.
 * `mab_eapol_request` - Set MAB EAPOL Request.
 * `dacl` - Enable/disable dynamic access control list mode. Valid values: `disable`, `enable`.

@@ -46,6 +46,7 @@ func resourceUserRadius() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
 				Optional:     true,
+				Computed:     true,
 			},
 			"source_ip6": &schema.Schema{
 				Type:     schema.TypeString,
@@ -83,6 +84,7 @@ func resourceUserRadius() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 64),
 				Optional:     true,
 				Sensitive:    true,
+				Computed:     true,
 			},
 			"nas_ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -139,6 +141,7 @@ func resourceUserRadius() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
 				Optional:     true,
+				Computed:     true,
 			},
 			"transport_type": &schema.Schema{
 				Type:     schema.TypeString,
@@ -202,6 +205,7 @@ func resourceUserRadius() *schema.Resource {
 			},
 			"acct_server": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -214,6 +218,7 @@ func resourceUserRadius() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
 							Optional:     true,
+							Computed:     true,
 						},
 						"port": &schema.Schema{
 							Type:     schema.TypeInt,
@@ -342,6 +347,12 @@ func flattenUserRadiusRadiusCoa(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenUserRadiusLinkMonitorInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -358,6 +369,12 @@ func flattenUserRadiusNasIp6(v interface{}, d *schema.ResourceData, pre string, 
 }
 
 func flattenUserRadiusAcctInterimInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -386,10 +403,22 @@ func flattenUserRadiusLinkMonitor(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenUserRadiusAcctFastFramedipDetect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenUserRadiusFrameMtuSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -422,6 +451,12 @@ func flattenUserRadiusTransportType(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenUserRadiusRadsecPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -454,10 +489,22 @@ func flattenUserRadiusRadsecCertCnDns(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenUserRadiusRadsecIdleTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenUserRadiusRadsecConnectTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -533,10 +580,22 @@ func flattenUserRadiusAcctServerSecret(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenUserRadiusAcctServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenUserRadiusAcctServerId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -545,6 +604,12 @@ func flattenUserRadiusAcctServerServer(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenUserRadiusRadiusPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

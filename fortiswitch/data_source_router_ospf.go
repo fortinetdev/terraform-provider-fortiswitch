@@ -328,6 +328,10 @@ func dataSourceRouterOspf() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"auto_cost_ref_bandwidth": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 			"interface": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -406,6 +410,10 @@ func dataSourceRouterOspf() *schema.Resource {
 							},
 						},
 						"mtu_ignore": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"network_type": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -1560,6 +1568,10 @@ func dataSourceFlattenRouterOspfAbrType(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func dataSourceFlattenRouterOspfAutoCostRefBandwidth(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenRouterOspfInterface(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -1657,6 +1669,11 @@ func dataSourceFlattenRouterOspfInterface(v interface{}, d *schema.ResourceData,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mtu_ignore"
 		if _, ok := i["mtu-ignore"]; ok {
 			tmp["mtu_ignore"] = dataSourceFlattenRouterOspfInterfaceMtuIgnore(i["mtu-ignore"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "network_type"
+		if _, ok := i["network-type"]; ok {
+			tmp["network_type"] = dataSourceFlattenRouterOspfInterfaceNetworkType(i["network-type"], d, pre_append)
 		}
 
 		result = append(result, tmp)
@@ -1769,6 +1786,10 @@ func dataSourceFlattenRouterOspfInterfaceMd5KeysKey(v interface{}, d *schema.Res
 }
 
 func dataSourceFlattenRouterOspfInterfaceMtuIgnore(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterOspfInterfaceNetworkType(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -2941,6 +2962,12 @@ func dataSourceRefreshObjectRouterOspf(d *schema.ResourceData, o map[string]inte
 	if err = d.Set("abr_type", dataSourceFlattenRouterOspfAbrType(o["abr-type"], d, "abr_type")); err != nil {
 		if !fortiAPIPatch(o["abr-type"]) {
 			return fmt.Errorf("Error reading abr_type: %v", err)
+		}
+	}
+
+	if err = d.Set("auto_cost_ref_bandwidth", dataSourceFlattenRouterOspfAutoCostRefBandwidth(o["auto-cost-ref-bandwidth"], d, "auto_cost_ref_bandwidth")); err != nil {
+		if !fortiAPIPatch(o["auto-cost-ref-bandwidth"]) {
+			return fmt.Errorf("Error reading auto_cost_ref_bandwidth: %v", err)
 		}
 	}
 

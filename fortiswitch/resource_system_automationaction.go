@@ -35,6 +35,7 @@ func resourceSystemAutomationAction() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 123),
 				Optional:     true,
+				Computed:     true,
 			},
 			"alicloud_account_id": &schema.Schema{
 				Type:         schema.TypeString,
@@ -67,6 +68,7 @@ func resourceSystemAutomationAction() *schema.Resource {
 			},
 			"email_to": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -83,6 +85,7 @@ func resourceSystemAutomationAction() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 123),
 				Optional:     true,
+				Computed:     true,
 			},
 			"port": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -134,6 +137,7 @@ func resourceSystemAutomationAction() *schema.Resource {
 			},
 			"headers": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -214,6 +218,7 @@ func resourceSystemAutomationAction() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 59),
 				Optional:     true,
+				Computed:     true,
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
@@ -449,10 +454,22 @@ func flattenSystemAutomationActionAzureApiKey(v interface{}, d *schema.ResourceD
 }
 
 func flattenSystemAutomationActionPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemAutomationActionMinimumInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

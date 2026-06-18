@@ -45,6 +45,7 @@ func resourceSwitchQosQosPolicy() *schema.Resource {
 			},
 			"cos_queue": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -308,6 +309,12 @@ func flattenSwitchQosQosPolicyCosQueue(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenSwitchQosQosPolicyCosQueueMaxRatePercent(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -316,10 +323,22 @@ func flattenSwitchQosQosPolicyCosQueueName(v interface{}, d *schema.ResourceData
 }
 
 func flattenSwitchQosQosPolicyCosQueueWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchQosQosPolicyCosQueueMinRatePercent(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -328,14 +347,32 @@ func flattenSwitchQosQosPolicyCosQueueEcn(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSwitchQosQosPolicyCosQueueMinRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchQosQosPolicyCosQueueWredSlope(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchQosQosPolicyCosQueueMaxRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

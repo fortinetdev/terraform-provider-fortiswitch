@@ -32,9 +32,10 @@ func resourceRouterRipng() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"default_metric": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
-				Computed: true,
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 16),
+				Optional:     true,
+				Computed:     true,
 			},
 			"timeout_timer": &schema.Schema{
 				Type:     schema.TypeInt,
@@ -43,6 +44,7 @@ func resourceRouterRipng() *schema.Resource {
 			},
 			"aggregate_address": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -61,6 +63,7 @@ func resourceRouterRipng() *schema.Resource {
 			},
 			"offset_list": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -81,9 +84,10 @@ func resourceRouterRipng() *schema.Resource {
 							Computed:     true,
 						},
 						"offset": &schema.Schema{
-							Type:     schema.TypeInt,
-							Optional: true,
-							Computed: true,
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 16),
+							Optional:     true,
+							Computed:     true,
 						},
 						"interface": &schema.Schema{
 							Type:         schema.TypeString,
@@ -106,6 +110,7 @@ func resourceRouterRipng() *schema.Resource {
 			},
 			"redistribute": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -151,6 +156,7 @@ func resourceRouterRipng() *schema.Resource {
 			},
 			"interface": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -190,6 +196,7 @@ func resourceRouterRipng() *schema.Resource {
 			},
 			"distribute_list": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -303,10 +310,22 @@ func resourceRouterRipngRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenRouterRipngDefaultMetric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterRipngTimeoutTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -356,6 +375,12 @@ func flattenRouterRipngAggregateAddress(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenRouterRipngAggregateAddressId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -445,6 +470,12 @@ func flattenRouterRipngOffsetListAccessList6(v interface{}, d *schema.ResourceDa
 }
 
 func flattenRouterRipngOffsetListOffset(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -453,6 +484,12 @@ func flattenRouterRipngOffsetListInterface(v interface{}, d *schema.ResourceData
 }
 
 func flattenRouterRipngOffsetListId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -528,6 +565,12 @@ func flattenRouterRipngRedistributeStatus(v interface{}, d *schema.ResourceData,
 }
 
 func flattenRouterRipngRedistributeMetric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -536,6 +579,12 @@ func flattenRouterRipngRedistributeRoutemap(v interface{}, d *schema.ResourceDat
 }
 
 func flattenRouterRipngRedistributeFlags(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -544,6 +593,12 @@ func flattenRouterRipngRedistributeName(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenRouterRipngGarbageTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -627,6 +682,12 @@ func flattenRouterRipngInterfaceSplitHorizon(v interface{}, d *schema.ResourceDa
 }
 
 func flattenRouterRipngInterfaceFlags(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -635,6 +696,12 @@ func flattenRouterRipngInterfaceName(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenRouterRipngUpdateTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -718,6 +785,12 @@ func flattenRouterRipngDistributeListInterface(v interface{}, d *schema.Resource
 }
 
 func flattenRouterRipngDistributeListId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

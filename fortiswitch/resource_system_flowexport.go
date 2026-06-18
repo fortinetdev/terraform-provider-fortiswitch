@@ -45,6 +45,7 @@ func resourceSystemFlowExport() *schema.Resource {
 			},
 			"collectors": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -86,6 +87,7 @@ func resourceSystemFlowExport() *schema.Resource {
 			},
 			"aggregates": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -234,10 +236,22 @@ func resourceSystemFlowExportRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenSystemFlowExportTimeoutTcp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemFlowExportTimeoutUdp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -311,6 +325,12 @@ func flattenSystemFlowExportCollectorsTransport(v interface{}, d *schema.Resourc
 }
 
 func flattenSystemFlowExportCollectorsPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -319,6 +339,12 @@ func flattenSystemFlowExportLevel(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenSystemFlowExportTimeoutTcpRst(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -379,6 +405,12 @@ func flattenSystemFlowExportAggregatesIp(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenSystemFlowExportAggregatesId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -387,10 +419,22 @@ func flattenSystemFlowExportFormat(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenSystemFlowExportTimeoutTcpFin(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemFlowExportTemplateExportPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -399,22 +443,52 @@ func flattenSystemFlowExportFilter(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenSystemFlowExportTimeoutIcmp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemFlowExportMaxExportPktSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemFlowExportTimeoutGeneral(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemFlowExportIdentity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemFlowExportTimeoutMax(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

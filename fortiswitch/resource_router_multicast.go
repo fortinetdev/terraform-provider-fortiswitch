@@ -39,6 +39,7 @@ func resourceRouterMulticast() *schema.Resource {
 			},
 			"interface": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -71,6 +72,7 @@ func resourceRouterMulticast() *schema.Resource {
 						},
 						"igmp": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
@@ -249,6 +251,12 @@ func flattenRouterMulticastInterface(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenRouterMulticastInterfaceHelloInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -261,6 +269,12 @@ func flattenRouterMulticastInterfacePimMode(v interface{}, d *schema.ResourceDat
 }
 
 func flattenRouterMulticastInterfaceDrPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -294,10 +308,22 @@ func flattenRouterMulticastInterfaceIgmp(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenRouterMulticastInterfaceIgmpQueryInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenRouterMulticastInterfaceIgmpQueryMaxResponseTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

@@ -105,6 +105,7 @@ func resourceUserLdap() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
 				Sensitive:    true,
+				Computed:     true,
 			},
 			"type": &schema.Schema{
 				Type:     schema.TypeString,
@@ -272,6 +273,12 @@ func flattenUserLdapType(v interface{}, d *schema.ResourceData, pre string, sv s
 }
 
 func flattenUserLdapPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

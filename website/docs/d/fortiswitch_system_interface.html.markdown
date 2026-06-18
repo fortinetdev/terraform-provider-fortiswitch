@@ -20,6 +20,7 @@ The following attributes are exported:
 * `defaultgw` - Enable/disable default gateway.
 * `gwdetect` - Enable/disable gateway detection.
 * `dhcp_client_status` - DHCP client connection status.
+* `ptp_status` - Interface PTP status.
 * `weight` - Default weight for static routes if route has no weight configured (0 - 255).
 * `ip` - Interface IPv4 address.
 * `vrrp_virtual_mac` - enable to use virtual MAC for VRRP
@@ -118,6 +119,7 @@ The `ipv6` block contains:
 The `vrrp6` block contains:
 
 * `status` - Enable/disable VRRP.
+* `backup_vmac_fwd` - Enable/disable backup-vmac-fwd.
 * `priority` - Priority of the virtual router (1 - 255).
 * `vrip6` - IPv6 address of the virtual router.
 * `adv_interval` - Advertisement interval (1 - 255 seconds).

@@ -126,6 +126,12 @@ func resourceSwitchNetworkMonitorSettingsRead(d *schema.ResourceData, m interfac
 }
 
 func flattenSwitchNetworkMonitorSettingsDbAgingInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -134,6 +140,12 @@ func flattenSwitchNetworkMonitorSettingsStatus(v interface{}, d *schema.Resource
 }
 
 func flattenSwitchNetworkMonitorSettingsSurveyModeInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

@@ -38,6 +38,7 @@ func resourceRouterospf6Area() *schema.Resource {
 			},
 			"filter_list": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -62,6 +63,7 @@ func resourceRouterospf6Area() *schema.Resource {
 			},
 			"range": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -256,6 +258,12 @@ func flattenRouterospf6AreaFilterListList(v interface{}, d *schema.ResourceData,
 }
 
 func flattenRouterospf6AreaFilterListId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -315,6 +323,12 @@ func flattenRouterospf6AreaRangeAdvertise(v interface{}, d *schema.ResourceData,
 }
 
 func flattenRouterospf6AreaRangeId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

@@ -273,10 +273,22 @@ func flattenSystemSettingsUtf8SpamTagging(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSystemSettingsEcmpMaxPaths(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemSettingsSipUdpPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -293,10 +305,22 @@ func flattenSystemSettingsVpnStatsLog(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSystemSettingsBfdDetectMult(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemSettingsBfdRequiredMinRx(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -329,6 +353,12 @@ func flattenSystemSettingsComments(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenSystemSettingsVpnStatsPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -337,10 +367,22 @@ func flattenSystemSettingsOpmode(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenSystemSettingsBfdDesiredMinTx(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSystemSettingsSccpPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -373,6 +415,12 @@ func flattenSystemSettingsSipHelper(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenSystemSettingsSipTcpPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

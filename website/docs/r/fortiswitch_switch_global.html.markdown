@@ -63,6 +63,7 @@ The following arguments are supported:
 * `poe_alarm_threshold` - Threshold (% of total power budget) above which an alarm event is generated.
 * `poe_guard_band` - Reserves power (W) in case of a spike in PoE consumption.
 * `auto_stp_priority` - Automatic assignment of STP priority for tier1 and tier2 switches. Valid values: `enable`, `disable`.
+* `auto_stp_cost` - Automatic assignment of STP cost for tier1 and tier2 switches. Valid values: `enable`, `disable`.
 * `poe_power_budget` - Set/override maximum power budget.
 * `vxlan_sport` - VXLAN source UDP port (0 - 65535).
 * `mclag_peer_info_timeout` - MCLAG peer info timeout.
@@ -75,10 +76,14 @@ The following arguments are supported:
 * `dmi_global_all` - Enable/disable DMI global status. Valid values: `enable`, `disable`.
 * `storm_control_monitor` - Enable/disable storm control monitor. Valid values: `enable`, `disable`.
 * `l2_memory_check` - Enable/disable L2 memory check, default interval is 120 seconds. Valid values: `enable`, `disable`.
+* `log_source_guard_violations` - Enable/disable logs for source guard violations globally. Valid values: `enable`, `disable`.
+* `source_guard_violation_timer` - Set a global timeout for source guard violations (0 - 1500 min, 0 = disabled).
 * `mclag_split_brain_detect` - Enable/disable MCLAG split brain detect. Valid values: `enable`, `disable`.
 * `forti_trunk_dmac` - Destination MAC address to be used for FortiTrunk heartbeat packets.
 * `mac_aging_interval` - MAC address aging interval (sec; remove any MAC addresses unused since the the last check.
 * `port_security` - Global parameters for port-security. The structure of `port_security` block is documented below.
+* `reserved_mcast_to_cpu` - Enable/disable forwarding reserved multicast packets to CPU. Valid values: `enable`, `disable`.
+* `neighbor_discovery_to_cpu` - Enable/disable forwarding IPv6 neighbor discovery packets to CPU. Valid values: `enable`, `disable`.
 * `flood_unknown_multicast` - Enable/disable unknown mcast flood in the vlan. Valid values: `enable`, `disable`.
 * `l2_memory_check_interval` - User defined interval to check L2 memory(second). 
 

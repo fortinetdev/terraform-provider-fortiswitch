@@ -38,6 +38,7 @@ func resourceSystemSflow() *schema.Resource {
 			},
 			"collectors": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -141,6 +142,12 @@ func resourceSystemSflowRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenSystemSflowDummy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -204,6 +211,12 @@ func flattenSystemSflowCollectorsName(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSystemSflowCollectorsPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

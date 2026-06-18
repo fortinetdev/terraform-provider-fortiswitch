@@ -97,6 +97,9 @@ The following attributes are exported:
 * `prefix_list_in` - IPv4 Inbound filter for updates from this neighbor.
 * `distribute_list_in` - Filter for IPv4 updates from this neighbor.
 * `remote_as` - AS number of neighbor.
+* `local_as` - Local AS number of neighbor.
+* `local_as_no_prepend` - Enable/disable do not prepend local-as to updates from ebgp peers.
+* `local_as_replace` - Enable/disable replace real AS with local-as in outgoing updates.
 * `maximum_prefix_threshold6` - Maximum IPv6 prefix threshold value (1-100 percent)
 * `prefix_list_out` - IPv4 Outbound filter for updates to this neighbor.
 * `soft_reconfiguration` - Enable/disable allow IPv4 inbound soft reconfiguration.

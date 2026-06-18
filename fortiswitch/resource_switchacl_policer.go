@@ -157,10 +157,22 @@ func resourceSwitchAclPolicerRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenSwitchAclPolicerMaximumBurst(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchAclPolicerGuaranteedBurst(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -169,6 +181,12 @@ func flattenSwitchAclPolicerDescription(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenSwitchAclPolicerGuaranteedBandwidth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -177,6 +195,12 @@ func flattenSwitchAclPolicerType(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenSwitchAclPolicerId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 

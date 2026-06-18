@@ -80,6 +80,7 @@ func resourceSwitchInterface() *schema.Resource {
 			},
 			"security_groups": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -129,6 +130,7 @@ func resourceSwitchInterface() *schema.Resource {
 			},
 			"dhcp_snoop_option82_override": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -164,6 +166,7 @@ func resourceSwitchInterface() *schema.Resource {
 			},
 			"qnq": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -175,6 +178,7 @@ func resourceSwitchInterface() *schema.Resource {
 						},
 						"vlan_mapping": &schema.Schema{
 							Type:     schema.TypeList,
+							Computed: true,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -284,6 +288,7 @@ func resourceSwitchInterface() *schema.Resource {
 			},
 			"vlan_mapping": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -331,6 +336,7 @@ func resourceSwitchInterface() *schema.Resource {
 			},
 			"raguard": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -444,6 +450,11 @@ func resourceSwitchInterface() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ip_source_guard": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"ip_mac_binding": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -510,6 +521,7 @@ func resourceSwitchInterface() *schema.Resource {
 			},
 			"port_security": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
@@ -734,13 +746,7 @@ func resourceSwitchInterfaceUpdate(d *schema.ResourceData, m interface{}) error 
 		return fmt.Errorf("Error updating SwitchInterface resource while getting object: %v", err)
 	}
 
-	// Create the request body in the required format
-	data := map[string]interface{}{
-		"json": obj, // Assuming `obj` contains the request body data
-	}
-
-	// Pass the `data` to the `UpdateSwitchInterface` function
-	o, err := c.UpdateSwitchInterface(&data, mkey)
+	o, err := c.UpdateSwitchInterface(obj, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchInterface resource: %v", err)
 	}
@@ -879,6 +885,12 @@ func flattenSwitchInterfacePrivateVlan(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenSwitchInterfaceSubVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -958,6 +970,12 @@ func flattenSwitchInterfaceDhcpSnoopOption82OverrideCircuitId(v interface{}, d *
 }
 
 func flattenSwitchInterfaceDhcpSnoopOption82OverrideId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1120,14 +1138,32 @@ func flattenSwitchInterfaceQnqVlanMapping(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSwitchInterfaceQnqVlanMappingNewSVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchInterfaceQnqVlanMappingMatchCVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchInterfaceQnqVlanMappingId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1140,7 +1176,10 @@ func flattenSwitchInterfaceQnqStpQnqAdmin(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSwitchInterfaceQnqNativeCVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	if v == "" || v == "none" {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
 		return nil
 	}
 	return v
@@ -1159,11 +1198,20 @@ func flattenSwitchInterfaceQnqVlanMappingMissDrop(v interface{}, d *schema.Resou
 }
 
 func flattenSwitchInterfaceQnqUntaggedSVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchInterfaceQnqAddInner(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	if v == "" || v == "none" {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
 		return nil
 	}
 	return v
@@ -1178,6 +1226,12 @@ func flattenSwitchInterfaceQnqEdgeType(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenSwitchInterfaceQnqSTagPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1190,10 +1244,22 @@ func flattenSwitchInterfaceNac(v interface{}, d *schema.ResourceData, pre string
 }
 
 func flattenSwitchInterfaceAutoDiscoveryFortilinkPacketInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchInterfacePrimaryVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1281,10 +1347,22 @@ func flattenSwitchInterfaceVlanMappingDescription(v interface{}, d *schema.Resou
 }
 
 func flattenSwitchInterfaceVlanMappingMatchSVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchInterfaceVlanMappingNewSVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1293,10 +1371,22 @@ func flattenSwitchInterfaceVlanMappingAction(v interface{}, d *schema.ResourceDa
 }
 
 func flattenSwitchInterfaceVlanMappingMatchCVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchInterfaceVlanMappingId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1356,6 +1446,12 @@ func flattenSwitchInterfaceRaguardVlanList(v interface{}, d *schema.ResourceData
 }
 
 func flattenSwitchInterfaceRaguardId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1364,6 +1460,12 @@ func flattenSwitchInterfaceRaguardRaguardPolicy(v interface{}, d *schema.Resourc
 }
 
 func flattenSwitchInterfaceStpBpduGuardTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1372,6 +1474,12 @@ func flattenSwitchInterfaceStpLoopProtection(v interface{}, d *schema.ResourceDa
 }
 
 func flattenSwitchInterfaceLearningLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1380,6 +1488,12 @@ func flattenSwitchInterfaceLearningLimitAction(v interface{}, d *schema.Resource
 }
 
 func flattenSwitchInterfaceLoopGuardMacMoveThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1388,6 +1502,12 @@ func flattenSwitchInterfaceLogMacEvent(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenSwitchInterfaceDhcpSnoopLearningLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1396,6 +1516,12 @@ func flattenSwitchInterfaceType(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenSwitchInterfaceSnmpIndex(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1428,10 +1554,20 @@ func flattenSwitchInterfacePacketSampler(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenSwitchInterfaceLoopGuardTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchInterfaceRpvstPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchInterfaceIpSourceGuard(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1444,6 +1580,12 @@ func flattenSwitchInterfaceMldSnoopingFloodReports(v interface{}, d *schema.Reso
 }
 
 func flattenSwitchInterfaceSflowCounterInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1452,6 +1594,12 @@ func flattenSwitchInterfaceName(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenSwitchInterfaceNativeVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1464,6 +1612,12 @@ func flattenSwitchInterfaceUntaggedVlans(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenSwitchInterfacePrivateVlanPortType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1687,6 +1841,12 @@ func flattenSwitchInterfacePortSecurityAllowMacMoveTo(v interface{}, d *schema.R
 }
 
 func flattenSwitchInterfacePortSecurityAuthFailVlanid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1699,6 +1859,12 @@ func flattenSwitchInterfacePortSecurityAuthserverTimeoutTagged(v interface{}, d 
 }
 
 func flattenSwitchInterfacePortSecurityMabEapolRequest(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1719,10 +1885,22 @@ func flattenSwitchInterfacePortSecurityGuestVlan(v interface{}, d *schema.Resour
 }
 
 func flattenSwitchInterfacePortSecurityGuestAuthDelay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchInterfacePortSecurityClientLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1739,10 +1917,22 @@ func flattenSwitchInterfacePortSecurityEapAutoUntaggedVlans(v interface{}, d *sc
 }
 
 func flattenSwitchInterfacePortSecurityAuthserverTimeoutTaggedLldpVoiceVlanid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
 func flattenSwitchInterfacePortSecurityAuthserverTimeoutTaggedVlanid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1759,6 +1949,12 @@ func flattenSwitchInterfacePortSecurityRadiusTimeoutOverwrite(v interface{}, d *
 }
 
 func flattenSwitchInterfacePortSecurityAuthserverTimeoutPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1767,6 +1963,12 @@ func flattenSwitchInterfacePortSecurityOpenAuth(v interface{}, d *schema.Resourc
 }
 
 func flattenSwitchInterfacePortSecurityAuthserverTimeoutVlanid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1775,6 +1977,12 @@ func flattenSwitchInterfacePortSecurityQuarantineVlan(v interface{}, d *schema.R
 }
 
 func flattenSwitchInterfacePortSecurityGuestVlanid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1787,6 +1995,12 @@ func flattenSwitchInterfacePortSecurityEapPassthru(v interface{}, d *schema.Reso
 }
 
 func flattenSwitchInterfaceDefaultCos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -1799,6 +2013,12 @@ func flattenSwitchInterfaceVlanTpid(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenSwitchInterfacePacketSampleRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v == nil || v == "" {
+		return nil
+	}
+	if _, ok := v.([]interface{}); ok {
+		return nil
+	}
 	return v
 }
 
@@ -2126,6 +2346,12 @@ func refreshObjectSwitchInterface(d *schema.ResourceData, o map[string]interface
 	if err = d.Set("rpvst_port", flattenSwitchInterfaceRpvstPort(o["rpvst-port"], d, "rpvst_port", sv)); err != nil {
 		if !fortiAPIPatch(o["rpvst-port"]) {
 			return fmt.Errorf("Error reading rpvst_port: %v", err)
+		}
+	}
+
+	if err = d.Set("ip_source_guard", flattenSwitchInterfaceIpSourceGuard(o["ip-source-guard"], d, "ip_source_guard", sv)); err != nil {
+		if !fortiAPIPatch(o["ip-source-guard"]) {
+			return fmt.Errorf("Error reading ip_source_guard: %v", err)
 		}
 	}
 
@@ -2823,6 +3049,10 @@ func expandSwitchInterfaceLoopGuardTimeout(d *schema.ResourceData, v interface{}
 }
 
 func expandSwitchInterfaceRpvstPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchInterfaceIpSourceGuard(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3619,6 +3849,16 @@ func getObjectSwitchInterface(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["rpvst-port"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ip_source_guard"); ok {
+
+		t, err := expandSwitchInterfaceIpSourceGuard(d, v, "ip_source_guard", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ip-source-guard"] = t
 		}
 	}
 

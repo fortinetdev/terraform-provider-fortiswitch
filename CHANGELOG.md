@@ -1,4 +1,15 @@
-## 1.1.7 (Unreleased)
+## 1.1.8 (Unreleased)
+
+## 1.1.7 (June 17, 2025)
+
+BUGFIXES:
+
+* Fixed perpetual diffs caused by reordered `allowaccess` values in `fortiswitch_system_interface` and other resources;
+* Fixed repeated Terraform changes after a successful apply when FortiSwitch returned automatically assigned or default values. Subsequent plans now remain unchanged when the configuration has not changed.
+
+IMPROVEMENTS:
+
+* Support new version 8.0.0
 
 ## 1.1.6 (Sep 10, 2025)
 
