@@ -107,6 +107,8 @@ func resourceSystemAutomationDestinationUpdate(d *schema.ResourceData, m interfa
 		return fmt.Errorf("Error updating SystemAutomationDestination resource while getting object: %v", err)
 	}
 
+	// The URL identifies the object; omit only its top-level API key.
+	delete(*obj, "name")
 	o, err := c.UpdateSystemAutomationDestination(obj, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAutomationDestination resource: %v", err)

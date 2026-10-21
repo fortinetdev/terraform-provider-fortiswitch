@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_logsyslogd_overridefilter
-Override filters for remote system server.
+Override filters for remote system server. Applies to FortiSwitch Version `<= 8.0.0`.
 
 ## Argument Reference
 

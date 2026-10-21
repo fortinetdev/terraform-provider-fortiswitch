@@ -80,6 +80,8 @@ func resourceSwitchNetworkMonitorDirectedUpdate(d *schema.ResourceData, m interf
 		return fmt.Errorf("Error updating SwitchNetworkMonitorDirected resource while getting object: %v", err)
 	}
 
+	// The URL identifies the object; omit only its top-level API key.
+	delete(*obj, "id")
 	o, err := c.UpdateSwitchNetworkMonitorDirected(obj, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchNetworkMonitorDirected resource: %v", err)

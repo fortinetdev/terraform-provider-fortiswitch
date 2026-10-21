@@ -40,7 +40,7 @@ The following arguments are supported:
 * `auto_mclag_icl` - Enable/disable MCLAG inter chassis link. Valid values: `enable`, `disable`.
 * `name` - Profile name.
 * `auto_isl` - Enable/disable automatic inter-switch LAG. Valid values: `enable`, `disable`.
-* `n8023_tlvs` - Transmitted IEEE 802.3 TLVs. Valid values: `max-frame-size`, `power-negotiation`, `eee-config`.
+* `n8023_tlvs` - Transmitted IEEE 802.3 TLVs.
 * `auto_isl_auth` - Automatic inter-switch LAG authentication. Valid values: `legacy`, `strict`, `relax`.
 * `auto_isl_receive_timeout` - Automatic ISL timeout (0 - 300 sec).
 * `auto_isl_auth_macsec_profile` - Fortilink LLDP macsec port profile.
@@ -50,7 +50,7 @@ The following arguments are supported:
 * `auto_isl_auth_reauth` - Automatic authentication reauth period (10 - 3600 mins).
 * `med_location_service` - LLDP MED location service configuration. The structure of `med_location_service` block is documented below.
 * `n8021_tlvs` - Transmitted IEEE 802.1 TLVs.
-* `med_tlvs` - Transmitted LLDP-MED TLVs. Valid values: `inventory-management`, `network-policy`, `location-identification`, `power-management`.
+* `med_tlvs` - Transmitted LLDP-MED TLVs.
 * `med_network_policy` - LLDP MED network policy configuration. The structure of `med_network_policy` block is documented below.
 * `auto_isl_auth_identity` - Automatic authentication identity.
 * `auto_isl_hello_timer` - Automatic ISL hello timer (1 - 30 sec).

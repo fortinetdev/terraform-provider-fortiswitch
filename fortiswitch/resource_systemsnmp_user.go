@@ -57,12 +57,14 @@ func resourceSystemSnmpUser() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 				Computed:     true,
 			},
 			"priv_pwd": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 				Computed:     true,
 			},
 			"security_level": &schema.Schema{
@@ -123,6 +125,8 @@ func resourceSystemSnmpUserUpdate(d *schema.ResourceData, m interface{}) error {
 		return fmt.Errorf("Error updating SystemSnmpUser resource while getting object: %v", err)
 	}
 
+	// The URL identifies the object; omit only its top-level API key.
+	delete(*obj, "name")
 	o, err := c.UpdateSystemSnmpUser(obj, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSnmpUser resource: %v", err)
@@ -248,18 +252,6 @@ func refreshObjectSystemSnmpUser(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("query_port", flattenSystemSnmpUserQueryPort(o["query-port"], d, "query_port", sv)); err != nil {
 		if !fortiAPIPatch(o["query-port"]) {
 			return fmt.Errorf("Error reading query_port: %v", err)
-		}
-	}
-
-	if err = d.Set("auth_pwd", flattenSystemSnmpUserAuthPwd(o["auth-pwd"], d, "auth_pwd", sv)); err != nil {
-		if !fortiAPIPatch(o["auth-pwd"]) {
-			return fmt.Errorf("Error reading auth_pwd: %v", err)
-		}
-	}
-
-	if err = d.Set("priv_pwd", flattenSystemSnmpUserPrivPwd(o["priv-pwd"], d, "priv_pwd", sv)); err != nil {
-		if !fortiAPIPatch(o["priv-pwd"]) {
-			return fmt.Errorf("Error reading priv_pwd: %v", err)
 		}
 	}
 

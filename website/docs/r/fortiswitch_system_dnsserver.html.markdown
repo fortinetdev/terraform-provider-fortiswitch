@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_system_dnsserver
-Dns-server.
+Dns-server. Applies to FortiSwitch Version `<= 8.0.0`.
 
 ## Example Usage
 

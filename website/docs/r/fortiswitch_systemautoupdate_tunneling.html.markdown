@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_systemautoupdate_tunneling
-Configure web proxy tunneling for the FDN.
+Configure web proxy tunneling for the FDN. Applies to FortiSwitch Version `<= 8.0.0`.
 
 ## Example Usage
 

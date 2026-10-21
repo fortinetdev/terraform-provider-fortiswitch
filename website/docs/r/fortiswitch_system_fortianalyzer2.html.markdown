@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_system_fortianalyzer2
-Setting for FortiAnalyzer.
+Setting for FortiAnalyzer. Applies to FortiSwitch Version `<= 8.0.0`.
 
 ## Example Usage
 

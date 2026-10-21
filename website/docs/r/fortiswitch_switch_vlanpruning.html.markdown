@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_switch_vlanpruning
-Vlan Pruning. Applies to FortiSwitch Version `>= 7.6.1`.
+Vlan Pruning. Applies to FortiSwitch Version `7.6.1,7.6.2,7.6.3,7.6.4,8.0.0`.
 
 ## Argument Reference
 

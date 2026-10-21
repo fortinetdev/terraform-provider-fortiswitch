@@ -2247,60 +2247,6 @@ func (c *FortiSDKClient) ReadSwitchDomain(mkey string) (mapTmp map[string]interf
 	return
 }
 
-// CreateSwitchIpSourceGuard API operation for FortiSwitch creates a new Ip Source Guard.
-// Returns the index value of the Ip Source Guard and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the switch - ip-source-guard chapter in the FortiSwitch Handbook - CLI Reference.
-func (c *FortiSDKClient) CreateSwitchIpSourceGuard(params *map[string]interface{}) (output map[string]interface{}, err error) {
-
-	HTTPMethod := "POST"
-	path := "/api/v2/cmdb/switch/ip-source-guard"
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output)
-	return
-}
-
-// UpdateSwitchIpSourceGuard API operation for FortiSwitch updates the specified Ip Source Guard.
-// Returns the index value of the Ip Source Guard and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the switch - ip-source-guard chapter in the FortiSwitch Handbook - CLI Reference.
-func (c *FortiSDKClient) UpdateSwitchIpSourceGuard(params *map[string]interface{}, mkey string) (output map[string]interface{}, err error) {
-	HTTPMethod := "PUT"
-	path := "/api/v2/cmdb/switch/ip-source-guard"
-	path += "/" + escapeURLString(mkey)
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output)
-	return
-}
-
-// DeleteSwitchIpSourceGuard API operation for FortiSwitch deletes the specified Ip Source Guard.
-// Returns error for service API and SDK errors.
-// See the switch - ip-source-guard chapter in the FortiSwitch Handbook - CLI Reference.
-func (c *FortiSDKClient) DeleteSwitchIpSourceGuard(mkey string) (err error) {
-	HTTPMethod := "DELETE"
-	path := "/api/v2/cmdb/switch/ip-source-guard"
-	path += "/" + escapeURLString(mkey)
-
-	err = delete(c, HTTPMethod, path)
-	return
-}
-
-// ReadSwitchIpSourceGuard API operation for FortiSwitch gets the Ip Source Guard
-// with the specified index value.
-// Returns the requested Ip Source Guard value when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the switch - ip-source-guard chapter in the FortiSwitch Handbook - CLI Reference.
-func (c *FortiSDKClient) ReadSwitchIpSourceGuard(mkey string) (mapTmp map[string]interface{}, err error) {
-	HTTPMethod := "GET"
-	path := "/api/v2/cmdb/switch/ip-source-guard"
-	path += "/" + escapeURLString(mkey)
-
-	mapTmp, err = read(c, HTTPMethod, path, false)
-	return
-}
-
 // UpdateSwitchGlobal API operation for FortiSwitch updates the specified Global.
 // Returns the index value of the Global and execution result when the request executes successfully.
 // Returns error for service API and SDK errors.
@@ -2438,6 +2384,60 @@ func (c *FortiSDKClient) DeleteSwitchIpMacBinding(mkey string) (err error) {
 func (c *FortiSDKClient) ReadSwitchIpMacBinding(mkey string) (mapTmp map[string]interface{}, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/switch/ip-mac-binding"
+	path += "/" + escapeURLString(mkey)
+
+	mapTmp, err = read(c, HTTPMethod, path, false)
+	return
+}
+
+// CreateSwitchIpSourceGuard API operation for FortiSwitch creates a new Ip Source Guard.
+// Returns the index value of the Ip Source Guard and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the switch - ip-source-guard chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateSwitchIpSourceGuard(params *map[string]interface{}) (output map[string]interface{}, err error) {
+
+	HTTPMethod := "POST"
+	path := "/api/v2/cmdb/switch/ip-source-guard"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// UpdateSwitchIpSourceGuard API operation for FortiSwitch updates the specified Ip Source Guard.
+// Returns the index value of the Ip Source Guard and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the switch - ip-source-guard chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateSwitchIpSourceGuard(params *map[string]interface{}, mkey string) (output map[string]interface{}, err error) {
+	HTTPMethod := "PUT"
+	path := "/api/v2/cmdb/switch/ip-source-guard"
+	path += "/" + escapeURLString(mkey)
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// DeleteSwitchIpSourceGuard API operation for FortiSwitch deletes the specified Ip Source Guard.
+// Returns error for service API and SDK errors.
+// See the switch - ip-source-guard chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteSwitchIpSourceGuard(mkey string) (err error) {
+	HTTPMethod := "DELETE"
+	path := "/api/v2/cmdb/switch/ip-source-guard"
+	path += "/" + escapeURLString(mkey)
+
+	err = delete(c, HTTPMethod, path)
+	return
+}
+
+// ReadSwitchIpSourceGuard API operation for FortiSwitch gets the Ip Source Guard
+// with the specified index value.
+// Returns the requested Ip Source Guard value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the switch - ip-source-guard chapter in the FortiSwitch Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadSwitchIpSourceGuard(mkey string) (mapTmp map[string]interface{}, err error) {
+	HTTPMethod := "GET"
+	path := "/api/v2/cmdb/switch/ip-source-guard"
 	path += "/" + escapeURLString(mkey)
 
 	mapTmp, err = read(c, HTTPMethod, path, false)

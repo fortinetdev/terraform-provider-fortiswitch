@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_system_vdomdns
-Vdom dns configuration.
+Vdom dns configuration. Applies to FortiSwitch Version `<= 8.0.0`.
 
 ## Example Usage
 

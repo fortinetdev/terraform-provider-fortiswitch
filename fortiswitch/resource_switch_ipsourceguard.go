@@ -112,6 +112,8 @@ func resourceSwitchIpSourceGuardUpdate(d *schema.ResourceData, m interface{}) er
 		return fmt.Errorf("Error updating SwitchIpSourceGuard resource while getting object: %v", err)
 	}
 
+	// The URL identifies the object; omit only its top-level API key.
+	delete(*obj, "interface-name")
 	o, err := c.UpdateSwitchIpSourceGuard(obj, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchIpSourceGuard resource: %v", err)

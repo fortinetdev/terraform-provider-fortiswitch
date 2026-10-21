@@ -150,6 +150,8 @@ func resourceSystemAutomationTriggerUpdate(d *schema.ResourceData, m interface{}
 		return fmt.Errorf("Error updating SystemAutomationTrigger resource while getting object: %v", err)
 	}
 
+	// The URL identifies the object; omit only its top-level API key.
+	delete(*obj, "name")
 	o, err := c.UpdateSystemAutomationTrigger(obj, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAutomationTrigger resource: %v", err)

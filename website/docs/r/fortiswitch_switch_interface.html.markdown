@@ -39,7 +39,7 @@ The following arguments are supported:
 * `allowed_sub_vlans` - Sub-VLANs allowed to egress this interface.
 * `sample_direction` - SFlow sample direction. Valid values: `tx`, `rx`, `both`.
 * `dhcp_snoop_option82_trust` - Enable/Disable (allow/disallow) dhcp pkt with option82 on untrusted interface. Valid values: `enable`, `disable`.
-* `edge_port` - Enable/disable interface as edge port. Valid values: `enabled`, `disabled`.
+* `edge_port` - Enable/disable interface as edge port.
 * `stp_bpdu_guard` - Enable/disable STP BPDU guard protection (stp-state and edge-port must be enabled). Valid values: `enabled`, `disabled`.
 * `dhcp_snoop_option82_override` - Configure per vlan option82 override. The structure of `dhcp_snoop_option82_override` block is documented below.
 * `ptp_status` - PTP Admin. Status. Valid values: `enable`, `disable`.

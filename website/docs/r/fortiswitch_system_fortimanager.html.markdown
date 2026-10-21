@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_system_fortimanager
-FortiManagerconfiguration.
+FortiManagerconfiguration. Applies to FortiSwitch Version `<= 8.0.0`.
 
 By design considerations, the feature is using the fortiswitch_system_centralmanagement resource as documented below.
 

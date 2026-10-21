@@ -32,9 +32,10 @@ func resourceSystemCertificateRemote() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"remote": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				DiffSuppressFunc: suppressSystemCertificateRemoteFormatting,
+				Type:             schema.TypeString,
+				Optional:         true,
+				Computed:         true,
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
@@ -81,6 +82,8 @@ func resourceSystemCertificateRemoteUpdate(d *schema.ResourceData, m interface{}
 		return fmt.Errorf("Error updating SystemCertificateRemote resource while getting object: %v", err)
 	}
 
+	// The URL identifies the object; omit only its top-level API key.
+	delete(*obj, "name")
 	o, err := c.UpdateSystemCertificateRemote(obj, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemCertificateRemote resource: %v", err)
@@ -169,7 +172,7 @@ func flattenSystemCertificateRemoteFortiTestDebug(d *schema.ResourceData, fswdeb
 }
 
 func expandSystemCertificateRemoteRemote(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	return toCertFormat(v), nil
 }
 
 func expandSystemCertificateRemoteName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -200,4 +203,16 @@ func getObjectSystemCertificateRemote(d *schema.ResourceData, sv string) (*map[s
 	}
 
 	return &obj, nil
+}
+
+// Compare only representation differences; a different certificate still updates.
+func suppressSystemCertificateRemoteFormatting(k, old, new string, d *schema.ResourceData) bool {
+	normalize := func(value string) string {
+		value = strings.TrimSpace(value)
+		if len(value) >= 2 && strings.HasPrefix(value, "\"") && strings.HasSuffix(value, "\"") {
+			value = value[1 : len(value)-1]
+		}
+		return strings.TrimSpace(strings.ReplaceAll(value, "\r\n", "\n"))
+	}
+	return normalize(old) == normalize(new)
 }

@@ -85,6 +85,8 @@ func resourceRouterospfNetworkUpdate(d *schema.ResourceData, m interface{}) erro
 		return fmt.Errorf("Error updating RouterospfNetwork resource while getting object: %v", err)
 	}
 
+	// The URL identifies the object; omit only its top-level API key.
+	delete(*obj, "id")
 	o, err := c.UpdateRouterospfNetwork(obj, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterospfNetwork resource: %v", err)

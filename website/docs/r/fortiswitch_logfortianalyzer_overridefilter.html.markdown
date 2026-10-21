@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_logfortianalyzer_overridefilter
-Override filters for FortiAnalyzer.
+Override filters for FortiAnalyzer. Applies to FortiSwitch Version `<= 8.0.0`.
 
 ## Example Usage
 

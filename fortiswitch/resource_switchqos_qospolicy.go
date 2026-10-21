@@ -152,6 +152,8 @@ func resourceSwitchQosQosPolicyUpdate(d *schema.ResourceData, m interface{}) err
 		return fmt.Errorf("Error updating SwitchQosQosPolicy resource while getting object: %v", err)
 	}
 
+	// The URL identifies the object; omit only its top-level API key.
+	delete(*obj, "name")
 	o, err := c.UpdateSwitchQosQosPolicy(obj, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchQosQosPolicy resource: %v", err)

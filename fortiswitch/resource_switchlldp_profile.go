@@ -263,6 +263,8 @@ func resourceSwitchLldpProfileUpdate(d *schema.ResourceData, m interface{}) erro
 		return fmt.Errorf("Error updating SwitchLldpProfile resource while getting object: %v", err)
 	}
 
+	// The URL identifies the object; omit only its top-level API key.
+	delete(*obj, "name")
 	o, err := c.UpdateSwitchLldpProfile(obj, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchLldpProfile resource: %v", err)

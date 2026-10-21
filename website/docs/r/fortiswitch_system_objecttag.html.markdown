@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_system_objecttag
-Object tags.
+Object tags. Applies to FortiSwitch Version `<= 8.0.0`.
 
 ## Example Usage
 

@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_system_macaddresstable
-Mac address table.
+Mac address table. Applies to FortiSwitch Version `<= 8.0.0`.
 
 ## Example Usage
 

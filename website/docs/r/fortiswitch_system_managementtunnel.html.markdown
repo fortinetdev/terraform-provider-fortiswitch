@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_system_managementtunnel
-Management tunnel configuration.
+Management tunnel configuration. Applies to FortiSwitch Version `<= 8.0.0`.
 
 ## Example Usage
 

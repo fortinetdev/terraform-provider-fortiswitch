@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_systemautoupdate_override
-Configure override FDS server.
+Configure override FDS server. Applies to FortiSwitch Version `<= 8.0.0`.
 
 ## Example Usage
 

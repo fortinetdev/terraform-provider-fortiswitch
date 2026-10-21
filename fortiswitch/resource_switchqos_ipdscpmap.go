@@ -128,6 +128,8 @@ func resourceSwitchQosIpDscpMapUpdate(d *schema.ResourceData, m interface{}) err
 		return fmt.Errorf("Error updating SwitchQosIpDscpMap resource while getting object: %v", err)
 	}
 
+	// The URL identifies the object; omit only its top-level API key.
+	delete(*obj, "name")
 	o, err := c.UpdateSwitchQosIpDscpMap(obj, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchQosIpDscpMap resource: %v", err)

@@ -91,6 +91,8 @@ func resourceSystemScheduleRecurringUpdate(d *schema.ResourceData, m interface{}
 		return fmt.Errorf("Error updating SystemScheduleRecurring resource while getting object: %v", err)
 	}
 
+	// The URL identifies the object; omit only its top-level API key.
+	delete(*obj, "name")
 	o, err := c.UpdateSystemScheduleRecurring(obj, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemScheduleRecurring resource: %v", err)

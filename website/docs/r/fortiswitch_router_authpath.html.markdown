@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_router_authpath
-Auth-based routing configuration.
+Auth-based routing configuration. Applies to FortiSwitch Version `<= 8.0.0`.
 
 ## Example Usage
 

@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_logfortiguard_setting
-Settings for FortiGuard Analysis Service.
+Settings for FortiGuard Analysis Service. Applies to FortiSwitch Version `<= 8.0.0`.
 
 ## Example Usage
 

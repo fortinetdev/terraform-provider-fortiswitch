@@ -157,6 +157,8 @@ func resourceSystemVdomPropertyUpdate(d *schema.ResourceData, m interface{}) err
 		return fmt.Errorf("Error updating SystemVdomProperty resource while getting object: %v", err)
 	}
 
+	// The URL identifies the object; omit only its top-level API key.
+	delete(*obj, "name")
 	o, err := c.UpdateSystemVdomProperty(obj, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemVdomProperty resource: %v", err)

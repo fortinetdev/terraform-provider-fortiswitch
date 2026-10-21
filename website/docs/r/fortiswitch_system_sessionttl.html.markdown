@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_system_sessionttl
-Session ttl configuration.
+Session ttl configuration. Applies to FortiSwitch Version `<= 8.0.0`.
 
 ## Example Usage
 

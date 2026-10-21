@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_system_resourcelimits
-Resource limits configuration.
+Resource limits configuration. Applies to FortiSwitch Version `<= 8.0.0`.
 
 ## Example Usage
 

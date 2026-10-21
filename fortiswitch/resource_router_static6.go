@@ -129,6 +129,8 @@ func resourceRouterStatic6Update(d *schema.ResourceData, m interface{}) error {
 		return fmt.Errorf("Error updating RouterStatic6 resource while getting object: %v", err)
 	}
 
+	// The URL identifies the object; omit only its top-level API key.
+	delete(*obj, "seq-num")
 	o, err := c.UpdateRouterStatic6(obj, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterStatic6 resource: %v", err)

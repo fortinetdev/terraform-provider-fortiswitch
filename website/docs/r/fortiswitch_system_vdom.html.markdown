@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_system_vdom
-Virtual domain configuration.
+Virtual domain configuration. Applies to FortiSwitch Version `<= 8.0.0`.
 
 ## Argument Reference
 

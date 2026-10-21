@@ -131,6 +131,8 @@ func resourceRouterospf6InterfaceUpdate(d *schema.ResourceData, m interface{}) e
 		return fmt.Errorf("Error updating Routerospf6Interface resource while getting object: %v", err)
 	}
 
+	// The URL identifies the object; omit only its top-level API key.
+	delete(*obj, "name")
 	o, err := c.UpdateRouterospf6Interface(obj, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating Routerospf6Interface resource: %v", err)

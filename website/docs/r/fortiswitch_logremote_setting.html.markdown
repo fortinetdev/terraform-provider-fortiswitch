@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_logremote_setting
-Settings for remote logging.
+Settings for remote logging. Applies to FortiSwitch Version `<= 8.0.0`.
 
 ## Example Usage
 

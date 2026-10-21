@@ -127,6 +127,8 @@ func resourceSwitchQosDot1PMapUpdate(d *schema.ResourceData, m interface{}) erro
 		return fmt.Errorf("Error updating SwitchQosDot1PMap resource while getting object: %v", err)
 	}
 
+	// The URL identifies the object; omit only its top-level API key.
+	delete(*obj, "name")
 	o, err := c.UpdateSwitchQosDot1PMap(obj, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchQosDot1PMap resource: %v", err)

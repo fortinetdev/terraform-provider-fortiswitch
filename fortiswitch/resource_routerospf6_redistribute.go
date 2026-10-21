@@ -97,6 +97,8 @@ func resourceRouterospf6RedistributeUpdate(d *schema.ResourceData, m interface{}
 		return fmt.Errorf("Error updating Routerospf6Redistribute resource while getting object: %v", err)
 	}
 
+	// The URL identifies the object; omit only its top-level API key.
+	delete(*obj, "name")
 	o, err := c.UpdateRouterospf6Redistribute(obj, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating Routerospf6Redistribute resource: %v", err)

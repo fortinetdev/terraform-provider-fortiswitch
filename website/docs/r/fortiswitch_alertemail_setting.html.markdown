@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_alertemail_setting
-Alertemail setting configuration.
+Alertemail setting configuration. Applies to FortiSwitch Version `<= 8.0.0`.
 
 ## Example Usage
 

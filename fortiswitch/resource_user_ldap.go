@@ -161,6 +161,8 @@ func resourceUserLdapUpdate(d *schema.ResourceData, m interface{}) error {
 		return fmt.Errorf("Error updating UserLdap resource while getting object: %v", err)
 	}
 
+	// The URL identifies the object; omit only its top-level API key.
+	delete(*obj, "name")
 	o, err := c.UpdateUserLdap(obj, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating UserLdap resource: %v", err)

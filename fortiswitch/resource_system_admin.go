@@ -189,6 +189,7 @@ func resourceSystemAdmin() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 204),
 				Optional:     true,
+				Sensitive:    true,
 				Computed:     true,
 			},
 			"vdom": &schema.Schema{
@@ -321,6 +322,8 @@ func resourceSystemAdminUpdate(d *schema.ResourceData, m interface{}) error {
 		return fmt.Errorf("Error updating SystemAdmin resource while getting object: %v", err)
 	}
 
+	// The URL identifies the object; omit only its top-level API key.
+	delete(*obj, "name")
 	o, err := c.UpdateSystemAdmin(obj, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAdmin resource: %v", err)
@@ -881,12 +884,6 @@ func refreshObjectSystemAdmin(d *schema.ResourceData, o map[string]interface{}, 
 	if err = d.Set("ip6_trusthost10", flattenSystemAdminIp6Trusthost10(o["ip6-trusthost10"], d, "ip6_trusthost10", sv)); err != nil {
 		if !fortiAPIPatch(o["ip6-trusthost10"]) {
 			return fmt.Errorf("Error reading ip6_trusthost10: %v", err)
-		}
-	}
-
-	if err = d.Set("password", flattenSystemAdminPassword(o["password"], d, "password", sv)); err != nil {
-		if !fortiAPIPatch(o["password"]) {
-			return fmt.Errorf("Error reading password: %v", err)
 		}
 	}
 

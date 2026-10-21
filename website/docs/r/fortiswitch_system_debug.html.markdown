@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_system_debug
-Application and CLI debug values to set at startup and retain over reboot. Applies to FortiSwitch Version `>= 7.6.1`.
+Application and CLI debug values to set at startup and retain over reboot. Applies to FortiSwitch Version `7.6.1,7.6.2,7.6.3,7.6.4,8.0.0`.
 
 ## Argument Reference
 

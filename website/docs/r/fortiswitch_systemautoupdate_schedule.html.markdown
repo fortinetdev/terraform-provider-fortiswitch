@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_systemautoupdate_schedule
-Configure update schedule.
+Configure update schedule. Applies to FortiSwitch Version `<= 8.0.0`.
 
 ## Example Usage
 

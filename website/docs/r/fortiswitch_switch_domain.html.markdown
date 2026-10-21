@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_switch_domain
-Switch forwarding domains.
+Switch forwarding domains. Applies to FortiSwitch Version `<= 8.0.0`.
 
 ## Example Usage
 

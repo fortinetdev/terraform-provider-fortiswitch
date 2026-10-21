@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_system_dnsdatabase
-Dns-database.
+Dns-database. Applies to FortiSwitch Version `<= 8.0.0`.
 
 ## Argument Reference
 

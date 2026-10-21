@@ -400,6 +400,8 @@ func resourceSystemDhcpServerUpdate(d *schema.ResourceData, m interface{}) error
 		return fmt.Errorf("Error updating SystemDhcpServer resource while getting object: %v", err)
 	}
 
+	// The URL identifies the object; omit only its top-level API key.
+	delete(*obj, "id")
 	o, err := c.UpdateSystemDhcpServer(obj, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemDhcpServer resource: %v", err)

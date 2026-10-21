@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_logfortianalyzer2_setting
-Setting for FortiAnalyzer.
+Setting for FortiAnalyzer. Applies to FortiSwitch Version `<= 8.0.0`.
 
 ## Example Usage
 

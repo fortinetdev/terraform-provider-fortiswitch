@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_logfortianalyzer_filter
-Filters for FortiAnalyzer.
+Filters for FortiAnalyzer. Applies to FortiSwitch Version `<= 8.0.0`.
 
 ## Example Usage
 

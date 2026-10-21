@@ -107,6 +107,7 @@ func resourceLogDiskSetting() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
+				Sensitive:    true,
 				Computed:     true,
 			},
 			"upload_ssl_conn": &schema.Schema{
@@ -492,12 +493,6 @@ func refreshObjectLogDiskSetting(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("full_final_warning_threshold", flattenLogDiskSettingFullFinalWarningThreshold(o["full-final-warning-threshold"], d, "full_final_warning_threshold", sv)); err != nil {
 		if !fortiAPIPatch(o["full-final-warning-threshold"]) {
 			return fmt.Errorf("Error reading full_final_warning_threshold: %v", err)
-		}
-	}
-
-	if err = d.Set("uploadpass", flattenLogDiskSettingUploadpass(o["uploadpass"], d, "uploadpass", sv)); err != nil {
-		if !fortiAPIPatch(o["uploadpass"]) {
-			return fmt.Errorf("Error reading uploadpass: %v", err)
 		}
 	}
 

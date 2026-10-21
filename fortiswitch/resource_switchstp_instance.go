@@ -116,6 +116,8 @@ func resourceSwitchStpInstanceUpdate(d *schema.ResourceData, m interface{}) erro
 		return fmt.Errorf("Error updating SwitchStpInstance resource while getting object: %v", err)
 	}
 
+	// The URL identifies the object; omit only its top-level API key.
+	delete(*obj, "id")
 	o, err := c.UpdateSwitchStpInstance(obj, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchStpInstance resource: %v", err)

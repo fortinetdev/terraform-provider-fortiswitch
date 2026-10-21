@@ -127,6 +127,8 @@ func resourceRouterGwdetectUpdate(d *schema.ResourceData, m interface{}) error {
 		return fmt.Errorf("Error updating RouterGwdetect resource while getting object: %v", err)
 	}
 
+	// The URL identifies the object; omit only its top-level API key.
+	delete(*obj, "interface")
 	o, err := c.UpdateRouterGwdetect(obj, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterGwdetect resource: %v", err)

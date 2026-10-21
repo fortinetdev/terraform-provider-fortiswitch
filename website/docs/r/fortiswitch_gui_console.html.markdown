@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_gui_console
-Dashboard CLI console configuration.
+Dashboard CLI console configuration. Applies to FortiSwitch Version `<= 8.0.0`.
 
 ## Argument Reference
 

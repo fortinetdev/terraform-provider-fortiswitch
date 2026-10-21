@@ -303,7 +303,12 @@ func resourceSwitchAclIngressCreate(d *schema.ResourceData, m interface{}) error
 	if o["mkey"] != nil && o["mkey"] != "" {
 		d.SetId(fmt.Sprintf("%v", o["mkey"]))
 	} else {
-		d.SetId("SwitchAclIngress")
+		// Some firmware acknowledges creation without returning mkey.
+		if key, ok := d.GetOk("fswid"); ok {
+			d.SetId(fmt.Sprintf("%v", key))
+		} else {
+			return fmt.Errorf("SwitchAclIngress response omitted mkey; configure an explicit fswid")
+		}
 	}
 
 	return resourceSwitchAclIngressRead(d, m)
@@ -319,6 +324,8 @@ func resourceSwitchAclIngressUpdate(d *schema.ResourceData, m interface{}) error
 		return fmt.Errorf("Error updating SwitchAclIngress resource while getting object: %v", err)
 	}
 
+	// The URL identifies the object; omit only its top-level API key.
+	delete(*obj, "id")
 	o, err := c.UpdateSwitchAclIngress(obj, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchAclIngress resource: %v", err)
@@ -328,7 +335,8 @@ func resourceSwitchAclIngressUpdate(d *schema.ResourceData, m interface{}) error
 	if o["mkey"] != nil && o["mkey"] != "" {
 		d.SetId(fmt.Sprintf("%v", o["mkey"]))
 	} else {
-		d.SetId("SwitchAclIngress")
+		// An update without mkey must retain the key already in state.
+		d.SetId(mkey)
 	}
 
 	return resourceSwitchAclIngressRead(d, m)

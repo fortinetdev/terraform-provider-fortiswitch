@@ -207,6 +207,8 @@ func resourceSystemLinkMonitorUpdate(d *schema.ResourceData, m interface{}) erro
 		return fmt.Errorf("Error updating SystemLinkMonitor resource while getting object: %v", err)
 	}
 
+	// The URL identifies the object; omit only its top-level API key.
+	delete(*obj, "name")
 	o, err := c.UpdateSystemLinkMonitor(obj, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemLinkMonitor resource: %v", err)

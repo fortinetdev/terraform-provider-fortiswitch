@@ -145,8 +145,9 @@ func dataSourceSystemAdmin() *schema.Resource {
 				Computed: true,
 			},
 			"password": &schema.Schema{
-				Type:     schema.TypeString,
-				Computed: true,
+				Type:      schema.TypeString,
+				Sensitive: true,
+				Computed:  true,
 			},
 			"vdom": &schema.Schema{
 				Type:     schema.TypeString,
@@ -728,12 +729,6 @@ func dataSourceRefreshObjectSystemAdmin(d *schema.ResourceData, o map[string]int
 	if err = d.Set("ip6_trusthost10", dataSourceFlattenSystemAdminIp6Trusthost10(o["ip6-trusthost10"], d, "ip6_trusthost10")); err != nil {
 		if !fortiAPIPatch(o["ip6-trusthost10"]) {
 			return fmt.Errorf("Error reading ip6_trusthost10: %v", err)
-		}
-	}
-
-	if err = d.Set("password", dataSourceFlattenSystemAdminPassword(o["password"], d, "password")); err != nil {
-		if !fortiAPIPatch(o["password"]) {
-			return fmt.Errorf("Error reading password: %v", err)
 		}
 	}
 

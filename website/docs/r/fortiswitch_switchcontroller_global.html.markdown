@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_switchcontroller_global
-Switch-controller global configuration.
+Switch-controller global configuration. Applies to FortiSwitch Version `<= 8.0.0`.
 
 ## Argument Reference
 

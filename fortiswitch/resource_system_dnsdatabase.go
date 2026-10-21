@@ -201,6 +201,8 @@ func resourceSystemDnsDatabaseUpdate(d *schema.ResourceData, m interface{}) erro
 		return fmt.Errorf("Error updating SystemDnsDatabase resource while getting object: %v", err)
 	}
 
+	// The URL identifies the object; omit only its top-level API key.
+	delete(*obj, "name")
 	o, err := c.UpdateSystemDnsDatabase(obj, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemDnsDatabase resource: %v", err)

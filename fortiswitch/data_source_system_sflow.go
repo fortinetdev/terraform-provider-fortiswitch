@@ -23,6 +23,14 @@ func dataSourceSystemSflow() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemSflowRead,
 		Schema: map[string]*schema.Schema{
+			"collector_ip": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"collector_port": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 
 			"dummy": &schema.Schema{
 				Type:     schema.TypeInt,
@@ -138,6 +146,13 @@ func dataSourceFlattenSystemSflowCollectorsPort(v interface{}, d *schema.Resourc
 
 func dataSourceRefreshObjectSystemSflow(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
+
+	if err = d.Set("collector_ip", o["collector-ip"]); err != nil {
+		return fmt.Errorf("Error reading collector_ip: %v", err)
+	}
+	if err = d.Set("collector_port", o["collector-port"]); err != nil {
+		return fmt.Errorf("Error reading collector_port: %v", err)
+	}
 
 	if err = d.Set("dummy", dataSourceFlattenSystemSflowDummy(o["dummy"], d, "dummy")); err != nil {
 		if !fortiAPIPatch(o["dummy"]) {

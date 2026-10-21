@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_systemautoupdate_pushupdate
-Configure push updates.
+Configure push updates. Applies to FortiSwitch Version `<= 8.0.0`.
 
 ## Example Usage
 

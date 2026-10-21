@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_router_gwdetect
-Gwdetect.
+Gwdetect. Applies to FortiSwitch Version `<= 8.0.0`.
 
 ## Example Usage
 

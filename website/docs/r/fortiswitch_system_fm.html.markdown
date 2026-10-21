@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_system_fm
-Fm.
+Fm. Applies to FortiSwitch Version `<= 8.0.0`.
 
 ## Example Usage
 

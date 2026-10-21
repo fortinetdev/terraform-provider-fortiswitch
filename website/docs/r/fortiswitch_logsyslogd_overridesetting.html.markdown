@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_logsyslogd_overridesetting
-Settings for remote syslog server.
+Settings for remote syslog server. Applies to FortiSwitch Version `<= 8.0.0`.
 
 ## Argument Reference
 

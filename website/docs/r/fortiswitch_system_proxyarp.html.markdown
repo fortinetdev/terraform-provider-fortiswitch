@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_system_proxyarp
-Configure proxy-arp.
+Configure proxy-arp. Applies to FortiSwitch Version `<= 8.0.0`.
 
 ## Example Usage
 

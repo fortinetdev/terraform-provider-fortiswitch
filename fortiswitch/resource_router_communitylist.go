@@ -117,6 +117,8 @@ func resourceRouterCommunityListUpdate(d *schema.ResourceData, m interface{}) er
 		return fmt.Errorf("Error updating RouterCommunityList resource while getting object: %v", err)
 	}
 
+	// The URL identifies the object; omit only its top-level API key.
+	delete(*obj, "name")
 	o, err := c.UpdateRouterCommunityList(obj, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterCommunityList resource: %v", err)

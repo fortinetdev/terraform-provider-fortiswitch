@@ -31,6 +31,19 @@ func resourceSystemSflow() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"collector_ip": &schema.Schema{
+				Type:          schema.TypeString,
+				Computed:      true,
+				Optional:      true,
+				ConflictsWith: []string{"collectors"},
+			},
+			"collector_port": &schema.Schema{
+				Type:          schema.TypeInt,
+				Computed:      true,
+				Optional:      true,
+				ConflictsWith: []string{"collectors"},
+			},
+
 			"dummy": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -223,6 +236,13 @@ func flattenSystemSflowCollectorsPort(v interface{}, d *schema.ResourceData, pre
 func refreshObjectSystemSflow(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
+	if err = d.Set("collector_ip", o["collector-ip"]); err != nil {
+		return fmt.Errorf("Error reading collector_ip: %v", err)
+	}
+	if err = d.Set("collector_port", o["collector-port"]); err != nil {
+		return fmt.Errorf("Error reading collector_port: %v", err)
+	}
+
 	if err = d.Set("dummy", flattenSystemSflowDummy(o["dummy"], d, "dummy", sv)); err != nil {
 		if !fortiAPIPatch(o["dummy"]) {
 			return fmt.Errorf("Error reading dummy: %v", err)
@@ -312,6 +332,24 @@ func expandSystemSflowCollectorsPort(d *schema.ResourceData, v interface{}, pre 
 
 func getObjectSystemSflow(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+
+	collectors, _ := d.Get("collectors").([]interface{})
+	if len(collectors) == 0 {
+		if value, ok := d.GetOkExists("collector_ip"); ok {
+			if setArgNil {
+				obj["collector-ip"] = nil
+			} else {
+				obj["collector-ip"] = value
+			}
+		}
+		if value, ok := d.GetOkExists("collector_port"); ok {
+			if setArgNil {
+				obj["collector-port"] = nil
+			} else {
+				obj["collector-port"] = value
+			}
+		}
+	}
 
 	if v, ok := d.GetOk("dummy"); ok {
 		if setArgNil {

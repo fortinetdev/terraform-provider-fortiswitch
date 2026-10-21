@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_systemautoupdate_clientoverride
-Configure client override for the FDN.
+Configure client override for the FDN. Applies to FortiSwitch Version `<= 8.0.0`.
 
 ## Example Usage
 

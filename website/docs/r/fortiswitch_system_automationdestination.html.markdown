@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_system_automationdestination
-Automation destinations. Applies to FortiSwitch Version `>= 7.2.0`.
+Automation destinations. Applies to FortiSwitch Version `7.2.0,7.2.1,7.2.2,7.2.3,7.2.4,7.2.5,7.4.0,7.4.1,7.4.2,7.4.3,7.6.0,7.6.1,7.6.2,7.6.3,7.6.4,8.0.0`.
 
 ## Argument Reference
 

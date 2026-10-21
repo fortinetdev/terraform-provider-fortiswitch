@@ -215,6 +215,8 @@ func resourceSwitchAclPrelookupUpdate(d *schema.ResourceData, m interface{}) err
 		return fmt.Errorf("Error updating SwitchAclPrelookup resource while getting object: %v", err)
 	}
 
+	// The URL identifies the object; omit only its top-level API key.
+	delete(*obj, "id")
 	o, err := c.UpdateSwitchAclPrelookup(obj, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchAclPrelookup resource: %v", err)

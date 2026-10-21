@@ -128,6 +128,8 @@ func resourceSystemCertificateCrlUpdate(d *schema.ResourceData, m interface{}) e
 		return fmt.Errorf("Error updating SystemCertificateCrl resource while getting object: %v", err)
 	}
 
+	// The URL identifies the object; omit only its top-level API key.
+	delete(*obj, "name")
 	o, err := c.UpdateSystemCertificateCrl(obj, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemCertificateCrl resource: %v", err)

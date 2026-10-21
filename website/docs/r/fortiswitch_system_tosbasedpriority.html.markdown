@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_system_tosbasedpriority
-Configure tos based priority table.
+Configure tos based priority table. Applies to FortiSwitch Version `<= 8.0.0`.
 
 ## Example Usage
 

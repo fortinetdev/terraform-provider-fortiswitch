@@ -93,6 +93,8 @@ func resourceSwitchVirtualWireUpdate(d *schema.ResourceData, m interface{}) erro
 		return fmt.Errorf("Error updating SwitchVirtualWire resource while getting object: %v", err)
 	}
 
+	// The URL identifies the object; omit only its top-level API key.
+	delete(*obj, "name")
 	o, err := c.UpdateSwitchVirtualWire(obj, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchVirtualWire resource: %v", err)

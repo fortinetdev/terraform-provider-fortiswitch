@@ -105,6 +105,8 @@ func resourceSystemSnifferProfileUpdate(d *schema.ResourceData, m interface{}) e
 		return fmt.Errorf("Error updating SystemSnifferProfile resource while getting object: %v", err)
 	}
 
+	// The URL identifies the object; omit only its top-level API key.
+	delete(*obj, "profile-name")
 	o, err := c.UpdateSystemSnifferProfile(obj, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSnifferProfile resource: %v", err)

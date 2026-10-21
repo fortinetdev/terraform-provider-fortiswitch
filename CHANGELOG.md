@@ -1,4 +1,18 @@
-## 1.1.8 (Unreleased)
+## 1.2.1 (Unreleased)
+
+## 1.2.0 (October 21, 2026)
+
+BUGFIXES:
+
+* Omit the top-level API primary key (`mkey`) from PUT request bodies in resource `Update()` functions to avoid request failing.
+* Fix resource ID handling in `fortiswitch_switchacl_ingress` when the API response omits `mkey`: use the configured `fswid` after creation and retain the existing ID after updates. Return an error if creation returns no key and no explicit `fswid` was configured.
+* Mark `password` in `fortiswitch_system_admin`, `auth_pwd` and `priv_pwd` in `fortiswitch_systemsnmp_user`, and `uploadpass` in `fortiswitch_logdisk_setting` as sensitive. Preserve configured secret values during refresh when the API does not return usable values, preventing repeated password changes.
+* Fix `fortiswitch_system_sflow` resource and data source handling of the single-collector API format through `collector_ip` and `collector_port`, while retaining support for `collectors` blocks.
+* Handle unset integer fields returned as null, empty strings, or arrays, and convert non-integer strings such as `disabled` to zero instead of failing integer conversion.
+
+IMPROVEMENTS:
+
+* Support FortiSwitchOS 8.0.1.
 
 ## 1.1.7 (June 17, 2025)
 

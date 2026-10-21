@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_system_fortiguard
-Configure FortiGuard services.
+Configure FortiGuard services. Applies to FortiSwitch Version `<= 8.0.0`.
 
 ## Example Usage
 

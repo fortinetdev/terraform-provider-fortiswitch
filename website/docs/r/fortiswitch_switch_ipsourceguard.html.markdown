@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortiswitch_switch_ipsourceguard
-IP-source-guard table. Applies to FortiSwitch Version `>= 8.0.0`.
+IP-source-guard table. Applies to FortiSwitch Version `8.0.0`.
 
 ## Argument Reference
 
